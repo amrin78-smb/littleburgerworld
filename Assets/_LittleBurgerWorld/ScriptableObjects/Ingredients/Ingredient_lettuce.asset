@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798f8f4bf54f534f0b3e6ce86b6b7f10, type: 3}
+  m_Name: Ingredient_lettuce
+  m_EditorClassIdentifier: LittleBurgerWorld.Runtime::LittleBurgerWorld.Food.IngredientData
+  id: lettuce
+  displayName: Lettuce
+  prefab: {fileID: 6592485085578902719, guid: c53cde529cf17ea9e87a5438fdfdce14, type: 3}
+  icon: {fileID: 21300000, guid: 48aa8033308655d77b926ea710f7af15, type: 3}
+  color: {r: 0.54901963, g: 0.79607844, b: 0.36862746, a: 1}
+  material: {fileID: 0}
+  stackHeight: 0.07
+  stackable: 1
+  completesBurger: 0
+  isBase: 0
+  cookedVariant: {fileID: 0}
+  showInTray: 1
+  unlockedByDefault: 1
+  trayOrder: 3
+  pickSound: 1
+  placeSound: 3

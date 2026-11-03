@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beb0be676cf8c127aa9d0e523a1a5836, type: 3}
+  m_Name: Activity_my_first_burger
+  m_EditorClassIdentifier: LittleBurgerWorld.Runtime::LittleBurgerWorld.Activities.ActivityData
+  id: my_first_burger
+  displayName: My First Burger
+  thumbnail: {fileID: 21300000, guid: 48597f491d4c0b161b959dff1595c793, type: 3}
+  cardColor: {r: 1, g: 0.8901961, b: 0.6392157, a: 1}
+  steps:
+  - type: 0
+    targetKey: 
+    sourceKey: 
+    itemId: 
+    eventType: 0
+    promptIcon: {fileID: 0}
+    voiceKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 1
+    targetKey: 
+    sourceKey: 
+    itemId: 
+    eventType: 0
+    promptIcon: {fileID: 0}
+    voiceKey: 
+    sound: 0
+    animation: 
+    duration: 0.4
+    characterId: benny
+    requestItems:
+    - burger
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 6
+    targetKey: Board
+    sourceKey: Tray.bun_bottom
+    itemId: bun_bottom
+    eventType: 0
+    promptIcon: {fileID: 21300000, guid: 0df163763ac1b5895b08de9f136da5bb, type: 3}
+    voiceKey: add_bun
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 6
+    targetKey: Grill
+    sourceKey: Tray.patty_raw
+    itemId: patty_raw
+    eventType: 0
+    promptIcon: {fileID: 21300000, guid: 6507c27c107f6d72b8ed786b83a2b5c7, type: 3}
+    voiceKey: patty_on_grill
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 8
+    targetKey: Grill
+    sourceKey: 
+    itemId: 
+    eventType: 6
+    promptIcon: {fileID: 21300000, guid: 9ce8183a73d33f97d950ae1c75c44786, type: 3}
+    voiceKey: flip_patty
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 3.2
+    autoAssistAfterHints: 4
+  - type: 8
+    targetKey: 
+    sourceKey: 
+    itemId: 
+    eventType: 7
+    promptIcon: {fileID: 21300000, guid: 9ce8183a73d33f97d950ae1c75c44786, type: 3}
+    voiceKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 30
+    autoAssistAfterHints: 0
+  - type: 6
+    targetKey: Board
+    sourceKey: Grill
+    itemId: patty
+    eventType: 0
+    promptIcon: {fileID: 21300000, guid: 9ce8183a73d33f97d950ae1c75c44786, type: 3}
+    voiceKey: patty_on_bun
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 6
+    targetKey: Board
+    sourceKey: Tray.bun_top
+    itemId: bun_top
+    eventType: 0
+    promptIcon: {fileID: 21300000, guid: 516954c6a312bbc20b6e4c9b7244244d, type: 3}
+    voiceKey: add_top_bun
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 8
+    targetKey: 
+    sourceKey: 
+    itemId: 
+    eventType: 4
+    promptIcon: {fileID: 0}
+    voiceKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 30
+    autoAssistAfterHints: 0
+  - type: 11
+    targetKey: 
+    sourceKey: 
+    itemId: 
+    eventType: 0
+    promptIcon: {fileID: 0}
+    voiceKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 9
+    targetKey: Customer
+    sourceKey: 
+    itemId: 
+    eventType: 0
+    promptIcon: {fileID: 0}
+    voiceKey: 
+    sound: 0
+    animation: cheer
+    duration: 1.4
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  completionSound: 14
+  completionAnimation: balloons
+  starReward: 1
+  unlocks: []

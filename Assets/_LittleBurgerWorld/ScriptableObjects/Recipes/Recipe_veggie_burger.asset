@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ac8b27b5f547926a0e4109456baec2, type: 3}
+  m_Name: Recipe_veggie_burger
+  m_EditorClassIdentifier: LittleBurgerWorld.Runtime::LittleBurgerWorld.Food.RecipeData
+  id: veggie_burger
+  displayName: Veggie Burger
+  icon: {fileID: 21300000, guid: 48597f491d4c0b161b959dff1595c793, type: 3}
+  ingredients:
+  - {fileID: 11400000, guid: 0bbb1b821205dc1d0b0a2df6cf853b76, type: 2}
+  - {fileID: 11400000, guid: 451aa9390fcc25a96831447709d2a524, type: 2}
+  - {fileID: 11400000, guid: 2fb39ee42bf0b5783a65b7b58af6f08a, type: 2}
+  - {fileID: 11400000, guid: 451aa9390fcc25a96831447709d2a524, type: 2}
+  - {fileID: 11400000, guid: 45c31f3138e9c21f680bae3055fa799a, type: 2}
+  finalFoodPrefab: {fileID: 0}
+  completionSound: 13
+  completionAnimation: spin

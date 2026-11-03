@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bfa3acb3c185e9c8a695c28143b3753, type: 3}
+  m_Name: LocalizationTable
+  m_EditorClassIdentifier: LittleBurgerWorld.Runtime::LittleBurgerWorld.Core.LocalizationTable
+  languages:
+  - en
+  - es
+  languageNames:
+  - English
+  - "Espa\xF1ol"
+  entries:
+  - key: lets_play
+    values:
+    - LET'S PLAY!
+    - "\xA1A JUGAR!"
+  - key: free_play
+    values:
+    - FREE PLAY
+    - JUEGO LIBRE
+  - key: parent_gate_question
+    values:
+    - 'Grown-ups only! Tap the answer:'
+    - "\xA1Solo adultos! Toca la respuesta:"
+  - key: settings_title
+    values:
+    - Parent Settings
+    - Ajustes para padres
+  - key: music
+    values:
+    - Music
+    - "M\xFAsica"
+  - key: sounds
+    values:
+    - Sounds
+    - Sonidos
+  - key: voice
+    values:
+    - Voice
+    - Voz
+  - key: voice_prompts
+    values:
+    - Spoken hints
+    - Pistas habladas
+  - key: language
+    values:
+    - Language
+    - Idioma
+  - key: reset_progress
+    values:
+    - Hold to reset progress
+    - "Mant\xE9n pulsado para reiniciar"
+  - key: progress_reset_done
+    values:
+    - Progress has been reset.
+    - Se ha reiniciado el progreso.
+  - key: privacy
+    values:
+    - Privacy
+    - Privacidad
+  - key: privacy_text
+    values:
+    - 'Little Burger World works completely offline.
+
+      It does not collect,
+      store or share any personal information.
+
+      There are no ads, no purchases,
+      no accounts, no analytics and no third-party tracking.
+
+      Progress (stars,
+      stickers and settings) is saved only on this device and can be erased with
+      "Reset progress".'
+    - "Little Burger World funciona totalmente sin conexi\xF3n.\nNo recopila, guarda
+      ni comparte informaci\xF3n personal.\nNo hay anuncios, compras, cuentas, anal\xEDticas
+      ni rastreo de terceros.\nEl progreso (estrellas, pegatinas y ajustes) se guarda
+      solo en este dispositivo y se puede borrar con \"Reiniciar progreso\"."
+  - key: stickers
+    values:
+    - Stickers
+    - Pegatinas
