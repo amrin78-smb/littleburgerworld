@@ -24,6 +24,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -38,6 +39,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 0.4
@@ -53,6 +55,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 0df163763ac1b5895b08de9f136da5bb, type: 3}
     voiceKey: add_bun
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -67,6 +70,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 6507c27c107f6d72b8ed786b83a2b5c7, type: 3}
     voiceKey: patty_on_grill
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -81,6 +85,7 @@ MonoBehaviour:
     eventType: 6
     promptIcon: {fileID: 21300000, guid: 9ce8183a73d33f97d950ae1c75c44786, type: 3}
     voiceKey: flip_patty
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -94,7 +99,8 @@ MonoBehaviour:
     itemId: 
     eventType: 7
     promptIcon: {fileID: 21300000, guid: 9ce8183a73d33f97d950ae1c75c44786, type: 3}
-    voiceKey: 
+    voiceKey: patty_cooking
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -109,6 +115,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 9ce8183a73d33f97d950ae1c75c44786, type: 3}
     voiceKey: patty_on_bun
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -123,6 +130,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 67881d47fef4de17f95c61f5cffffc1c, type: 3}
     voiceKey: add_cheese
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -137,6 +145,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 516954c6a312bbc20b6e4c9b7244244d, type: 3}
     voiceKey: add_top_bun
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -151,6 +160,7 @@ MonoBehaviour:
     eventType: 4
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -165,6 +175,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -179,6 +190,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: b8d45a9376fec22208ceffbcc1ad1757, type: 3}
     voiceKey: serve_benny
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -193,6 +205,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 3.4

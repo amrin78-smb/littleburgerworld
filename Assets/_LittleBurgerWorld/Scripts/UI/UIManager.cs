@@ -13,6 +13,9 @@ namespace LittleBurgerWorld.UI
         [SerializeField] private HintHand m_Hand;
         [SerializeField] private RectTransform m_PromptBubble;
         [SerializeField] private Image m_PromptIcon;
+        [Tooltip("Instruction line beside the picture (optional).")]
+        [SerializeField] private Text m_PromptText;
+        [SerializeField] private float m_PromptWidthWithText = 800f;
         [SerializeField] private IngredientTrayUI m_Tray;
         [SerializeField] private ActivitySelectUI m_ActivitySelect;
         [SerializeField] private CelebrationUI m_Celebration;
@@ -25,6 +28,7 @@ namespace LittleBurgerWorld.UI
         [SerializeField] private Sprite m_FreePlayBadge;
 
         private Sprite m_CurrentPrompt;
+        private string m_CurrentText;
 
         public HintHand Hand => m_Hand;
         public IngredientTrayUI Tray => m_Tray;
@@ -35,6 +39,8 @@ namespace LittleBurgerWorld.UI
         public SquishyButton Replay => m_Replay;
         public SquishyButton ActivityList => m_ActivityList;
         public bool PromptVisible => m_PromptBubble != null && m_PromptBubble.gameObject.activeSelf;
+        /// <summary>Instruction text currently shown in the prompt bubble (empty when picture only).</summary>
+        public string PromptText => m_PromptText != null && m_PromptText.gameObject.activeSelf ? m_PromptText.text : string.Empty;
 
         private void Awake()
         {
@@ -58,11 +64,17 @@ namespace LittleBurgerWorld.UI
             if (m_ActivityList != null) m_ActivityList.gameObject.SetActive(visible);
         }
 
-        public void SetPrompt(Sprite icon)
+        public void SetPrompt(Sprite icon) => SetPrompt(icon, null);
+
+        /// <summary>Picture prompt with an optional short instruction beside it. Null icon hides the bubble.</summary>
+        public void SetPrompt(Sprite icon, string text)
         {
             if (m_PromptBubble == null) return;
-            if (icon == m_CurrentPrompt && (icon == null) != m_PromptBubble.gameObject.activeSelf) return;
+            if (icon == null) text = null;
+            bool shown = m_PromptBubble.gameObject.activeSelf;
+            if (icon == m_CurrentPrompt && text == m_CurrentText && (icon != null) == shown) return;
             m_CurrentPrompt = icon;
+            m_CurrentText = text;
             Tween.Kill(m_PromptBubble);
             if (icon == null)
             {
@@ -74,9 +86,28 @@ namespace LittleBurgerWorld.UI
             }
             m_PromptIcon.sprite = icon;
             m_PromptIcon.preserveAspect = true;
+            LayoutPrompt(text);
             m_PromptBubble.gameObject.SetActive(true);
             m_PromptBubble.localScale = Vector3.zero;
             Tween.Scale(m_PromptBubble, Vector3.one, 0.45f, Ease.OutBack);
+        }
+
+        private void LayoutPrompt(string text)
+        {
+            bool hasText = m_PromptText != null && !string.IsNullOrEmpty(text);
+            float height = m_PromptBubble.sizeDelta.y;
+            float width = hasText ? m_PromptWidthWithText : height;
+            m_PromptBubble.sizeDelta = new Vector2(width, height);
+            RectTransform icon = m_PromptIcon.rectTransform;
+            icon.anchoredPosition = hasText ? new Vector2(-width * 0.5f + height * 0.5f, 0f) : Vector2.zero;
+            if (m_PromptText == null) return;
+            m_PromptText.gameObject.SetActive(hasText);
+            if (!hasText) return;
+            m_PromptText.text = text;
+            RectTransform t = m_PromptText.rectTransform;
+            float left = height - 10f, right = 36f;
+            t.sizeDelta = new Vector2(width - left - right, height - 30f);
+            t.anchoredPosition = new Vector2((left - right) * 0.5f, 0f);
         }
 
         public void FlashStepSuccess()

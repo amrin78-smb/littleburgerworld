@@ -139,7 +139,7 @@ MonoBehaviour:
   voice:
   - key: add_bun
     clip: {fileID: 0}
-    transcript: Let's start with the bottom bun!
+    transcript: Put the bottom bun on the board!
   - key: patty_on_grill
     clip: {fileID: 0}
     transcript: Put the patty on the grill.
@@ -160,13 +160,13 @@ MonoBehaviour:
     transcript: Give the burger to Benny!
   - key: tap_potato
     clip: {fileID: 0}
-    transcript: Tap a potato!
+    transcript: Tap the potatoes!
   - key: fries_in_box
     clip: {fileID: 0}
     transcript: Put the fries in the box.
   - key: pick_flavour
     clip: {fileID: 0}
-    transcript: Pick a flavour!
+    transcript: Tap the strawberry flavour!
   - key: pick_cup
     clip: {fileID: 0}
     transcript: Get a cup.
@@ -188,3 +188,12 @@ MonoBehaviour:
   - key: shake_on_tray
     clip: {fileID: 0}
     transcript: Put the milkshake on the tray.
+  - key: patty_cooking
+    clip: {fileID: 0}
+    transcript: Sizzle sizzle! The patty is cooking.
+  - key: fries_cooking
+    clip: {fileID: 0}
+    transcript: The fries are cooking!
+  - key: meal_ready
+    clip: {fileID: 0}
+    transcript: What a yummy meal!

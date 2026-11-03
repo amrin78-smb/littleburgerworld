@@ -175,7 +175,7 @@ namespace LittleBurgerWorld.EditorTools
             yield return S(ActivityStepType.WaitForDrop, "Board", "Tray.bun_bottom", "bun_bottom", "icon_bun_bottom", voice: "add_bun");
             yield return S(ActivityStepType.WaitForDrop, "Grill", "Tray.patty_raw", "patty_raw", "icon_patty_raw", voice: "patty_on_grill");
             yield return S(ActivityStepType.WaitForEvent, "Grill", null, null, "icon_patty", GameplayEventType.PattyFlipped, hintDelay: 3.2f, voice: "flip_patty");
-            yield return S(ActivityStepType.WaitForEvent, null, null, null, "icon_patty", GameplayEventType.PattyCooked, hintDelay: 30f, assist: 0);
+            yield return S(ActivityStepType.WaitForEvent, null, null, null, "icon_patty", GameplayEventType.PattyCooked, hintDelay: 30f, assist: 0, voice: "patty_cooking");
             yield return S(ActivityStepType.WaitForDrop, "Board", "Grill", "patty", "icon_patty", voice: "patty_on_bun");
             if (cheese) yield return S(ActivityStepType.WaitForDrop, "Board", "Tray.cheese", "cheese", "icon_cheese", voice: "add_cheese");
             yield return S(ActivityStepType.WaitForDrop, "Board", "Tray.bun_top", "bun_top", "icon_bun_top", voice: "add_top_bun");
@@ -186,7 +186,7 @@ namespace LittleBurgerWorld.EditorTools
         private static IEnumerable<ActivityStep> FriesSteps()
         {
             yield return S(ActivityStepType.WaitForTap, "Fryer.Potatoes", null, null, "icon_potato", voice: "tap_potato");
-            yield return S(ActivityStepType.WaitForEvent, null, null, null, "icon_fries", GameplayEventType.FriesReady, hintDelay: 30f, assist: 0);
+            yield return S(ActivityStepType.WaitForEvent, null, null, null, "icon_fries", GameplayEventType.FriesReady, hintDelay: 30f, assist: 0, voice: "fries_cooking");
             yield return S(ActivityStepType.WaitForDrop, "FriesBox", "Fryer.Batch", "fries_batch", "icon_fries", voice: "fries_in_box");
             yield return S(ActivityStepType.WaitForEvent, null, null, null, null, GameplayEventType.FriesBoxFilled, hintDelay: 30f, assist: 0);
         }
@@ -236,7 +236,7 @@ namespace LittleBurgerWorld.EditorTools
             a5.Add(S(ActivityStepType.WaitForDrop, "Tray", "FriesBox", "fries", "icon_fries", voice: "fries_on_tray"));
             a5.AddRange(ShakeSteps(false));
             a5.Add(S(ActivityStepType.WaitForDrop, "Tray", "Drinks.Cup", "milkshake", "icon_milkshake_strawberry", voice: "shake_on_tray"));
-            a5.Add(S(ActivityStepType.WaitForEvent, null, null, null, "icon_meal", GameplayEventType.MealReady, hintDelay: 30f, assist: 0));
+            a5.Add(S(ActivityStepType.WaitForEvent, null, null, null, "icon_meal", GameplayEventType.MealReady, hintDelay: 30f, assist: 0, voice: "meal_ready"));
             a5.Add(S(ActivityStepType.Wait, duration: 1.2f));
             list.Add(Activity("complete_meal", "Prepare a Complete Meal", "icon_meal", "#C9EBDC", a5, null));
 
@@ -333,16 +333,16 @@ namespace LittleBurgerWorld.EditorTools
             // Voice prompts: architecture is complete; recorded clips are a documented future asset.
             lib.voice = new List<VoiceEntry>();
             void V(string key, string text) => lib.voice.Add(new VoiceEntry { key = key, clip = null, transcript = text });
-            V("add_bun", "Let's start with the bottom bun!");
+            V("add_bun", "Put the bottom bun on the board!");
             V("patty_on_grill", "Put the patty on the grill.");
             V("flip_patty", "Tap the patty to flip it!");
             V("patty_on_bun", "Yummy! Put the patty on the bun.");
             V("add_cheese", "Add some cheese!");
             V("add_top_bun", "Now the top bun!");
             V("serve_benny", "Give the burger to Benny!");
-            V("tap_potato", "Tap a potato!");
+            V("tap_potato", "Tap the potatoes!");
             V("fries_in_box", "Put the fries in the box.");
-            V("pick_flavour", "Pick a flavour!");
+            V("pick_flavour", "Tap the strawberry flavour!");
             V("pick_cup", "Get a cup.");
             V("press_lever", "Press the big button!");
             V("add_cream", "Add whipped cream!");
@@ -350,6 +350,9 @@ namespace LittleBurgerWorld.EditorTools
             V("burger_on_tray", "Put the burger on the tray.");
             V("fries_on_tray", "Put the fries on the tray.");
             V("shake_on_tray", "Put the milkshake on the tray.");
+            V("patty_cooking", "Sizzle sizzle! The patty is cooking.");
+            V("fries_cooking", "The fries are cooking!");
+            V("meal_ready", "What a yummy meal!");
             EditorUtility.SetDirty(lib);
             return lib;
         }
@@ -377,6 +380,28 @@ namespace LittleBurgerWorld.EditorTools
                 "Little Burger World works completely offline.\nIt does not collect, store or share any personal information.\nThere are no ads, no purchases, no accounts, no analytics and no third-party tracking.\nProgress (stars, stickers and settings) is saved only on this device and can be erased with \"Reset progress\".",
                 "Little Burger World funciona totalmente sin conexión.\nNo recopila, guarda ni comparte información personal.\nNo hay anuncios, compras, cuentas, analíticas ni rastreo de terceros.\nEl progreso (estrellas, pegatinas y ajustes) se guarda solo en este dispositivo y se puede borrar con \"Reiniciar progreso\".");
             L("stickers", "Stickers", "Pegatinas");
+
+            // On-screen instructions for guided steps ("say." + voice key).
+            L("say.add_bun", "Put the bottom bun on the board!", "¡Pon el pan de abajo en la tabla!");
+            L("say.patty_on_grill", "Put the patty on the grill.", "Pon la carne en la parrilla.");
+            L("say.flip_patty", "Tap the patty to flip it!", "¡Toca la carne para darle la vuelta!");
+            L("say.patty_cooking", "Sizzle sizzle! The patty is cooking.", "¡Chisporrotea! La carne se está cocinando.");
+            L("say.patty_on_bun", "Yummy! Put the patty on the bun.", "¡Qué rico! Pon la carne sobre el pan.");
+            L("say.add_cheese", "Add some cheese!", "¡Añade queso!");
+            L("say.add_top_bun", "Now the top bun!", "¡Ahora el pan de arriba!");
+            L("say.serve_benny", "Give the burger to Benny!", "¡Dale la hamburguesa a Benny!");
+            L("say.tap_potato", "Tap the potatoes!", "¡Toca las patatas!");
+            L("say.fries_cooking", "The fries are cooking!", "¡Las patatas se están friendo!");
+            L("say.fries_in_box", "Put the fries in the box.", "Pon las patatas en la caja.");
+            L("say.pick_flavour", "Tap the strawberry flavour!", "¡Toca el sabor de fresa!");
+            L("say.pick_cup", "Get a cup.", "Coge un vaso.");
+            L("say.press_lever", "Press the big button!", "¡Pulsa el botón grande!");
+            L("say.add_cream", "Add whipped cream!", "¡Añade nata montada!");
+            L("say.add_straw", "And a straw!", "¡Y una pajita!");
+            L("say.burger_on_tray", "Put the burger on the tray.", "Pon la hamburguesa en la bandeja.");
+            L("say.fries_on_tray", "Put the fries on the tray.", "Pon las patatas en la bandeja.");
+            L("say.shake_on_tray", "Put the milkshake on the tray.", "Pon el batido en la bandeja.");
+            L("say.meal_ready", "What a yummy meal!", "¡Qué comida tan rica!");
             EditorUtility.SetDirty(t);
             return t;
         }

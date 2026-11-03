@@ -88,3 +88,83 @@ MonoBehaviour:
     values:
     - Stickers
     - Pegatinas
+  - key: say.add_bun
+    values:
+    - Put the bottom bun on the board!
+    - "\xA1Pon el pan de abajo en la tabla!"
+  - key: say.patty_on_grill
+    values:
+    - Put the patty on the grill.
+    - Pon la carne en la parrilla.
+  - key: say.flip_patty
+    values:
+    - Tap the patty to flip it!
+    - "\xA1Toca la carne para darle la vuelta!"
+  - key: say.patty_cooking
+    values:
+    - Sizzle sizzle! The patty is cooking.
+    - "\xA1Chisporrotea! La carne se est\xE1 cocinando."
+  - key: say.patty_on_bun
+    values:
+    - Yummy! Put the patty on the bun.
+    - "\xA1Qu\xE9 rico! Pon la carne sobre el pan."
+  - key: say.add_cheese
+    values:
+    - Add some cheese!
+    - "\xA1A\xF1ade queso!"
+  - key: say.add_top_bun
+    values:
+    - Now the top bun!
+    - "\xA1Ahora el pan de arriba!"
+  - key: say.serve_benny
+    values:
+    - Give the burger to Benny!
+    - "\xA1Dale la hamburguesa a Benny!"
+  - key: say.tap_potato
+    values:
+    - Tap the potatoes!
+    - "\xA1Toca las patatas!"
+  - key: say.fries_cooking
+    values:
+    - The fries are cooking!
+    - "\xA1Las patatas se est\xE1n friendo!"
+  - key: say.fries_in_box
+    values:
+    - Put the fries in the box.
+    - Pon las patatas en la caja.
+  - key: say.pick_flavour
+    values:
+    - Tap the strawberry flavour!
+    - "\xA1Toca el sabor de fresa!"
+  - key: say.pick_cup
+    values:
+    - Get a cup.
+    - Coge un vaso.
+  - key: say.press_lever
+    values:
+    - Press the big button!
+    - "\xA1Pulsa el bot\xF3n grande!"
+  - key: say.add_cream
+    values:
+    - Add whipped cream!
+    - "\xA1A\xF1ade nata montada!"
+  - key: say.add_straw
+    values:
+    - And a straw!
+    - "\xA1Y una pajita!"
+  - key: say.burger_on_tray
+    values:
+    - Put the burger on the tray.
+    - Pon la hamburguesa en la bandeja.
+  - key: say.fries_on_tray
+    values:
+    - Put the fries on the tray.
+    - Pon las patatas en la bandeja.
+  - key: say.shake_on_tray
+    values:
+    - Put the milkshake on the tray.
+    - Pon el batido en la bandeja.
+  - key: say.meal_ready
+    values:
+    - What a yummy meal!
+    - "\xA1Qu\xE9 comida tan rica!"

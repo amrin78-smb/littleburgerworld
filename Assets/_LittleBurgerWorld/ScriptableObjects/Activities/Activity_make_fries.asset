@@ -24,6 +24,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -38,6 +39,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 3286f01dc2a7ee25a90709f5e9d9c5c9, type: 3}
     voiceKey: tap_potato
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -51,7 +53,8 @@ MonoBehaviour:
     itemId: 
     eventType: 9
     promptIcon: {fileID: 21300000, guid: b51f892dd8cbced358070ed91f587521, type: 3}
-    voiceKey: 
+    voiceKey: fries_cooking
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -66,6 +69,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: b51f892dd8cbced358070ed91f587521, type: 3}
     voiceKey: fries_in_box
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -80,6 +84,7 @@ MonoBehaviour:
     eventType: 10
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -94,6 +99,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1

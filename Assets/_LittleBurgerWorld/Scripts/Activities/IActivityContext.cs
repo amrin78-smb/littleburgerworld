@@ -13,7 +13,8 @@ namespace LittleBurgerWorld.Activities
         void CallCustomer(string characterId, IList<string> request);
         /// <summary>Restricts the burger board to one ingredient (null clears).</summary>
         void SetBoardFilter(string ingredientId);
-        void SetPrompt(Sprite icon);
+        /// <summary>Shows the picture prompt plus an optional instruction (localization key). Null icon hides it.</summary>
+        void SetPrompt(Sprite icon, string textKey);
         void ShowHint(ActivityStep step);
         void HideHint();
         /// <summary>Performs the step's action on the child's behalf. True if something happened.</summary>

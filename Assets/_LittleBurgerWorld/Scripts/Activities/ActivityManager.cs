@@ -115,9 +115,16 @@ namespace LittleBurgerWorld.Activities
             m_Kitchen.SetExpectedIngredient(string.IsNullOrEmpty(ingredientId) ? (running ? k_ClosedFilter : null) : ingredientId);
         }
 
-        public void SetPrompt(Sprite icon)
+        public void SetPrompt(Sprite icon, string textKey)
         {
-            if (m_UI != null) m_UI.SetPrompt(icon);
+            if (m_UI == null) return;
+            string text = null;
+            if (icon != null && !string.IsNullOrEmpty(textKey))
+            {
+                text = Localization.Get(textKey);
+                if (text == textKey) text = null; // missing entry: picture only
+            }
+            m_UI.SetPrompt(icon, text);
         }
 
         public void ShowHint(ActivityStep step)

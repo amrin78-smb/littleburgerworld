@@ -523,6 +523,15 @@ namespace LittleBurgerWorld.EditorTools
                 new Vector2(200f, 200f), false, true);
             bubble.pixelsPerUnitMultiplier = 0.35f;
             Image promptIcon = UIFactory.Image("Icon", bubble.transform, null, Color.white, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(156f, 156f), false);
+            // Instruction line beside the picture (read aloud by a grown-up / future voice clip).
+            Text promptText = UIFactory.Text("Text", bubble.transform, "", 54, E.Hex("#5A3A26"), new Vector2(0.5f, 0.5f), Vector2.zero,
+                new Vector2(560f, 170f), TextAnchor.MiddleLeft, false);
+            promptText.resizeTextForBestFit = true;
+            promptText.resizeTextMinSize = 30;
+            promptText.resizeTextMaxSize = 54;
+            promptText.verticalOverflow = VerticalWrapMode.Truncate;
+            promptText.lineSpacing = 0.9f;
+            promptText.gameObject.SetActive(false);
 
             // Activity picker
             RectTransform pick = UIFactory.Stretch("ActivitySelect", root);
@@ -594,6 +603,7 @@ namespace LittleBurgerWorld.EditorTools
             E.Set(ui, "m_Hand", hh);
             E.Set(ui, "m_PromptBubble", bubble.rectTransform);
             E.Set(ui, "m_PromptIcon", promptIcon);
+            E.Set(ui, "m_PromptText", promptText);
             E.Set(ui, "m_Tray", trayUi);
             E.Set(ui, "m_ActivitySelect", select);
             E.Set(ui, "m_Celebration", cel);

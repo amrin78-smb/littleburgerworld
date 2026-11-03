@@ -343,7 +343,7 @@ namespace LittleBurgerWorld.Tests
             public void ResetKitchen() => Resets++;
             public void CallCustomer(string c, IList<string> r) { }
             public void SetBoardFilter(string id) => Filter = id;
-            public void SetPrompt(Sprite icon) { }
+            public void SetPrompt(Sprite icon, string textKey) { }
             public void ShowHint(ActivityStep s) => Hints++;
             public void HideHint() { }
             public bool Assist(ActivityStep s) { Assists++; OnAssist?.Invoke(s); return true; }
@@ -466,6 +466,27 @@ namespace LittleBurgerWorld.Tests
             Assert.AreEqual(3, cfg.drinks.Count);
             Assert.IsNotNull(cfg.FindCharacter("benny").prefab.GetComponent<AnimalCustomerController>());
             Assert.IsNotNull(cfg.audioLibrary.restaurantMusic);
+        }
+
+        [Test]
+        public void GuidedSteps_WithAPicture_HaveInstructionTextInEveryLanguage()
+        {
+            var cfg = Resources.Load<GameConfig>(GameConfig.ResourcePath);
+            LocalizationTable table = cfg.localization;
+            int checkedSteps = 0;
+            foreach (ActivityData a in cfg.activities)
+            {
+                foreach (ActivityStep s in a.steps)
+                {
+                    if (!s.IsWaitStep || s.promptIcon == null) continue;
+                    string key = s.PromptTextKey;
+                    Assert.IsFalse(string.IsNullOrEmpty(key), $"{a.id}: step {s.type} {s.targetKey} has a picture but no instruction");
+                    foreach (string lang in table.languages)
+                        Assert.AreNotEqual(key, table.Get(key, lang), $"{a.id}: missing '{key}' ({lang})");
+                    checkedSteps++;
+                }
+            }
+            Assert.Greater(checkedSteps, 20);
         }
 
         [Test]

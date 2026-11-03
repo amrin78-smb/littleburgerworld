@@ -54,6 +54,8 @@ namespace LittleBurgerWorld.Activities
         public Sprite promptIcon;
         [Tooltip("Optional voice line key (AudioLibrary voice table).")]
         public string voiceKey;
+        [Tooltip("Localization key of the short instruction shown next to the picture. Empty = \"say.\" + voiceKey.")]
+        public string textKey;
         public SfxId sound = SfxId.None;
         [Tooltip("Animation hook name for PlayAnimation (cheer, hop, wave).")]
         public string animation;
@@ -69,6 +71,10 @@ namespace LittleBurgerWorld.Activities
         public float hintDelay = 2.5f;
         [Tooltip("After this many hint cycles the game gently does the action for the child (0 = never).")]
         public int autoAssistAfterHints = 4;
+
+        /// <summary>Localization key of the instruction text, or null when the step has none.</summary>
+        public string PromptTextKey =>
+            !string.IsNullOrEmpty(textKey) ? textKey : (string.IsNullOrEmpty(voiceKey) ? null : "say." + voiceKey);
 
         public bool IsWaitStep =>
             type == ActivityStepType.WaitForSelection || type == ActivityStepType.WaitForDrop ||

@@ -69,7 +69,7 @@ namespace LittleBurgerWorld.Activities
             m_Waiting = false;
             HideHint();
             m_Context?.SetBoardFilter(null);
-            m_Context?.SetPrompt(null);
+            m_Context?.SetPrompt(null, null);
         }
 
         /// <summary>Restarts the current activity from the beginning (replay button).</summary>
@@ -142,7 +142,7 @@ namespace LittleBurgerWorld.Activities
         private void BeginWait(ActivityStep step)
         {
             m_Waiting = true;
-            m_Context.SetPrompt(step.promptIcon);
+            m_Context.SetPrompt(step.promptIcon, step.PromptTextKey);
             if (step.type == ActivityStepType.WaitForDrop && IsBoardKey(step.targetKey) && !string.IsNullOrEmpty(step.itemId))
                 m_Context.SetBoardFilter(step.itemId);
             else
@@ -224,7 +224,7 @@ namespace LittleBurgerWorld.Activities
         {
             m_Waiting = false;
             HideHint();
-            m_Context.SetPrompt(null);
+            m_Context.SetPrompt(null, null);
             m_Context.SetBoardFilter(null);
             m_Context.StepSucceeded(step);
             // Short pause so the child sees the result before the next prompt appears;

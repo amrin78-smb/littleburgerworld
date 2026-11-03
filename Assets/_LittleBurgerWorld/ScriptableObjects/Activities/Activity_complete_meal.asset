@@ -24,6 +24,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -38,6 +39,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 0df163763ac1b5895b08de9f136da5bb, type: 3}
     voiceKey: add_bun
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -52,6 +54,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 6507c27c107f6d72b8ed786b83a2b5c7, type: 3}
     voiceKey: patty_on_grill
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -66,6 +69,7 @@ MonoBehaviour:
     eventType: 6
     promptIcon: {fileID: 21300000, guid: 9ce8183a73d33f97d950ae1c75c44786, type: 3}
     voiceKey: flip_patty
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -79,7 +83,8 @@ MonoBehaviour:
     itemId: 
     eventType: 7
     promptIcon: {fileID: 21300000, guid: 9ce8183a73d33f97d950ae1c75c44786, type: 3}
-    voiceKey: 
+    voiceKey: patty_cooking
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -94,6 +99,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 9ce8183a73d33f97d950ae1c75c44786, type: 3}
     voiceKey: patty_on_bun
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -108,6 +114,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 516954c6a312bbc20b6e4c9b7244244d, type: 3}
     voiceKey: add_top_bun
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -122,6 +129,7 @@ MonoBehaviour:
     eventType: 4
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -136,6 +144,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -150,6 +159,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 48597f491d4c0b161b959dff1595c793, type: 3}
     voiceKey: burger_on_tray
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -164,6 +174,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 3286f01dc2a7ee25a90709f5e9d9c5c9, type: 3}
     voiceKey: tap_potato
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -177,7 +188,8 @@ MonoBehaviour:
     itemId: 
     eventType: 9
     promptIcon: {fileID: 21300000, guid: b51f892dd8cbced358070ed91f587521, type: 3}
-    voiceKey: 
+    voiceKey: fries_cooking
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -192,6 +204,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: b51f892dd8cbced358070ed91f587521, type: 3}
     voiceKey: fries_in_box
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -206,6 +219,7 @@ MonoBehaviour:
     eventType: 10
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -220,6 +234,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: b51f892dd8cbced358070ed91f587521, type: 3}
     voiceKey: fries_on_tray
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -234,6 +249,7 @@ MonoBehaviour:
     eventType: 13
     promptIcon: {fileID: 21300000, guid: 36664a4127d5db1fc88938cce393e159, type: 3}
     voiceKey: press_lever
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -248,6 +264,7 @@ MonoBehaviour:
     eventType: 15
     promptIcon: {fileID: 21300000, guid: 36664a4127d5db1fc88938cce393e159, type: 3}
     voiceKey: add_straw
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -262,6 +279,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 21300000, guid: 36664a4127d5db1fc88938cce393e159, type: 3}
     voiceKey: shake_on_tray
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -275,7 +293,8 @@ MonoBehaviour:
     itemId: 
     eventType: 18
     promptIcon: {fileID: 21300000, guid: 84f6e1a98b07775f3a09490ee01c7647, type: 3}
-    voiceKey: 
+    voiceKey: meal_ready
+    textKey: 
     sound: 0
     animation: 
     duration: 1
@@ -290,6 +309,7 @@ MonoBehaviour:
     eventType: 0
     promptIcon: {fileID: 0}
     voiceKey: 
+    textKey: 
     sound: 0
     animation: 
     duration: 1.2

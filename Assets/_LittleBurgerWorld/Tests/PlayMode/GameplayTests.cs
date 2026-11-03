@@ -264,6 +264,9 @@ namespace LittleBurgerWorld.Tests
             am.StartActivity("my_first_burger");
             yield return new WaitForSeconds(1.5f);
             Assert.IsFalse(k.Board.CanAccept(Spawn("cheese")), "Guided: only the pictured ingredient is accepted");
+            UIManager ui = Object.FindFirstObjectByType<UIManager>();
+            Assert.IsTrue(ui.PromptVisible, "Prompt bubble shown");
+            Assert.AreEqual("Put the bottom bun on the board!", ui.PromptText, "Instruction text shown with the picture");
 
             float t = 0f;
             while (finished == 0 && t < 40f)
