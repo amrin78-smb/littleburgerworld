@@ -9,5 +9,10 @@ namespace LittleBurgerWorld.Food
         bool HandleTap(FoodItem item);
         /// <summary>False while an item must stay put (cooking, being eaten, guided lock).</summary>
         bool AllowPickup(FoodItem item);
+        /// <summary>
+        /// A drag from this container ended nowhere: take the item back into its old place if that place is
+        /// still free (restoring the station's state). False = it stays a loose item.
+        /// </summary>
+        bool TakeBack(FoodItem item) => false;
     }
 }

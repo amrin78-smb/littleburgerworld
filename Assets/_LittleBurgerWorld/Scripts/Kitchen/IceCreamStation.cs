@@ -71,21 +71,34 @@ namespace LittleBurgerWorld.Kitchen
         private void OnTub(int index)
         {
             if (m_Cone == null) { PlaceCone(() => AddScoop(index)); return; }
-            if (ScoopCount >= (m_Visual != null ? m_Visual.MaxScoops : 3) || m_Completed) { m_Tubs[index].Wiggle(); return; }
+            // Toppings can come in any order: a cherry first doesn't stop more scoops.
+            if (ScoopCount >= (m_Visual != null ? m_Visual.MaxScoops : 3)) { m_Tubs[index].Wiggle(); return; }
             AddScoop(index);
         }
 
         private void OnSprinkles()
         {
-            if (ScoopCount == 0 || HasSprinkles || m_Completed) { m_SprinkleShaker.Wiggle(); return; }
-            AddSprinkles();
+            if (HasSprinkles) { m_SprinkleShaker.Wiggle(); return; }
+            WithAScoop(AddSprinkles);
         }
 
         private void OnCherry()
         {
-            if (ScoopCount == 0 || m_Completed) { m_CherryJar.Wiggle(); return; }
-            AddCherry();
+            if (HasCherry) { m_CherryJar.Wiggle(); return; }
+            WithAScoop(AddCherry);
         }
+
+        /// <summary>Toppings never say no: no cone or no scoop yet? One appears first.</summary>
+        private void WithAScoop(System.Action then)
+        {
+            if (m_Cone == null) { PlaceCone(() => { AddScoop(NextFlavour()); then(); }); return; }
+            if (ScoopCount == 0) AddScoop(NextFlavour());
+            then();
+        }
+
+        private int NextFlavour() => m_NextAssistFlavour++ % Mathf.Max(1, m_FlavourIds.Count);
+
+        public bool HasCherry => m_Visual != null && m_Visual.HasCherry;
 
         /// <summary>Puts an empty cone in the holder.</summary>
         public void PlaceCone(System.Action onPlaced)
@@ -114,7 +127,7 @@ namespace LittleBurgerWorld.Kitchen
 
         public void AddScoop(int flavourIndex)
         {
-            if (m_Cone == null || m_Visual == null || m_Completed) return;
+            if (m_Cone == null || m_Visual == null) return;
             if (m_FlavourIds.Count == 0) return;
             flavourIndex = Mathf.Clamp(flavourIndex, 0, m_FlavourIds.Count - 1);
             Color color = flavourIndex < m_FlavourColors.Count ? m_FlavourColors[flavourIndex] : Color.white;
@@ -148,7 +161,7 @@ namespace LittleBurgerWorld.Kitchen
 
         public void AddCherry()
         {
-            if (m_Visual == null || ScoopCount == 0 || m_Completed) return;
+            if (m_Visual == null || ScoopCount == 0 || HasCherry) return;
             m_Visual.ShowCherry(true);
             Transform c = m_Visual.Cherry;
             if (c != null)
@@ -191,14 +204,26 @@ namespace LittleBurgerWorld.Kitchen
         public bool HandleTap(FoodItem item)
         {
             if (item != m_Cone) return false;
-            if (m_Completed) return false;
-            if (ScoopCount == 0) { AddScoop(m_NextAssistFlavour++ % Mathf.Max(1, m_FlavourIds.Count)); return true; }
+            if (ScoopCount == 0) { AddScoop(NextFlavour()); return true; }
             if (!HasSprinkles) { AddSprinkles(); return true; }
-            AddCherry();
-            return true;
+            if (!HasCherry) { AddCherry(); return true; }
+            return false; // finished: tap sends it to the animal
         }
 
         public bool AllowPickup(FoodItem item) => item != m_Cone || ScoopCount > 0;
+
+        public bool TakeBack(FoodItem item)
+        {
+            if (m_Cone != null || item == null || item.Type != FoodType.IceCream) return false;
+            IceCreamVisual visual = item.GetComponent<IceCreamVisual>();
+            if (visual == null) return false;
+            m_Cone = item;
+            m_Visual = visual;
+            m_Completed = visual.HasCherry;
+            item.AttachTo(this);
+            item.transform.SetParent(m_Spot, true);
+            return true;
+        }
 
         /// <summary>One step forward (guided assist and tests): cone, two scoops, sprinkles, cherry, serve.</summary>
         public bool Assist(string itemId, string targetKey)

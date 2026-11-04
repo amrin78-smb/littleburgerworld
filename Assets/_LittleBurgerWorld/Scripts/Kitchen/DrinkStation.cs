@@ -177,14 +177,18 @@ namespace LittleBurgerWorld.Kitchen
 
         private void OnCream()
         {
-            if (m_State != CupState.Filled || m_CupVisual == null) { m_CreamButton.Wiggle(); return; }
+            if (!CanAddCream || m_CupVisual == null) { m_CreamButton.Wiggle(); return; }
             AddCream();
         }
 
+        /// <summary>Cream fits on a filled cup, and still fits after the straw if it was skipped.</summary>
+        private bool CanAddCream =>
+            m_State == CupState.Filled || (m_State == CupState.Complete && m_CupVisual != null && m_CupVisual.Cream != null && !m_CupVisual.Cream.activeSelf);
+
         public void AddCream()
         {
-            if (m_State != CupState.Filled) return;
-            m_State = CupState.Creamed;
+            if (!CanAddCream) return;
+            if (m_State == CupState.Filled) m_State = CupState.Creamed;
             GameObject cream = m_CupVisual != null ? m_CupVisual.Cream : null;
             if (cream != null)
             {
@@ -260,6 +264,19 @@ namespace LittleBurgerWorld.Kitchen
         }
 
         public bool AllowPickup(FoodItem item) => item != m_Cup || m_State == CupState.Complete;
+
+        public bool TakeBack(FoodItem item)
+        {
+            if (m_Cup != null || item == null || item.Type != FoodType.Milkshake) return false;
+            MilkshakeVisual visual = item.GetComponent<MilkshakeVisual>();
+            if (visual == null) return false;
+            m_Cup = item;
+            m_CupVisual = visual;
+            m_State = CupState.Complete; // only finished shakes can be picked up
+            item.AttachTo(this);
+            item.transform.SetParent(m_CupSpot, true);
+            return true;
+        }
 
         /// <summary>Advances the milkshake by one step (guided assist and tests).</summary>
         public bool Assist(string itemId, string targetKey)

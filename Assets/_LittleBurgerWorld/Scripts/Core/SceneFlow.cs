@@ -22,7 +22,8 @@ namespace LittleBurgerWorld.Core
         private void BuildOverlay()
         {
             if (m_Fade != null) return;
-            var go = new GameObject("FadeOverlay", typeof(RectTransform), typeof(Canvas), typeof(CanvasGroup));
+            // The raycaster is what lets the overlay actually swallow taps while a scene loads.
+            var go = new GameObject("FadeOverlay", typeof(RectTransform), typeof(Canvas), typeof(CanvasGroup), typeof(GraphicRaycaster));
             go.transform.SetParent(transform, false);
             var canvas = go.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -52,6 +53,8 @@ namespace LittleBurgerWorld.Core
             m_Loading = true;
             BuildOverlay();
             m_Fade.blocksRaycasts = true; // no stray taps while loading
+            // 3D kitchen input too (also cancels a drag in progress safely).
+            if (InputHandling.InputManager.Instance != null) InputHandling.InputManager.Instance.InputEnabled = false;
             yield return Fade(0f, 1f, 0.3f);
 
             AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);

@@ -73,6 +73,18 @@ namespace LittleBurgerWorld.UI
                 Tween.Scale(m_Tip, Vector3.zero, 0.2f, Ease.InBack, () => m_Tip.gameObject.SetActive(false)), true);
         }
 
+        /// <summary>A hold interrupted by the panel closing must not resume (and fire) the next time it opens.</summary>
+        private void OnDisable()
+        {
+            m_Holding = false;
+            m_Progress = 0f;
+            SetFill(0f);
+            Tween.Kill(transform);
+            if (m_Captured) transform.localScale = m_Rest;
+            transform.localRotation = Quaternion.identity;
+            HideTip();
+        }
+
         private void HideTip()
         {
             if (m_Tip == null || !m_Tip.gameObject.activeSelf) return;

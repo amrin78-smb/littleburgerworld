@@ -47,14 +47,16 @@ namespace LittleBurgerWorld.UI
                 bool found = gm.Rewards.HasToy(toy.name);
                 icon.color = found ? Color.white : new Color(0.35f, 0.25f, 0.2f, 0.18f);
                 Vector3 rest = slot.transform.localScale;
-                slot.transform.localScale = Vector3.zero;
-                Tween.Scale(slot.transform, rest, 0.3f, Ease.OutBack, null, 0.02f * i++);
                 if (found)
                 {
-                    // Found toys do a little happy wobble when tapped.
+                    // Found toys do a little happy wobble when tapped (button added before the pop-in so it
+                    // remembers the real size, and the slot made touchable).
+                    slot.raycastTarget = true;
                     var b = slot.gameObject.AddComponent<SquishyButton>();
                     b.OnClick.AddListener(() => Tween.Squash(slot.transform, rest, 0.3f, 0.4f));
                 }
+                slot.transform.localScale = Vector3.zero;
+                Tween.Scale(slot.transform, rest, 0.3f, Ease.OutBack, null, 0.02f * i++);
                 m_Slots.Add(slot);
             }
         }

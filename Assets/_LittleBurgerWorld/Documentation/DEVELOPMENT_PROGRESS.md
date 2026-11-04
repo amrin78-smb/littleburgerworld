@@ -60,7 +60,13 @@ Legend: `[x]` done and verified · `[~]` implemented, needs on-device verificati
 
 ### Phase 8 – Android
 - [x] Validator passes (setup batch exits 0)
-- [x] EditMode 35/35, PlayMode 26/26 passing (executed in batch mode)
+- [x] EditMode 38/38, PlayMode 30/30 passing (executed in batch mode)
+- [x] v0.7.0 bug sweep (4 area reviewers + adversarial verifiers, 23 confirmed bugs fixed):
+  - Guided activities can no longer soft-lock: early actions are kept per event (lever before flavour, sprinkles before scoop, potato tapped early); serving via the tray counts; animals only take food on the serving step and are called back if missing; tapped food goes straight to the animal on that step; hints/assists fall back to the parent key (closed sink); Complete Meal's "meal ready" step can put a removed dish back
+  - Ice cream toppings in any order (cherry no longer blocks scoops/sprinkles; sprinkles/cherry make a cone if needed); cream still fits after the straw
+  - Touch: a burger touched mid-spin no longer locks; touched hops finish instead of freezing (fries batch stuck mid-air); flavour buttons/lever outrank the cup; empty fries box no longer steals taps from the batch; a dragged-and-released cone/cup/fries box/batch returns into its station (no duplicates)
+  - Food dropped on the grill/fryer/milkshake machine lands beside it instead of inside; the top bun always fits on a 12-layer tower
+  - UI: scene-load fade blocks taps (no mode switch while loading); interrupted hold buttons reset when hidden; no music dip when the voice is muted; Toy Shelf wobble works; stale sink auto-close cancelled; capsule rest position fixed; washing-up panel above the capsule machine
 - [x] v0.6.1 device-test fixes: every cooking activity calls an animal and ends with serving them; ice cream cart buttons (tubs above all) win taps over the cone standing in front of them, bigger tub touch areas
 - [x] Automated play-through in a Linux player build: 13/13 checks passing, 17 screenshots
 - [x] ARMv7 + ARM64, IL2CPP, landscape, Vulkan + GLES3 with PowerVR → GLES3 deny list

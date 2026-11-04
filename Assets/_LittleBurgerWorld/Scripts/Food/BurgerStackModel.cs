@@ -20,7 +20,9 @@ namespace LittleBurgerWorld.Food
 
         public bool CanAdd(IngredientData data)
         {
-            return data != null && data.stackable && !data.IsRaw && !IsFull;
+            if (data == null || !data.stackable || data.IsRaw) return false;
+            // The top bun always fits on a full tower so a tapping child can still finish the burger.
+            return !IsFull || (data.completesBurger && m_Items.Count > 0 && m_Items.Count <= MaxItems);
         }
 
         public bool Add(IngredientData data)

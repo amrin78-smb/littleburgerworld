@@ -34,7 +34,7 @@ namespace LittleBurgerWorld.UI
         private Phase m_Phase = Phase.Idle;
         private string m_CurrentToy;
         private float m_IdleTimer;
-        private Vector2 m_TopRest, m_BottomRest;
+        private Vector2 m_TopRest, m_BottomRest, m_WaitingRest;
 
         public bool IsRevealing => m_Reveal != null && m_Reveal.activeSelf;
         public string LastToy { get; private set; }
@@ -46,6 +46,7 @@ namespace LittleBurgerWorld.UI
             if (m_TapCatcher != null) m_TapCatcher.OnClick.AddListener(OnRevealTap);
             if (m_CapsuleTop != null) m_TopRest = m_CapsuleTop.anchoredPosition;
             if (m_CapsuleBottom != null) m_BottomRest = m_CapsuleBottom.anchoredPosition;
+            if (m_WaitingCapsule != null) m_WaitingRest = m_WaitingCapsule.anchoredPosition;
         }
 
         private void OnEnable()
@@ -70,7 +71,7 @@ namespace LittleBurgerWorld.UI
             Refresh();
             if (m_WaitingCapsule == null) return;
             // Capsule rattles down into the machine's tray.
-            Vector2 rest = m_WaitingCapsule.anchoredPosition;
+            Vector2 rest = m_WaitingRest; // not the current position: it may still be mid-drop
             m_WaitingCapsule.anchoredPosition = rest + new Vector2(0f, 90f);
             Tween.Kill(m_WaitingCapsule);
             Tween.Value(m_WaitingCapsule, 0.6f, k => m_WaitingCapsule.anchoredPosition = Vector2.LerpUnclamped(rest + new Vector2(0f, 90f), rest, Easing.Evaluate(Ease.OutBounce, k)),

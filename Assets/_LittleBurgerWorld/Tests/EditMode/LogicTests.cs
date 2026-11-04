@@ -105,6 +105,16 @@ namespace LittleBurgerWorld.Tests
         }
 
         [Test]
+        public void TopBun_StillFitsOnAFullTower()
+        {
+            var m = new BurgerStackModel();
+            while (!m.IsFull) m.Add(TestData.Ing("lettuce", 0.07f));
+            Assert.IsFalse(m.CanAdd(TestData.Ing("cheese", 0.05f)), "Tower is full");
+            Assert.IsTrue(m.Add(TestData.Ing("bun_top", 0.48f, true)), "A tapping child can always finish the burger");
+            Assert.IsTrue(m.IsComplete);
+        }
+
+        [Test]
         public void RawIngredients_AreNotStackable()
         {
             var cooked = TestData.Ing("patty", 0.2f);
@@ -407,6 +417,38 @@ namespace LittleBurgerWorld.Tests
         }
 
         [Test]
+        public void EarlyActions_AreKeptForLaterSteps_EvenWhenAnotherStepCompletesInBetween()
+        {
+            var ctx = new FakeContext();
+            var c = new ActivityStepController(ctx);
+            bool done = false;
+            c.Completed += _ => done = true;
+            c.Start(Make(new ActivityStep { type = ActivityStepType.WaitForEvent, eventType = GameplayEventType.DrinkFlavourChosen },
+                new ActivityStep { type = ActivityStepType.WaitForEvent, eventType = GameplayEventType.CupPlaced },
+                new ActivityStep { type = ActivityStepType.WaitForEvent, eventType = GameplayEventType.DrinkFilled }));
+            // Lever pressed first: cup placed and filled before the flavour was picked.
+            GameEvents.Raise(GameplayEventType.CupPlaced);
+            GameEvents.Raise(GameplayEventType.DrinkFilled);
+            Run(c, 1f);
+            GameEvents.Raise(GameplayEventType.DrinkFlavourChosen);
+            Run(c, 3f);
+            Assert.IsTrue(done, "Lever-first must not leave 'pick a cup' waiting for a cup that is already there");
+        }
+
+        [Test]
+        public void EarlyEvent_SatisfiesOnlyOneStep()
+        {
+            var ctx = new FakeContext();
+            var c = new ActivityStepController(ctx);
+            c.Start(Make(new ActivityStep { type = ActivityStepType.WaitForEvent, eventType = GameplayEventType.IceCreamScoop },
+                new ActivityStep { type = ActivityStepType.WaitForEvent, eventType = GameplayEventType.IceCreamScoop }));
+            GameEvents.Raise(GameplayEventType.IceCreamScoop);
+            Run(c, 3f);
+            Assert.AreEqual(1, c.StepIndex, "One scoop completes one scoop step");
+            Assert.IsTrue(c.IsWaiting);
+        }
+
+        [Test]
         public void Inactivity_ShowsHints_ThenAutoAssists()
         {
             var ctx = new FakeContext();
@@ -440,6 +482,9 @@ namespace LittleBurgerWorld.Tests
             Assert.IsFalse(ActivityStepController.Matches(tap, new GameplayEvent(GameplayEventType.ObjectTapped, null, "Grill")));
             var serve = new ActivityStep { type = ActivityStepType.WaitForDrop, targetKey = "Customer", itemId = "burger" };
             Assert.IsTrue(ActivityStepController.Matches(serve, new GameplayEvent(GameplayEventType.CustomerServed, "burger", "Customer")));
+            Assert.IsTrue(ActivityStepController.Matches(serve, new GameplayEvent(GameplayEventType.CustomerServed, "meal", "Customer")),
+                "Serving the burger on the tray still counts");
+            Assert.IsFalse(ActivityStepController.Matches(serve, new GameplayEvent(GameplayEventType.TrayItemAdded, "burger", "Tray")));
             var anyFlavour = new ActivityStep { type = ActivityStepType.WaitForEvent, eventType = GameplayEventType.DrinkFlavourChosen };
             Assert.IsTrue(ActivityStepController.Matches(anyFlavour, new GameplayEvent(GameplayEventType.DrinkFlavourChosen, "vanilla")));
         }

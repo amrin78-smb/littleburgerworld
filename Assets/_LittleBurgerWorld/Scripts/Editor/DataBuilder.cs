@@ -284,7 +284,8 @@ namespace LittleBurgerWorld.EditorTools
             a5.Add(S(ActivityStepType.WaitForDrop, "Tray", "FriesBox", "fries", "icon_fries", voice: "fries_on_tray"));
             a5.AddRange(ShakeSteps(false));
             a5.Add(S(ActivityStepType.WaitForDrop, "Tray", "Drinks.Cup", "milkshake", "icon_milkshake_strawberry", voice: "shake_on_tray"));
-            a5.Add(S(ActivityStepType.WaitForEvent, null, null, null, "icon_meal", GameplayEventType.MealReady, hintDelay: 30f, assist: 0, voice: "meal_ready"));
+            // Normally already done by the three drops above; if a dish was taken off again the tray asks for it back.
+            a5.Add(S(ActivityStepType.WaitForEvent, "Tray", null, null, "icon_meal", GameplayEventType.MealReady, hintDelay: 6f, assist: 2, voice: "meal_ready"));
             a5.Add(S(ActivityStepType.WaitForDrop, "Customer", "Tray", "meal", "icon_meal", voice: "serve_meal"));
             a5.Add(S(ActivityStepType.Wait, duration: 3.4f));
             list.Add(Activity("complete_meal", "Prepare a Complete Meal", "icon_meal", "#C9EBDC", a5, "bao"));

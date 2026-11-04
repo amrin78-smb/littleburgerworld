@@ -306,7 +306,7 @@ MonoBehaviour:
     hintDelay: 2.5
     autoAssistAfterHints: 4
   - type: 8
-    targetKey: 
+    targetKey: Tray
     sourceKey: 
     itemId: 
     eventType: 18
@@ -318,8 +318,8 @@ MonoBehaviour:
     duration: 1
     characterId: 
     requestItems: []
-    hintDelay: 30
-    autoAssistAfterHints: 0
+    hintDelay: 6
+    autoAssistAfterHints: 2
   - type: 6
     targetKey: Customer
     sourceKey: Tray

@@ -361,7 +361,7 @@ namespace LittleBurgerWorld.EditorTools
                 Part(vis.transform, "Cap", A.Mesh("FlavourCap", () => MeshFactory.Lathe(MeshFactory.DomeProfile(0.17f, 0.12f, 0.03f), 24, "FlavourCap")), m, new Vector3(0f, 0.06f, 0f));
                 var c = btn.AddComponent<SphereCollider>();
                 c.radius = 0.32f;
-                flavourButtons.Add(Button3D(btn, 8, SfxId.ButtonTap, vis.transform));
+                flavourButtons.Add(Button3D(btn, CartButtonPriority, SfxId.ButtonTap, vis.transform)); // above the cup in front
                 flavourData.Add(d);
                 Key(btn, "Drinks.Flavour." + d.id);
             }
@@ -373,7 +373,7 @@ namespace LittleBurgerWorld.EditorTools
             Part(lv.transform, "Cap", A.Mesh("LeverCap", () => MeshFactory.Lathe(MeshFactory.DomeProfile(0.21f, 0.16f, 0.03f), 24, "LeverCap")), A.TomatoCoral, new Vector3(0f, 0.07f, 0f));
             var lc = lever.AddComponent<SphereCollider>();
             lc.radius = 0.38f;
-            TapButton3D leverButton = Button3D(lever, 8, SfxId.ButtonTap, lv.transform);
+            TapButton3D leverButton = Button3D(lever, CartButtonPriority, SfxId.ButtonTap, lv.transform);
             Key(lever, "Drinks.Lever");
 
             // Cup stack

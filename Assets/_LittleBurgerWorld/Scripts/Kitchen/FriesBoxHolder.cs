@@ -77,6 +77,7 @@ namespace LittleBurgerWorld.Kitchen
             m_Filling = true;
             batch.AttachTo(null);
             batch.Locked = true;
+            batch.SetContained(true); // can't be grabbed while it pours into the box
             Tween.Kill(batch.transform);
             Vector3 top = SnapPoint + Vector3.up * 0.9f;
             Tween.Jump(batch.transform, top, 0.4f, 0.3f, () =>
@@ -134,6 +135,18 @@ namespace LittleBurgerWorld.Kitchen
         }
 
         public bool AllowPickup(FoodItem item) => item != m_Box || m_Filled;
+
+        public bool TakeBack(FoodItem item)
+        {
+            // Only while the spot is still empty (a fresh box appears 0.6 s after the full one is taken).
+            if (m_Box != null || item == null || item.Type != FoodType.Fries) return false;
+            m_Box = item;
+            m_Filled = true;
+            m_Filling = false;
+            item.AttachTo(this);
+            item.transform.SetParent(transform, true);
+            return true;
+        }
 
         public bool Assist(string itemId, string targetKey)
         {

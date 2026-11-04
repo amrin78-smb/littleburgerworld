@@ -40,6 +40,7 @@ namespace LittleBurgerWorld.Activities
             Instance = this;
             m_Controller = new ActivityStepController(this);
             m_Controller.Completed += OnCompleted;
+            m_Controller.StepStarted += OnStepStarted;
             if (m_Kitchen == null) m_Kitchen = FindFirstObjectByType<KitchenManager>();
             if (m_Customers == null) m_Customers = FindFirstObjectByType<CustomerManager>();
             if (m_UI == null) m_UI = FindFirstObjectByType<UIManager>();
@@ -48,6 +49,7 @@ namespace LittleBurgerWorld.Activities
         private void OnDestroy()
         {
             m_Controller?.Stop();
+            SetServing(false, false);
             if (Instance == this) Instance = null;
         }
 
@@ -76,12 +78,63 @@ namespace LittleBurgerWorld.Activities
         {
             m_Controller.Stop();
             ClearHighlights();
+            SetServing(false, false);
             if (m_Kitchen != null) m_Kitchen.SetGuidedLock(false);
+        }
+
+        /// <summary>
+        /// Guided play keeps the animal waiting until the "give it to ..." step: until then animals don't take
+        /// food (so a treat served half-made can't send them home and leave the last step with nobody to feed).
+        /// On the serving step, tapped food flies straight to the animal instead of onto the tray.
+        /// </summary>
+        private void OnStepStarted(int index, ActivityStep step)
+        {
+            bool serveStep = step != null && step.IsWaitStep && step.targetKey == ActivityStepController.k_CustomerKey;
+            SetServing(true, serveStep);
+            if (serveStep) EnsureCustomer();
+        }
+
+        private void SetServing(bool guided, bool serveStep)
+        {
+            AnimalCustomerController.HoldFood = guided && !serveStep;
+            if (m_Kitchen != null) m_Kitchen.ServeCustomerFirst = guided && serveStep;
+        }
+
+        /// <summary>Makes sure the activity's animal is at the counter (calls them back if they left).</summary>
+        private void EnsureCustomer()
+        {
+            if (m_Customers == null || Current == null) return;
+            AnimalCustomerController c = m_Customers.Current;
+            if (c != null && (c.State == CustomerState.Waiting || c.State == CustomerState.Entering)) return;
+            foreach (ActivityStep s in Current.steps)
+            {
+                if (s.type != ActivityStepType.CallCustomer) continue;
+                m_Customers.CallCustomer(s.characterId, s.requestItems);
+                return;
+            }
+            m_Customers.SpawnRandom();
+        }
+
+        /// <summary>
+        /// Finds a keyed object; for a hidden child key like "Sink.Plate" falls back to "Sink" so hints and
+        /// assists can still reopen what the child closed.
+        /// </summary>
+        private static Transform FindKey(string key)
+        {
+            Transform t = SceneObjectRegistry.Find(key);
+            int dot;
+            while (t == null && !string.IsNullOrEmpty(key) && (dot = key.LastIndexOf('.')) > 0)
+            {
+                key = key.Substring(0, dot);
+                t = SceneObjectRegistry.Find(key);
+            }
+            return t;
         }
 
         private void OnCompleted(ActivityData activity)
         {
             ClearHighlights();
+            SetServing(false, false);
             if (m_Kitchen != null) m_Kitchen.SetGuidedLock(false);
             GameManager gm = GameManager.Instance;
             int stars = 1;
@@ -158,11 +211,12 @@ namespace LittleBurgerWorld.Activities
         public bool Assist(ActivityStep step)
         {
             if (step == null) return false;
+            if (step.targetKey == ActivityStepController.k_CustomerKey) EnsureCustomer();
             // Prefer the source (e.g. tray button spawns the ingredient), then the target.
             foreach (string key in new[] { step.sourceKey, step.targetKey })
             {
                 if (string.IsNullOrEmpty(key)) continue;
-                Transform t = SceneObjectRegistry.Find(key);
+                Transform t = FindKey(key);
                 if (t == null) continue;
                 foreach (IAssistable a in t.GetComponentsInParent<IAssistable>())
                 {
@@ -216,7 +270,7 @@ namespace LittleBurgerWorld.Activities
 
         public void Highlight(string targetKey, bool on)
         {
-            Transform t = SceneObjectRegistry.Find(targetKey);
+            Transform t = FindKey(targetKey);
             if (t == null) return;
             if (on)
             {
@@ -246,7 +300,7 @@ namespace LittleBurgerWorld.Activities
         /// <summary>Screen position of a keyed object (UI or world) for the hint hand.</summary>
         public Vector2 ScreenPositionOf(string key)
         {
-            Transform t = SceneObjectRegistry.Find(key);
+            Transform t = FindKey(key);
             if (t == null) return new Vector2(-9999f, -9999f);
             if (t is RectTransform rt) return RectTransformUtility.WorldToScreenPoint(null, rt.position);
             Vector3 world = t.position;

@@ -19,12 +19,13 @@ namespace LittleBurgerWorld.Activities
     {
         private const float k_HintRepeat = 5.5f;
         private const float k_SuccessPause = 0.45f;
+        public const string k_CustomerKey = "Customer";
 
         private readonly IActivityContext m_Context;
         private readonly List<GameplayEvent> m_History = new List<GameplayEvent>();
         private ActivityData m_Activity;
         private int m_Index = -1;
-        private int m_Consumed;
+        private const int k_MaxHistory = 256;
         private float m_Timer;
         private float m_IdleTimer;
         private int m_HintCount;
@@ -55,7 +56,6 @@ namespace LittleBurgerWorld.Activities
             if (activity == null) return;
             m_Activity = activity;
             m_History.Clear();
-            m_Consumed = 0;
             m_Index = -1;
             m_Running = true;
             GameEvents.Gameplay += OnGameplay;
@@ -147,11 +147,13 @@ namespace LittleBurgerWorld.Activities
                 m_Context.SetBoardFilter(step.itemId);
             else
                 m_Context.SetBoardFilter(null);
-            // Already done ahead of time? Then skip straight on (no instruction needed).
-            for (int i = m_Consumed; i < m_History.Count; i++)
+            // Already done ahead of time? Then skip straight on (no instruction needed). Each early
+            // event satisfies one step only, and unrelated early events stay available for later steps
+            // (e.g. the lever pressed before the flavour still counts for "pick a cup").
+            for (int i = 0; i < m_History.Count; i++)
             {
                 if (!Matches(step, m_History[i])) continue;
-                m_Consumed = i + 1;
+                m_History.RemoveAt(i);
                 Satisfy(step);
                 return;
             }
@@ -211,12 +213,14 @@ namespace LittleBurgerWorld.Activities
         private void OnGameplay(GameplayEvent e)
         {
             if (!m_Running) return;
-            m_History.Add(e);
             ActivityStep step = CurrentStep;
-            if (!m_Waiting || step == null) return;
-            if (!Matches(step, e)) return;
-            m_Consumed = m_History.Count;
-            Satisfy(step);
+            if (m_Waiting && step != null && Matches(step, e))
+            {
+                Satisfy(step);
+                return;
+            }
+            m_History.Add(e);
+            if (m_History.Count > k_MaxHistory) m_History.RemoveAt(0);
         }
 
         private void Satisfy(ActivityStep step)
@@ -249,6 +253,9 @@ namespace LittleBurgerWorld.Activities
                         case GameplayEventType.PattyOnGrill:
                         case GameplayEventType.TrayItemAdded:
                         case GameplayEventType.CustomerServed:
+                            // Every food is the right food for an animal (a whole tray counts too).
+                            if (step.targetKey == k_CustomerKey) return targetOk && !string.IsNullOrEmpty(e.TargetKey);
+                            return itemOk && targetOk && !string.IsNullOrEmpty(e.TargetKey);
                         case GameplayEventType.ItemDropped:
                             return itemOk && targetOk && !string.IsNullOrEmpty(e.TargetKey);
                     }

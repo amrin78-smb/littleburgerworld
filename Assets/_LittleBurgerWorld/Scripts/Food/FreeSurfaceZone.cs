@@ -13,6 +13,10 @@ namespace LittleBurgerWorld.Food
     public sealed class FreeSurfaceZone : DropZone, IFoodContainer
     {
         [SerializeField] private float m_SurfaceHeight = 0.95f;
+        [Tooltip("World XZ footprints of stations standing on this counter (x, z = min corner). Food is never put down inside them.")]
+        [SerializeField] private List<Rect> m_KeepOut = new List<Rect>();
+        private const float k_KeepOutMargin = 0.3f;
+        private bool m_Returning;
 
         private readonly List<FoodItem> m_Items = new List<FoodItem>();
 
@@ -45,6 +49,14 @@ namespace LittleBurgerWorld.Food
             local.z = Mathf.Clamp(local.z, -hz, hz);
             Vector3 p = transform.TransformPoint(local);
             p.y = m_SurfaceHeight;
+            if (!AvoidStations(ref p, hx, hz) && !m_Returning)
+            {
+                // No free spot here (e.g. right on top of the grill): back where it came from.
+                m_Returning = true;
+                try { f.ReturnHome(); }
+                finally { m_Returning = false; }
+                return;
+            }
 
             // Resting on another loose item? Sit on top of it instead of intersecting.
             foreach (FoodItem other in m_Items)
@@ -65,6 +77,43 @@ namespace LittleBurgerWorld.Food
                 f.PlaySfx(SfxId.Plop, 0.8f);
             });
             Tween.RotateLocal(f.transform, Quaternion.Euler(0f, f.transform.eulerAngles.y, 0f), 0.2f);
+        }
+
+        /// <summary>Moves a point that landed on a station's body to the nearest free spot beside it.</summary>
+        private bool AvoidStations(ref Vector3 p, float hx, float hz)
+        {
+            for (int pass = 0; pass < 3; pass++)
+            {
+                bool moved = false;
+                foreach (Rect r in m_KeepOut)
+                {
+                    Rect k = new Rect(r.xMin - k_KeepOutMargin, r.yMin - k_KeepOutMargin, r.width + 2f * k_KeepOutMargin, r.height + 2f * k_KeepOutMargin);
+                    if (!k.Contains(new Vector2(p.x, p.z))) continue;
+                    Vector3 best = p;
+                    float bestDist = float.MaxValue;
+                    foreach (Vector3 c in new[]
+                             {
+                                 new Vector3(k.xMin, p.y, p.z), new Vector3(k.xMax, p.y, p.z),
+                                 new Vector3(p.x, p.y, k.yMin), new Vector3(p.x, p.y, k.yMax)
+                             })
+                    {
+                        if (!OnSurface(c, hx, hz)) continue;
+                        float d = (c - p).sqrMagnitude;
+                        if (d < bestDist) { bestDist = d; best = c; }
+                    }
+                    if (bestDist == float.MaxValue) return false;
+                    p = best;
+                    moved = true;
+                }
+                if (!moved) return true;
+            }
+            return false;
+        }
+
+        private bool OnSurface(Vector3 world, float hx, float hz)
+        {
+            Vector3 l = transform.InverseTransformPoint(world);
+            return Mathf.Abs(l.x) <= hx + 0.001f && Mathf.Abs(l.z) <= hz + 0.001f;
         }
 
         public void Release(FoodItem item) => m_Items.Remove(item);

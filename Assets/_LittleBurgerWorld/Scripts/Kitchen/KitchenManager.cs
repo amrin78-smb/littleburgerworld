@@ -29,6 +29,8 @@ namespace LittleBurgerWorld.Kitchen
         public DrinkStation Drinks => m_Drinks;
         public ServingTray Tray => m_Tray;
         public IceCreamStation IceCream => m_IceCream;
+        /// <summary>Guided serving step: tapped food goes straight to the animal, not onto the tray.</summary>
+        public bool ServeCustomerFirst { get; set; }
 
         private void Awake()
         {
@@ -63,6 +65,7 @@ namespace LittleBurgerWorld.Kitchen
                 case FoodType.Burger:
                 case FoodType.Fries:
                 case FoodType.Milkshake:
+                    if (ServeCustomerFirst && customer != null && customer.CanAccept(item)) return customer;
                     if (m_Tray != null && item.Container != (IFoodContainer)m_Tray && m_Tray.CanAccept(item)) return m_Tray;
                     if (customer != null && customer.CanAccept(item)) return customer;
                     return null;

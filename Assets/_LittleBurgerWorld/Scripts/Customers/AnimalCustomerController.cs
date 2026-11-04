@@ -32,6 +32,9 @@ namespace LittleBurgerWorld.Customers
         private Action m_OnPathDone;
         private float m_ShuffleTimer;
 
+        /// <summary>Guided play: animals wait (and don't take food) until the activity's serving step.</summary>
+        public static bool HoldFood { get; set; }
+
         public event Action<AnimalCustomerController> Left;
         public event Action<AnimalCustomerController> Arrived;
 
@@ -212,7 +215,7 @@ namespace LittleBurgerWorld.Customers
         // ------------------------------------------------------------------ receiving food
         public override bool CanAccept(IDraggable item)
         {
-            if (!m_Fsm.CanReceiveFood || !(item is FoodItem f) || f.IsConsumed) return false;
+            if (HoldFood || !m_Fsm.CanReceiveFood || !(item is FoodItem f) || f.IsConsumed) return false;
             if (f.IsRawIngredient) return false;
             if (f.Type == FoodType.Tray) return f.GetComponent<ServingTray>() is ServingTray t && t.ItemCount > 0;
             if (f.Type == FoodType.Fries && f.Locked) return false; // empty box
@@ -341,7 +344,7 @@ namespace LittleBurgerWorld.Customers
         /// <summary>Assist: serve whatever finished food is around (tray first).</summary>
         public bool Assist(string itemId, string targetKey)
         {
-            if (!m_Fsm.CanReceiveFood) return false;
+            if (HoldFood || !m_Fsm.CanReceiveFood) return false;
             FoodItem best = null;
             foreach (FoodItem f in FoodItem.All)
             {

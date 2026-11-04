@@ -156,6 +156,14 @@ namespace LittleBurgerWorld.Kitchen
         public bool HandleTap(FoodItem item) => false;
         public bool AllowPickup(FoodItem item) => true;
 
+        public bool TakeBack(FoodItem item)
+        {
+            if (m_Batch != null || item == null || item.Type != FoodType.FriesBatch) return false;
+            m_Batch = item;
+            item.AttachTo(this);
+            return true;
+        }
+
         public bool Assist(string itemId, string targetKey)
         {
             if (m_Batch != null && FoodItem.AutoSendHandler != null) return FoodItem.AutoSendHandler(m_Batch);

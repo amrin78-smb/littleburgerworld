@@ -209,7 +209,7 @@ namespace LittleBurgerWorld.Food
                 switch (m_Type)
                 {
                     case FoodType.Burger: return 14;
-                    case FoodType.Fries:
+                    case FoodType.Fries: return Locked ? 7 : 13; // an empty box must not steal taps from the fries batch
                     case FoodType.Milkshake:
                     case FoodType.IceCream: return 13;
                     case FoodType.FriesBatch: return 12;
@@ -226,7 +226,8 @@ namespace LittleBurgerWorld.Food
         public void OnSelect()
         {
             if (m_Dragging) return;
-            Tween.Kill(transform);
+            // Finish (not drop) any hop in flight so its landing callback still runs (box filling, unlocking...).
+            Tween.Kill(transform, true);
             Tween.Squash(transform, m_RestScale, 0.18f, 0.3f);
             PlaySfx(m_Ingredient != null ? m_Ingredient.pickSound : SfxId.Pop);
         }
@@ -313,6 +314,9 @@ namespace LittleBurgerWorld.Food
                 Vanish();
                 return;
             }
+            // Stations (cone holder, cup spot, fries box, fryer plate) take their item back so it keeps working.
+            if (m_OriginContainer != null && !(m_OriginContainer is UnityEngine.Object o && o == null) && m_Container == null)
+                m_OriginContainer.TakeBack(this);
             Vector3 target = m_Type == FoodType.Tray ? HomePosition : m_OriginPosition;
             Tween.Jump(transform, target, 0.6f, 0.4f, () =>
             {
@@ -350,7 +354,7 @@ namespace LittleBurgerWorld.Food
 
         public void Wiggle()
         {
-            Tween.Kill(transform);
+            Tween.Kill(transform, true);
             Quaternion baseRot = transform.localRotation;
             Tween.Value(transform, 0.4f, k =>
             {

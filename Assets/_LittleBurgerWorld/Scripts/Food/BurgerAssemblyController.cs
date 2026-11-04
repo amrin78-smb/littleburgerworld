@@ -153,7 +153,9 @@ namespace LittleBurgerWorld.Food
             Vector3 basePos = t.position;
             Quaternion baseRot = t.localRotation;
             burger.Locked = true;
-            Tween.Value(t, 0.9f, k =>
+            // Owned by the board, not the burger: a finger landing on the spinning burger must not cancel
+            // the spin before it unlocks the burger again.
+            Tween.Value(this, 0.9f, k =>
             {
                 float hop = Mathf.Sin(k * Mathf.PI) * 0.6f;
                 t.position = basePos + Vector3.up * hop;

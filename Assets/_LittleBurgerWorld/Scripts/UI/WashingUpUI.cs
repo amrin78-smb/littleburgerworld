@@ -92,6 +92,7 @@ namespace LittleBurgerWorld.UI
         public void Open()
         {
             if (IsOpen || m_Overlay == null) return;
+            Tween.Kill(this); // a pending auto-close from the last visit must not shut this one
             GameEvents.Raise(new GameplayEvent(GameplayEventType.ObjectTapped, null, SceneObjectRegistry.KeyOf(m_OpenButton), m_OpenButton));
             m_ToWash = m_Dirty > 0 ? m_Dirty : m_PlayPlates;
             m_Washed = 0;

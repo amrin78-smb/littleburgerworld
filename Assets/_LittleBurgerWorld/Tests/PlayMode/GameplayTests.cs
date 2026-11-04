@@ -347,6 +347,114 @@ namespace LittleBurgerWorld.Tests
             Assert.AreSame(station.Cone, cone, "Cone can still be picked up by its scoops");
         }
 
+        private IEnumerator RunWithAssists(ActivityManager am, System.Func<bool> done, float limit = 150f, System.Action<ActivityStep> onWaiting = null)
+        {
+            float t = 0f;
+            while (!done() && t < limit)
+            {
+                ActivityStep s = am.Controller.CurrentStep;
+                if (am.Controller.IsWaiting && s != null)
+                {
+                    onWaiting?.Invoke(s);
+                    if (done()) yield break;
+                    am.Assist(s);
+                }
+                yield return new WaitForSeconds(0.4f);
+                t += 0.4f * Time.timeScale;
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator Guided_AnimalWaitsForTheServingStep_AndATapServesIt_EvenIfTheBurgerWasTouchedWhileSpinning()
+        {
+            yield return LoadRestaurant(GameMode.Guided);
+            KitchenManager.Instance.Grill.SideSeconds = 0.3f;
+            ActivityManager am = ActivityManager.Instance;
+            int finished = 0;
+            am.ActivityFinished += (a, st) => finished++;
+            bool heldBeforeServing = false, touched = false;
+            System.Action<GameplayEvent> touch = e =>
+            {
+                if (e.Type != GameplayEventType.BurgerCompleted || touched) return;
+                // A toddler's finger lands on the burger while it spins.
+                FoodItem spinning = e.Source as FoodItem;
+                if (spinning == null) return;
+                touched = true;
+                spinning.OnSelect();
+                spinning.OnTap();
+            };
+            GameEvents.Gameplay += touch;
+            am.StartActivity("my_first_burger");
+            yield return RunWithAssists(am, () => finished > 0 || (am.Controller.CurrentStep != null && am.Controller.CurrentStep.targetKey == "Customer" && am.Controller.IsWaiting),
+                onWaiting: s => heldBeforeServing |= AnimalCustomerController.HoldFood);
+            GameEvents.Gameplay -= touch;
+            Assert.IsTrue(touched, "Burger was touched mid-spin");
+            Assert.IsTrue(heldBeforeServing, "Animal doesn't take food before the serving step");
+            Assert.AreEqual("Customer", am.Controller.CurrentStep.targetKey);
+            Assert.IsFalse(AnimalCustomerController.HoldFood, "Serving step opens the animal's paws");
+            yield return new WaitForSeconds(0.5f);
+            FoodItem burger = FoodItem.All.Find(f => f != null && f.Type == FoodType.Burger && !f.IsConsumed);
+            Assert.IsNotNull(burger);
+            Assert.IsTrue(burger.CanDrag, "Burger touched while spinning is not locked");
+            burger.OnTap(); // tap = straight to the animal, not onto the tray
+            yield return Until(() => finished > 0, 20f);
+            Assert.IsTrue(m_Events.Exists(e => e.Type == GameplayEventType.CustomerServed && e.ItemId == "burger"), "Served directly");
+        }
+
+        [UnityTest]
+        public IEnumerator Guided_ServingTheTrayInsteadStillCounts()
+        {
+            yield return LoadRestaurant(GameMode.Guided);
+            KitchenManager k = KitchenManager.Instance;
+            k.Grill.SideSeconds = 0.3f;
+            ActivityManager am = ActivityManager.Instance;
+            int finished = 0;
+            am.ActivityFinished += (a, st) => finished++;
+            am.StartActivity("milos_snack");
+            yield return RunWithAssists(am, () => finished > 0 || (am.Controller.CurrentStep != null && am.Controller.CurrentStep.targetKey == "Customer" && am.Controller.IsWaiting));
+            yield return new WaitForSeconds(0.5f);
+            // The child put the fries on the tray first, then gives the whole tray.
+            Assert.IsTrue(k.FriesBox.CurrentBox.SendTo(k.Tray));
+            yield return new WaitForSeconds(0.6f);
+            Assert.IsTrue(k.Tray.TrayItem.SendTo(CustomerManager.Instance.Current));
+            yield return Until(() => finished > 0, 20f);
+        }
+
+        [UnityTest]
+        public IEnumerator Guided_LeverPressedFirst_MilkshakeActivityStillCompletes()
+        {
+            yield return LoadRestaurant(GameMode.Guided);
+            ActivityManager am = ActivityManager.Instance;
+            int finished = 0;
+            am.ActivityFinished += (a, st) => finished++;
+            am.StartActivity("make_milkshake");
+            yield return new WaitForSeconds(1.5f);
+            SceneObjectRegistry.Find("Drinks.Lever").GetComponent<TapButton3D>().OnTap();
+            yield return new WaitForSeconds(1f);
+            yield return RunWithAssists(am, () => finished > 0);
+            ActivityStep stuck = am.Controller.CurrentStep;
+            Assert.AreEqual(1, finished, "stuck at " + (stuck != null ? stuck.type + " " + stuck.targetKey : "-"));
+        }
+
+        [UnityTest]
+        public IEnumerator IceCream_ToppingsInAnyOrder_NeverSayNo()
+        {
+            yield return LoadRestaurant(GameMode.FreePlay);
+            CustomerManager.Instance.AutoSpawn = false;
+            IceCreamStation station = KitchenManager.Instance.IceCream;
+            SceneObjectRegistry.Find("IceCream.Cherry").GetComponent<TapButton3D>().OnTap(); // cherry with no cone at all
+            yield return new WaitForSeconds(0.8f);
+            Assert.IsNotNull(station.Cone, "A cone appears");
+            Assert.AreEqual(1, station.ScoopCount);
+            Assert.IsTrue(station.HasCherry);
+            SceneObjectRegistry.Find("IceCream.Tub.vanilla").GetComponent<TapButton3D>().OnTap();
+            yield return null;
+            Assert.AreEqual(2, station.ScoopCount, "More scoops after the cherry");
+            SceneObjectRegistry.Find("IceCream.Sprinkles").GetComponent<TapButton3D>().OnTap();
+            yield return null;
+            Assert.IsTrue(station.HasSprinkles, "Sprinkles after the cherry");
+        }
+
         [UnityTest]
         public IEnumerator IngredientTray_AllButtonsFitOnScreen()
         {

@@ -117,6 +117,7 @@ namespace LittleBurgerWorld.Core
 
         public void StartGame(GameMode mode)
         {
+            if (Scenes.IsLoading) return; // a second tap during the fade must not change the chosen mode
             Modes.SetMode(mode);
             Scenes.Load(m_Config.restaurantScene);
         }

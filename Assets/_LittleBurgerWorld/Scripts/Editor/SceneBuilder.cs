@@ -398,8 +398,12 @@ namespace LittleBurgerWorld.EditorTools
             GameObject iceCream = Instantiate($"{P.KitchenFolder}/Station_IceCream.prefab", kitchen, new Vector3(-0.4f, 0f, -2.8f), new Vector3(0f, 45f, 0f));
 
             // Free counter space for experimenting
-            AddFreeSurface(kitchen, "FreeSurface_Island", new Vector3(-1.35f, 0f, 0.2f), new Vector2(4.6f, 1.1f), 0f);
-            AddFreeSurface(kitchen, "FreeSurface_Back", new Vector3(-0.1f, 0f, 3.3f), new Vector2(7.4f, 1.1f), 0f);
+            // Station bodies (world XZ) where food must not be put down: it would sink inside them.
+            Rect grillBody = Footprint(grill.transform.position, 2.1f, 1.25f);
+            Rect fryerBody = Footprint(fryer.transform.position, 1.15f, 1.0f);
+            Rect drinksBody = Footprint(drinks.transform.position + new Vector3(0f, 0f, 0.15f), 1.7f, 0.85f);
+            AddFreeSurface(kitchen, "FreeSurface_Island", new Vector3(-1.35f, 0f, 0.2f), new Vector2(4.6f, 1.1f), 0f, grillBody);
+            AddFreeSurface(kitchen, "FreeSurface_Back", new Vector3(-0.1f, 0f, 3.3f), new Vector2(7.4f, 1.1f), 0f, fryerBody, drinksBody);
             AddFreeSurface(kitchen, "FreeSurface_Serve", new Vector3(2.45f, 0f, -1.3f), new Vector2(3.4f, 1.1f), 90f);
 
             // Systems
@@ -599,13 +603,21 @@ namespace LittleBurgerWorld.EditorTools
             r.receiveShadows = false;
         }
 
-        private static void AddFreeSurface(Transform parent, string name, Vector3 pos, Vector2 size, float yaw)
+        private static Rect Footprint(Vector3 center, float sizeX, float sizeZ) =>
+            new Rect(center.x - sizeX * 0.5f, center.z - sizeZ * 0.5f, sizeX, sizeZ);
+
+        private static void AddFreeSurface(Transform parent, string name, Vector3 pos, Vector2 size, float yaw, params Rect[] keepOut)
         {
             GameObject go = P.Node(parent, name, pos, new Vector3(0f, yaw, 0f));
             var fs = go.AddComponent<FreeSurfaceZone>();
             E.Set(fs, "m_BoxSize", size);
             E.Set(fs, "m_DropPriority", 0);
             E.Set(fs, "m_SurfaceHeight", P.CounterHeight);
+            var so = new SerializedObject(fs);
+            SerializedProperty list = so.FindProperty("m_KeepOut");
+            list.arraySize = keepOut.Length;
+            for (int i = 0; i < keepOut.Length; i++) list.GetArrayElementAtIndex(i).rectValue = keepOut[i];
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private static void BuildRoom(Transform env)
@@ -836,8 +848,9 @@ namespace LittleBurgerWorld.EditorTools
             SquishyButton replay = UIFactory.RoundButton("ReplayButton", root, IconLibrary.Get("icon_replay"), E.Hex("#F5A623"), new Vector2(1f, 1f), new Vector2(-100f, -100f), 120f);
             SquishyButton list = UIFactory.RoundButton("ActivitiesButton", root, IconLibrary.Get("icon_grid"), Color.white, new Vector2(1f, 1f), new Vector2(-245f, -100f), 120f);
 
-            BuildWashingUp(root);
+            // Capsule machine first so the washing-up overlay (and its close button) draws on top of it.
             BuildCapsuleMachine(root);
+            BuildWashingUp(root);
 
             // Celebration
             RectTransform celebration = UIFactory.Stretch("Celebration", root);

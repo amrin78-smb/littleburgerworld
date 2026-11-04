@@ -12,7 +12,7 @@ namespace LittleBurgerWorld.Food
     /// (a <see cref="FoodItem"/> of type Tray on the same object) can then be served to a customer.
     /// </summary>
     [RequireComponent(typeof(FoodItem))]
-    public sealed class ServingTray : DropZone, IFoodContainer
+    public sealed class ServingTray : DropZone, IFoodContainer, IAssistable
     {
         [Tooltip("0 burger, 1 fries, 2 drink, then extra slots.")]
         [SerializeField] private Transform[] m_Slots;
@@ -134,6 +134,19 @@ namespace LittleBurgerWorld.Food
 
         public bool HandleTap(FoodItem item) => false;
         public bool AllowPickup(FoodItem item) => true;
+
+        /// <summary>Guided assist: puts a finished burger, fries or milkshake that is lying around back on the tray.</summary>
+        public bool Assist(string itemId, string targetKey)
+        {
+            foreach (FoodItem f in FoodItem.All)
+            {
+                if (f == null || f.IsConsumed || f.Container == (IFoodContainer)this || !f.CanDrag) continue;
+                if (f.Container is Customers.AnimalCustomerController) continue;
+                if (!CanAccept(f)) continue;
+                if (f.SendTo(this)) return true;
+            }
+            return false;
+        }
 
         /// <summary>Removes and returns everything on the tray (a customer takes it).</summary>
         public List<FoodItem> TakeAll()

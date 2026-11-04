@@ -190,7 +190,7 @@ namespace LittleBurgerWorld.Audio
         private void Update()
         {
             // Music dips while the voice speaks so the words are easy to hear.
-            float duck = VoicePlaying ? k_VoiceDuck : 1f;
+            float duck = VoicePlaying && m_VoiceVolume > 0.001f ? k_VoiceDuck : 1f; // no dip for muted voice
             if (!Mathf.Approximately(duck, m_Duck))
             {
                 m_Duck = Mathf.MoveTowards(m_Duck, duck, Time.unscaledDeltaTime * (VoicePlaying ? 4f : 1.2f));

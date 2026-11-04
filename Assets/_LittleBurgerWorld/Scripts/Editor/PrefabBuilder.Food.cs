@@ -401,7 +401,7 @@ namespace LittleBurgerWorld.EditorTools
         private static void BuildMilkshakeCup()
         {
             var root = new GameObject("Food_MilkshakeCup");
-            Pickable(root, new Vector3(0.95f, 1.5f, 0.95f), new Vector3(0f, 0.75f, 0f));
+            Pickable(root, new Vector3(0.88f, 1.2f, 0.88f), new Vector3(0f, 0.6f, 0f)); // the visible cup, not the buttons above
             MakeFood(root, FoodType.Milkshake, 1f, 2.3f);
             Mesh cup = A.Mesh("ShakeCup", () => MeshFactory.Lathe(new List<Vector2>
             {
