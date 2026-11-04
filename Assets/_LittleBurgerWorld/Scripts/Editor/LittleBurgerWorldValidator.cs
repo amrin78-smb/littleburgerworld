@@ -149,7 +149,7 @@ namespace LittleBurgerWorld.EditorTools
                 if (c == null || c.prefab == null || c.prefab.GetComponent<AnimalCustomerController>() == null)
                     problems.Add("Invalid character " + (c != null ? c.id : "null"));
             }
-            if (cfg.activities.Count < 9) problems.Add("Expected 9 guided activities");
+            if (cfg.activities.Count < 10) problems.Add("Expected 10 guided activities");
             foreach (ActivityData a in cfg.activities)
             {
                 if (a == null || a.steps.Count == 0) problems.Add("Empty activity " + (a != null ? a.id : "null"));

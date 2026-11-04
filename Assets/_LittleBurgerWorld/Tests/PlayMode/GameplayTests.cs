@@ -327,6 +327,99 @@ namespace LittleBurgerWorld.Tests
         }
 
         [UnityTest]
+        public IEnumerator WashingUp_RubbingCleansPlates_AndAllCleanIsCelebrated()
+        {
+            yield return LoadRestaurant(GameMode.FreePlay);
+            Time.timeScale = 1f;
+            WashingUpUI wash = Object.FindFirstObjectByType<WashingUpUI>();
+            Assert.IsNotNull(wash, "Sink in the HUD");
+            wash.Open();
+            yield return new WaitForSecondsRealtime(0.8f);
+            Assert.IsTrue(wash.IsOpen);
+            int before = wash.SplotchesLeft;
+            Assert.Greater(before, 0, "Plate starts dirty");
+            // Rub in circles over the plate with real pointer events.
+            ScrubSurface surface = Object.FindFirstObjectByType<ScrubSurface>();
+            Vector2 centre = RectTransformUtility.WorldToScreenPoint(null, surface.transform.position);
+            float radius = ((RectTransform)surface.transform).rect.width * surface.GetComponentInParent<Canvas>().scaleFactor * 0.3f;
+            var e = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+            for (int i = 0; i < 160 && wash.WashedThisVisit == 0; i++)
+            {
+                float a = i * 0.45f, r = radius * ((i % 20) / 20f);
+                e.position = centre + new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * r;
+                if (i % 10 == 0) surface.OnPointerDown(e); else surface.OnDrag(e);
+                if (i % 10 == 0) yield return null;
+            }
+            Assert.GreaterOrEqual(wash.WashedThisVisit, 1, "Rubbing washes the plate");
+            while (wash.IsOpen && wash.WashedThisVisit < 3)
+            {
+                wash.CleanCurrentPlate();
+                yield return new WaitForSecondsRealtime(0.9f);
+            }
+            Assert.IsTrue(Has(GameplayEventType.AllDishesClean), "All clean celebrated");
+            Assert.GreaterOrEqual(GM.Save.Data.stats.dishesWashed, 3);
+        }
+
+        [UnityTest]
+        public IEnumerator SurpriseCapsule_RevealsAToy_ForTheToyShelf()
+        {
+            yield return LoadRestaurant(GameMode.FreePlay);
+            Time.timeScale = 1f;
+            ToyCapsuleUI capsules = Object.FindFirstObjectByType<ToyCapsuleUI>();
+            Assert.IsNotNull(capsules);
+            GM.Rewards.EarnCapsule();
+            Assert.AreEqual(1, GM.Rewards.PendingCapsules);
+            capsules.OpenNext();
+            Assert.IsTrue(capsules.IsRevealing);
+            yield return new WaitForSecondsRealtime(4.5f); // drops, opens by itself, toy flies to the shelf
+            yield return new WaitForSecondsRealtime(3.0f);
+            Assert.IsFalse(capsules.IsRevealing, "Reveal finishes on its own");
+            Assert.AreEqual(0, GM.Rewards.PendingCapsules);
+            Assert.AreEqual(1, GM.Save.Data.toys.Count, "Toy collected");
+            Assert.IsTrue(Has(GameplayEventType.ToyCollected));
+        }
+
+        [UnityTest]
+        public IEnumerator Themes_CycleWithTheWindow_AndBirthdayHasPartyHats()
+        {
+            yield return LoadRestaurant(GameMode.FreePlay);
+            ThemeManager themes = ThemeManager.Instance;
+            Assert.IsNotNull(themes);
+            yield return Until(() => CustomerManager.Instance.Current != null, 10f);
+            var seen = new HashSet<RestaurantTheme>();
+            for (int i = 0; i < 4; i++)
+            {
+                themes.NextTheme();
+                yield return null;
+                seen.Add(ThemeManager.Current);
+                Transform hat = CustomerManager.Instance.Current.transform.Find("Model/Head/PartyHat");
+                Assert.IsNotNull(hat);
+                Assert.AreEqual(ThemeManager.Current == RestaurantTheme.Birthday, hat.gameObject.activeSelf, "Party hat only on birthday days");
+                Assert.IsTrue(GameObject.Find("Environment/Themes/Theme_" + ThemeManager.Current) != null, "Theme decorations shown");
+            }
+            Assert.AreEqual(4, seen.Count, "All four moods reachable");
+        }
+
+        [UnityTest]
+        public IEnumerator WashTheDishesActivity_Completes()
+        {
+            yield return LoadRestaurant(GameMode.Guided);
+            ActivityManager am = ActivityManager.Instance;
+            int finished = 0;
+            am.ActivityFinished += (a, st) => finished++;
+            am.StartActivity("wash_dishes");
+            float t = 0f;
+            while (finished == 0 && t < 40f)
+            {
+                ActivityStep s = am.Controller.CurrentStep;
+                if (am.Controller.IsWaiting && s != null) am.Assist(s);
+                yield return new WaitForSecondsRealtime(0.5f);
+                t += 0.5f;
+            }
+            Assert.AreEqual(1, finished, "Wash the Dishes completed");
+        }
+
+        [UnityTest]
         public IEnumerator MainMenu_FreePlayButton_LoadsRestaurant()
         {
             m_SavePath = Path.Combine(Application.temporaryCachePath, "lbw_test_menu.json");

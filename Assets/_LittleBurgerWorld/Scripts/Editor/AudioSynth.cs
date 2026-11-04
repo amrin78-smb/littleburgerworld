@@ -42,6 +42,7 @@ namespace LittleBurgerWorld.EditorTools
                 { "sfx_squeeze", Squeeze() },
                 { "sfx_scrub", Scrub() },
                 { "sfx_capsule", CapsuleRattle() },
+                { "sfx_rain_loop", RainLoop() },
                 { "sfx_chime", Arp(new[] { 79, 83, 86, 91 }, 0.09f, Wave.Sine, 0.45f) },
                 { "sfx_straw", Slide(500f, 1500f, 0.32f) },
                 { "sfx_jingle", Jingle() },
@@ -273,6 +274,28 @@ namespace LittleBurgerWorld.EditorTools
             HighPass(b, 1800f);
             Tone(b, 0.05f, 0.3f, t => 700f - t * 600f, Env(0.1f, 2f), Wave.Sine, 0.2f);
             return Normalize(b, 0.5f);
+        }
+
+        /// <summary>Soft, seamless rain (gentle, not stormy).</summary>
+        private static float[] RainLoop()
+        {
+            float[] b = Buf(3f);
+            var rnd = new System.Random(11);
+            float lp = 0f;
+            for (int i = 0; i < b.Length; i++)
+            {
+                float n = (float)(rnd.NextDouble() * 2 - 1);
+                lp += (n - lp) * 0.35f;
+                b[i] = lp * 0.35f;
+            }
+            for (int d = 0; d < 90; d++)
+            {
+                float t = (float)rnd.NextDouble() * 2.9f;
+                Tone(b, t, 0.03f, x => 1800f + (float)rnd.NextDouble() * 1500f, Env(0.002f, 8f), Wave.Sine, 0.12f);
+            }
+            int fade = (int)(0.05f * Rate);
+            for (int i = 0; i < fade; i++) { float k = i / (float)fade; b[i] *= k; b[b.Length - 1 - i] *= k; }
+            return Normalize(b, 0.35f);
         }
 
         /// <summary>Squishy "pfft-splort" of a sauce bottle.</summary>

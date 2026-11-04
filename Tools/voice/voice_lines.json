@@ -31,6 +31,9 @@
     { "key": "add_sprinkles",   "en": "Shake on the sprinkles!",              "th": "โรยเม็ดสีสันลงไปเลย!" },
     { "key": "add_cherry",      "en": "And a cherry on top!",                 "th": "แล้วก็เชอร์รีไว้ข้างบน!" },
     { "key": "serve_ice_cream", "en": "Give the ice cream to Benny!",         "th": "เอาไอศกรีมให้เบนนี่เลย!" },
+    { "key": "wash_dishes",     "en": "Let's wash the dishes!",               "th": "มาล้างจานกันเถอะ!" },
+    { "key": "scrub_plate",     "en": "Rub the plate to make it shiny!",      "th": "ถูจานให้สะอาดเป็นประกายเลย!" },
+    { "key": "dishes_clean",    "en": "Squeaky clean!",                       "th": "สะอาดเอี่ยมเลย!" },
     { "key": "meal_ready",     "en": "What a yummy meal!",                    "th": "อาหารน่าอร่อยมากเลย!" },
     { "key": "well_done",      "en": "Hooray! You did it!",                   "th": "ไชโย! หนูทำได้แล้ว!" }
   ]

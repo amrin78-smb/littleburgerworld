@@ -11,6 +11,8 @@ namespace LittleBurgerWorld.Save
         public float voiceVolume = 1f;
         public string language = "en";
         public bool voicePrompts = true;
+        /// <summary>Restaurant mood shown last visit (themes rotate each visit).</summary>
+        public int lastTheme = -1;
     }
 
     [Serializable]
@@ -54,6 +56,10 @@ namespace LittleBurgerWorld.Save
         public List<string> stickers = new List<string>();
         public SettingsData settings = new SettingsData();
         public StatsData stats = new StatsData();
+        /// <summary>Toys found in surprise capsules (Toy Shelf).</summary>
+        public List<string> toys = new List<string>();
+        /// <summary>Capsules waiting in the machine (capped, free, never bought).</summary>
+        public int pendingCapsules;
 
         public ActivityProgress GetActivity(string id)
         {

@@ -32,6 +32,8 @@ namespace LittleBurgerWorld.Core
         [Header("Shared visuals")]
         public Sprite friesIcon;
         public Sprite iceCreamIcon;
+        [Tooltip("Surprise-capsule toys; the sprite name is the toy id.")]
+        public List<Sprite> toys = new List<Sprite>();
         public Sprite trayIcon;
         public Sprite burgerIcon;
         public Sprite starIcon;
@@ -59,6 +61,8 @@ namespace LittleBurgerWorld.Core
         public CharacterData FindCharacter(string id) => characters.Find(c => c != null && c.id == id);
         public ActivityData FindActivity(string id) => activities.Find(a => a != null && a.id == id);
         public StickerData FindSticker(string id) => stickers.Find(s => s != null && s.id == id);
+
+        public Sprite FindToy(string id) => toys.Find(t => t != null && t.name == id);
 
         /// <summary>Icon for a request/item id: ingredient, recipe, drink or one of the generic foods.</summary>
         public Sprite FindIcon(string id)

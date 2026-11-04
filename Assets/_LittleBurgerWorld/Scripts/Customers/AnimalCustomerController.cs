@@ -19,6 +19,8 @@ namespace LittleBurgerWorld.Customers
         [SerializeField] private CharacterData m_Data;
         [SerializeField] private ProceduralCharacterRig m_Rig;
         [SerializeField] private RequestBubble m_Bubble;
+        [Tooltip("Shown on birthday-party days.")]
+        [SerializeField] private GameObject m_PartyHat;
 
         private readonly CustomerStateMachine m_Fsm = new CustomerStateMachine();
         private readonly List<Vector3> m_Path = new List<Vector3>();
@@ -46,8 +48,27 @@ namespace LittleBurgerWorld.Customers
 
         protected override Vector3 RingPosition => transform.position + Vector3.up * 0.03f;
 
+        private void OnEnable()
+        {
+            GameEvents.Gameplay += OnThemeEvent;
+            UpdatePartyHat();
+        }
+
+        private void OnDisable() => GameEvents.Gameplay -= OnThemeEvent;
+
+        private void OnThemeEvent(GameplayEvent e)
+        {
+            if (e.Type == GameplayEventType.ThemeChanged) UpdatePartyHat();
+        }
+
+        private void UpdatePartyHat()
+        {
+            if (m_PartyHat != null) m_PartyHat.SetActive(ThemeManager.Current == RestaurantTheme.Birthday);
+        }
+
         public void Setup(CharacterData data, IList<Vector3> enterPath, IList<Vector3> exitPath, Vector3 waitFacing)
         {
+            UpdatePartyHat();
             if (data != null) m_Data = data;
             m_Path.Clear();
             if (enterPath != null) m_Path.AddRange(enterPath);
@@ -241,6 +262,7 @@ namespace LittleBurgerWorld.Customers
             PlaySfx(SfxId.ThankYou);
             PlaySfx(SfxId.Happy, 0.8f);
             FxManager.Play(FxType.Hearts, transform.position + Vector3.up * 2.2f, 8);
+            if (ThemeManager.Current == RestaurantTheme.Birthday) FxManager.Play(FxType.Confetti, transform.position + Vector3.up * 2.4f, 24);
 
             GameEvents.Raise(new GameplayEvent(GameplayEventType.CustomerServed, servedId, SceneObjectRegistry.KeyOf(this), this,
                 m_Data != null ? m_Data.id : null, foods.Count));

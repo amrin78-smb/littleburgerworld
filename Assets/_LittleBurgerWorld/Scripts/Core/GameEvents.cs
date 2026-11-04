@@ -84,6 +84,8 @@ namespace LittleBurgerWorld.Core
         public static event Action<string> ItemUnlocked;
         public static event Action LanguageChanged;
         public static event Action SettingsChanged;
+        /// <summary>A surprise capsule dropped into the machine.</summary>
+        public static event Action ToyCapsuleEarned;
 
         public static void Raise(GameplayEvent e)
         {
@@ -103,6 +105,7 @@ namespace LittleBurgerWorld.Core
         public static void RaiseItemUnlocked(string id) => Invoke(ItemUnlocked, id);
         public static void RaiseLanguageChanged() => Invoke(LanguageChanged);
         public static void RaiseSettingsChanged() => Invoke(SettingsChanged);
+        public static void RaiseToyCapsuleEarned() => Invoke(ToyCapsuleEarned);
 
         /// <summary>Removes every listener (used by tests and when returning to the main menu).</summary>
         public static void ClearAll()

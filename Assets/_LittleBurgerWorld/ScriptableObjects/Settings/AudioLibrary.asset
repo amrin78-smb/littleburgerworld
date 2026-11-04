@@ -156,6 +156,11 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e20ab06e0a1f2dd9db38c9e14dfab019, type: 3}
     volume: 0.5
     pitchVariance: 0.02
+  - id: 29
+    clips:
+    - {fileID: 8300000, guid: 46d6d964549565cc8b97a0ef252ceaa8, type: 3}
+    volume: 0.3
+    pitchVariance: 0
   voice:
   - key: add_bun
     language: en
@@ -374,6 +379,30 @@ MonoBehaviour:
     language: th
     clip: {fileID: 8300000, guid: b8833c0dadb036abfbcb684565e9398f, type: 3}
     transcript: "\u0E40\u0E2D\u0E32\u0E44\u0E2D\u0E28\u0E01\u0E23\u0E35\u0E21\u0E43\u0E2B\u0E49\u0E40\u0E1A\u0E19\u0E19\u0E35\u0E48\u0E40\u0E25\u0E22!"
+  - key: wash_dishes
+    language: en
+    clip: {fileID: 8300000, guid: 039a82e58f025965d87cb7f8c8800fed, type: 3}
+    transcript: Let's wash the dishes!
+  - key: wash_dishes
+    language: th
+    clip: {fileID: 8300000, guid: 0b66499de986100f990cb6c0aa6120e5, type: 3}
+    transcript: "\u0E21\u0E32\u0E25\u0E49\u0E32\u0E07\u0E08\u0E32\u0E19\u0E01\u0E31\u0E19\u0E40\u0E16\u0E2D\u0E30!"
+  - key: scrub_plate
+    language: en
+    clip: {fileID: 8300000, guid: f1296116a37ec8f6db232a8ca245b7b8, type: 3}
+    transcript: Rub the plate to make it shiny!
+  - key: scrub_plate
+    language: th
+    clip: {fileID: 8300000, guid: d2c5ad2a5b101b1a7a81154729c7fd9a, type: 3}
+    transcript: "\u0E16\u0E39\u0E08\u0E32\u0E19\u0E43\u0E2B\u0E49\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E40\u0E1B\u0E47\u0E19\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E22\u0E40\u0E25\u0E22!"
+  - key: dishes_clean
+    language: en
+    clip: {fileID: 8300000, guid: a0583a0baedbb73d7a960c4a665d13dc, type: 3}
+    transcript: Squeaky clean!
+  - key: dishes_clean
+    language: th
+    clip: {fileID: 8300000, guid: b4b5a85c2e137ea3c98d7fb66c90d153, type: 3}
+    transcript: "\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E40\u0E2D\u0E35\u0E48\u0E22\u0E21\u0E40\u0E25\u0E22!"
   - key: meal_ready
     language: en
     clip: {fileID: 8300000, guid: cf29cb2303e55e97eb95ac00818a96ad, type: 3}

@@ -67,3 +67,11 @@ Stars per activity (up to 3, earned by replaying), 10 stickers (first burger, ch
 
 ## Parent area
 Gear button → grown-up gate (simple sum, three big answers; a wrong answer just shows a new question) → music / sounds / voice volumes, spoken-hint toggle, language (English / ไทย, data-driven), hold-to-reset progress, privacy information. No links, purchases or accounts.
+
+
+## Replay features (v0.5–0.6)
+* **New toppings:** fried egg, onion rings, ketchup and mustard (tray shrinks to fit any screen). New recipe: Sunny Egg Burger.
+* **Ice cream cart** (dining area): tap the cones (or just a flavour), up to 3 scoops of strawberry / chocolate / vanilla, sprinkles, cherry on top. Servable from the first scoop. Animals sometimes order ice cream. Activity: *Ice Cream Time*.
+* **Washing up:** every customer who finishes eating leaves a dirty plate (sink button shows the count, top-left). Rub (or tap) the plate with the sponge – splotches melt away with bubbles, clean plates hop onto the drying rack. An empty sink still offers 3 play plates. Activity: *Wash the Dishes*. Sticker: *Squeaky Clean* (5 plates).
+* **Surprise capsules:** serving a customer or finishing an activity drops a free capsule into the machine (top-right, max 3 waiting – no currency, nothing to buy). Tap it: the capsule drops, pops open (by itself if the child just watches) and reveals one of 20 toys, which goes to the **Toy Shelf** on the main menu (unfound toys are silhouettes). New toys are always preferred until the set is complete. Sticker: *Toy Collector* (10 toys).
+* **Restaurant moods:** each visit rotates Sunny → Birthday party (balloons, cake, party hats, confetti on every serve) → Rainy day (rain outside, puddles, gentle rain sound) → Cosy night (fairy lights, moon in the window). Tapping the window changes the mood. Gameplay is identical in every mood.

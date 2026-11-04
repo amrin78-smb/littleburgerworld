@@ -206,10 +206,68 @@ namespace LittleBurgerWorld.Core
                 Check(gm.Save.Data.stats.customersServed > before, "Ice cream served to a customer");
             }
 
+            // Washing up: rub the plate (real pointer events), then finish the pile.
+            WashingUpUI wash = FindFirstObjectByType<WashingUpUI>();
+            Check(wash != null && wash.DirtyCount > 0, "Dirty dishes after customers ate");
+            if (wash != null)
+            {
+                wash.Open();
+                yield return new WaitForSecondsRealtime(0.8f);
+                ScrubSurface surface = FindFirstObjectByType<ScrubSurface>();
+                Vector2 centre = RectTransformUtility.WorldToScreenPoint(null, surface.transform.position);
+                var pe = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+                for (int i = 0; i < 40; i++)
+                {
+                    pe.position = centre + new Vector2(Mathf.Cos(i * 0.5f), Mathf.Sin(i * 0.5f)) * (20f + i * 3f);
+                    surface.OnDrag(pe);
+                    if (i % 8 == 0) yield return null;
+                }
+                yield return Shot("13d_washing_up");
+                for (int i = 0; i < 12 && wash.IsOpen; i++) { wash.CleanCurrentPlate(); yield return new WaitForSecondsRealtime(0.9f); }
+                Check(gm.Save.Data.stats.dishesWashed > 0, "Dishes washed");
+            }
+
+            // Surprise capsule
+            ToyCapsuleUI capsules = FindFirstObjectByType<ToyCapsuleUI>();
+            Check(capsules != null && gm.Rewards.PendingCapsules > 0, "Capsule earned by serving");
+            yield return Shot("13e_capsule_waiting");
+            if (capsules != null)
+            {
+                capsules.OpenNext();
+                yield return new WaitForSecondsRealtime(1.0f);
+                capsules.Assist(null, null); // crack open
+                yield return new WaitForSecondsRealtime(0.9f);
+                yield return Shot("13f_capsule_toy");
+                yield return new WaitForSecondsRealtime(3.5f);
+                Check(gm.Save.Data.toys.Count > 0, "Toy found in capsule");
+            }
+
+            // Restaurant moods (tap the window)
+            ThemeManager themes = ThemeManager.Instance;
+            Check(themes != null, "Theme manager present");
+            if (themes != null)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    themes.NextTheme();
+                    yield return new WaitForSeconds(1.2f);
+                    yield return Shot("13g_theme_" + ThemeManager.Current.ToString().ToLowerInvariant());
+                }
+            }
+
             // ---------------------------------------------------------------- Guided Play
             FindFirstObjectByType<RestaurantController>().GoHome();
             yield return Until(() => SceneManager.GetActiveScene().name == "MainMenu" && !gm.Scenes.IsLoading, 15f);
             yield return new WaitForSeconds(0.5f);
+            MainMenuUI menuUi = FindFirstObjectByType<MainMenuUI>();
+            if (menuUi != null && menuUi.ToyShelf != null)
+            {
+                menuUi.ToyShelf.Show();
+                yield return new WaitForSeconds(1.0f);
+                yield return Shot("13h_toy_shelf");
+                Check(menuUi.ToyShelf.SlotCount == gm.Config.toys.Count, "Toy shelf shows every toy slot");
+                menuUi.ToyShelf.Hide();
+            }
             FindFirstObjectByType<MainMenuUI>().GuidedButton.Click();
             yield return Until(() => SceneManager.GetActiveScene().name == "Restaurant" && !gm.Scenes.IsLoading, 15f);
             yield return new WaitForSeconds(1.2f);

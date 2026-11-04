@@ -31,6 +31,7 @@ namespace LittleBurgerWorld.Audio
         Squeeze,        // sauce bottle
         Scrub,          // washing-up sponge
         Capsule,        // toy capsule machine
-        Chime           // theme / surprise reveal
+        Chime,          // theme / surprise reveal
+        Rain            // rainy-day loop
     }
 }

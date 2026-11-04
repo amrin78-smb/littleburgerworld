@@ -17,6 +17,8 @@ namespace LittleBurgerWorld.UI
         [SerializeField] private ParentGate m_Gate;
         [SerializeField] private ParentSettingsUI m_Settings;
         [SerializeField] private StickerBookUI m_StickerBook;
+        [SerializeField] private SquishyButton m_ToyShelfButton;
+        [SerializeField] private ToyShelfUI m_ToyShelf;
         [SerializeField] private RectTransform m_Logo;
         [SerializeField] private ProceduralCharacterRig m_Mascot;
 
@@ -25,6 +27,7 @@ namespace LittleBurgerWorld.UI
 
         public SquishyButton GuidedButton => m_GuidedButton;
         public SquishyButton FreePlayButton => m_FreePlayButton;
+        public ToyShelfUI ToyShelf => m_ToyShelf;
 
         private void Awake()
         {
@@ -35,6 +38,8 @@ namespace LittleBurgerWorld.UI
             if (m_Gate != null) m_Gate.gameObject.SetActive(false);
             if (m_Settings != null) m_Settings.gameObject.SetActive(false);
             if (m_StickerBook != null) m_StickerBook.gameObject.SetActive(false);
+            if (m_ToyShelfButton != null && m_ToyShelf != null) m_ToyShelfButton.OnClick.AddListener(() => m_ToyShelf.Show());
+            if (m_ToyShelf != null) m_ToyShelf.gameObject.SetActive(false);
         }
 
         private void Start()

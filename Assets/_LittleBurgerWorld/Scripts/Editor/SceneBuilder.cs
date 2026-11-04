@@ -155,12 +155,15 @@ namespace LittleBurgerWorld.EditorTools
                 E.Hex("#79BFA0"), new Vector2(0.5f, 0f), new Vector2(345f, 190f), new Vector2(640f, 230f));
             SquishyButton stickers = UIFactory.RoundButton("StickersButton", root, IconLibrary.Get("icon_stickers"), E.Hex("#B9A6E8"),
                 new Vector2(0f, 0f), new Vector2(130f, 150f), 180f);
+            SquishyButton toys = UIFactory.RoundButton("ToyShelfButton", root, IconLibrary.Get("icon_toy_shelf"), E.Hex("#FFD6A0"),
+                new Vector2(1f, 0f), new Vector2(-130f, 150f), 180f, 0.7f);
             SquishyButton parent = UIFactory.RoundButton("ParentButton", root, IconLibrary.Get("icon_gear"), new Color(1f, 1f, 1f, 0.85f),
                 new Vector2(1f, 1f), new Vector2(-80f, -80f), 100f, 0.7f);
 
             ParentGate gate = BuildParentGate(root);
             ParentSettingsUI settings = BuildParentSettings(root);
             StickerBookUI book = BuildStickerBook(root);
+            ToyShelfUI shelf = BuildToyShelf(root);
 
             var menu = canvas.gameObject.AddComponent<MainMenuUI>();
             E.Set(menu, "m_GuidedButton", guided);
@@ -170,6 +173,8 @@ namespace LittleBurgerWorld.EditorTools
             E.Set(menu, "m_Gate", gate);
             E.Set(menu, "m_Settings", settings);
             E.Set(menu, "m_StickerBook", book);
+            E.Set(menu, "m_ToyShelfButton", toys);
+            E.Set(menu, "m_ToyShelf", shelf);
             E.Set(menu, "m_Logo", logo);
             E.Set(menu, "m_Mascot", mascot.GetComponent<ProceduralCharacterRig>());
             EditorSceneManager.SaveScene(SceneManager.GetActiveScene(), MenuPath);
@@ -314,6 +319,27 @@ namespace LittleBurgerWorld.EditorTools
             return ui;
         }
 
+        private static ToyShelfUI BuildToyShelf(Transform root)
+        {
+            Overlay(root, "ToyShelf", new Vector2(1500f, 900f), E.Hex("#FFF1DE"), out RectTransform panel);
+            UIFactory.Image("Header", panel, IconLibrary.Get("icon_toy_shelf"), Color.white, new Vector2(0.5f, 1f), new Vector2(0f, -85f), new Vector2(130f, 130f), false);
+            RectTransform grid = UIFactory.Rect("Grid", panel, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, -55f), new Vector2(1360f, 700f));
+            var g = grid.gameObject.AddComponent<GridLayoutGroup>();
+            g.cellSize = new Vector2(150f, 150f);
+            g.spacing = new Vector2(26f, 26f);
+            g.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            g.constraintCount = 7;
+            g.childAlignment = TextAnchor.MiddleCenter;
+            SquishyButton close = UIFactory.RoundButton("Close", panel, IconLibrary.Get("icon_close"), new Color(1, 1, 1, 0), new Vector2(1f, 1f),
+                new Vector2(-30f, -30f), 110f, 1f);
+            var shelf = panel.parent.gameObject.AddComponent<ToyShelfUI>();
+            E.Set(shelf, "m_Grid", grid);
+            E.Set(shelf, "m_SlotPrefab", AssetDatabase.LoadAssetAtPath<GameObject>($"{P.UiFolder}/UI_StickerSlot.prefab").GetComponent<Image>());
+            E.Set(shelf, "m_Close", close);
+            panel.parent.gameObject.SetActive(false);
+            return shelf;
+        }
+
         private static StickerBookUI BuildStickerBook(Transform root)
         {
             Overlay(root, "StickerBook", new Vector2(1400f, 860f), E.Hex("#F3EEFF"), out RectTransform panel);
@@ -412,6 +438,8 @@ namespace LittleBurgerWorld.EditorTools
             E.Set(cm, "m_FaceTowards", face);
             E.Set(cm, "m_DoorHinge", GameObject.Find("Environment/WallRight/DoorHinge").transform);
 
+            BuildThemes(systems, cam, env);
+
             UIManager ui = BuildHud();
             var am = systems.gameObject.AddComponent<ActivityManager>();
             E.Set(am, "m_Kitchen", km);
@@ -425,6 +453,150 @@ namespace LittleBurgerWorld.EditorTools
             UIFactory.EventSystem();
 
             EditorSceneManager.SaveScene(SceneManager.GetActiveScene(), RestaurantPath);
+        }
+
+        // ------------------------------------------------------------------ THEMES
+        private static Material Glow(string name, string hex) => A.Lit(name, E.Hex(hex), 0.5f, null, null, E.Hex(hex) * 0.9f);
+
+        /// <summary>Decorations + lighting for the four restaurant moods, and the tappable window that cycles them.</summary>
+        private static void BuildThemes(Transform systems, Camera cam, Transform env)
+        {
+            Transform themes = new GameObject("Themes").transform;
+            themes.SetParent(env, false);
+            GameObject sunny = P.Node(themes, "Theme_Sunny", Vector3.zero);
+            GameObject party = P.Node(themes, "Theme_Birthday", Vector3.zero);
+            GameObject rainy = P.Node(themes, "Theme_Rainy", Vector3.zero);
+            GameObject night = P.Node(themes, "Theme_Night", Vector3.zero);
+
+
+            // Birthday party: balloon bunches on the walls, extra bunting and a cake on the table.
+            Material[] balloon = { Glow("BalloonPink", "#FF6F91"), Glow("BalloonSky", "#83B6E8"), Glow("BalloonSun", "#FFD23F"), Glow("BalloonMint", "#7BD389") };
+            foreach (var (pos, k) in new[] { (new Vector3(-3.9f, 2.25f, 3.75f), 0), (new Vector3(3.2f, 2.25f, 3.75f), 1), (new Vector3(3.75f, 2.2f, -0.2f), 2) })
+            {
+                GameObject bunch = P.Node(party.transform, "Balloons", pos);
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector3 o = new Vector3((i - 1) * 0.32f, 0.35f + (i % 2) * 0.22f, 0f);
+                    P.Part(bunch.transform, "Balloon" + i, A.SphereMesh, balloon[(i + k) % balloon.Length], o, null, new Vector3(0.42f, 0.52f, 0.42f), false);
+                    P.Part(bunch.transform, "String" + i, A.Capsule(0.01f, 0.55f), A.White, o * 0.5f + new Vector3(0f, -0.05f, 0f), new Vector3(0f, 0f, -(i - 1) * 25f), Vector3.one, false);
+                }
+            }
+            Instantiate($"{P.EnvFolder}/Prop_Bunting.prefab", party.transform, new Vector3(-1.45f, 2.62f, 3.9f), Vector3.zero, new Vector3(1.4f, 1f, 1f));
+            GameObject cake = P.Node(party.transform, "Cake", new Vector3(-2.75f, 0.77f, -2.1f));
+            P.Part(cake.transform, "Tier1", A.Disc(0.42f, 0.28f, 0.08f, 32), A.Lit("CakePink", E.Hex("#FFB3C7"), 0.35f), Vector3.zero);
+            P.Part(cake.transform, "Tier2", A.Disc(0.3f, 0.24f, 0.07f, 32), A.Lit("CakeCream", E.Hex("#FFF4DF"), 0.35f), new Vector3(0f, 0.28f, 0f));
+            for (int i = 0; i < 3; i++)
+            {
+                Vector3 cp = new Vector3((i - 1) * 0.14f, 0.52f, (i == 1 ? 0.06f : -0.04f));
+                P.Part(cake.transform, "Candle" + i, A.Capsule(0.025f, 0.2f), balloon[i], cp + Vector3.up * 0.1f, null, Vector3.one, false);
+                P.Part(cake.transform, "Flame" + i, A.SphereMesh, Glow("Flame", "#FFC94A"), cp + Vector3.up * 0.24f, null, new Vector3(0.06f, 0.1f, 0.06f), false);
+            }
+
+            // Rainy day: gentle rain outside, puddles on the path.
+            Material rainMat = A.Sprite("FX_Rain", IconLibrary.Get("fx_soft").texture, new Color(0.95f, 0.98f, 1f, 1f));
+            foreach (var (pos, size) in new[] { (new Vector3(6.6f, 6.5f, 0.5f), new Vector3(4.5f, 0.1f, 13f)), (new Vector3(0f, 6.5f, 6.2f), new Vector3(15f, 0.1f, 3f)),
+                         (new Vector3(-6.4f, 6.5f, 0f), new Vector3(3f, 0.1f, 12f)) })
+                Rain(rainy.transform, pos, size, rainMat);
+            P.Part(rainy.transform, "Puddle1", A.Disc(0.6f, 0.02f, 0.01f, 28), A.Glass, new Vector3(5.3f, -0.12f, -1.2f), null, new Vector3(1.4f, 1f, 0.8f), false);
+            P.Part(rainy.transform, "Puddle2", A.Disc(0.45f, 0.02f, 0.01f, 28), A.Glass, new Vector3(6.6f, -0.12f, -3.4f), null, new Vector3(1.2f, 1f, 0.9f), false);
+
+            // Night: fairy lights along the walls, moon and stars in the window.
+            Material[] bulbs = { Glow("BulbWarm", "#FFE08A"), Glow("BulbPink", "#FF9EC1"), Glow("BulbMint", "#9EF0C9"), Glow("BulbSky", "#9ED3F5") };
+            int b = 0;
+            for (float x = -3.9f; x <= 3.7f; x += 0.5f, b++)
+                P.Part(night.transform, "BulbBack", A.SphereMesh, bulbs[b % 4], new Vector3(x, 2.55f - Mathf.Abs(Mathf.Sin(x * 2.1f)) * 0.14f, 3.82f), null, Vector3.one * 0.13f, false);
+            for (float z = 3.6f; z >= -3.4f; z -= 0.5f, b++)
+                P.Part(night.transform, "BulbSide", A.SphereMesh, bulbs[b % 4], new Vector3(3.84f, 2.55f - Mathf.Abs(Mathf.Sin(z * 2.1f)) * 0.14f, z), null, Vector3.one * 0.13f, false);
+            P.Part(night.transform, "NightSky", A.RoundedBox(0.03f, 1.0f, 1.4f, 0.01f, 1), Glow("NightSky", "#28335C"), new Vector3(4.06f, 1.62f, 2.15f), null, null, false);
+            P.Part(night.transform, "Moon", A.SphereMesh, Glow("Moon", "#FFF2B3"), new Vector3(4.09f, 1.86f, 2.5f), null, Vector3.one * 0.26f, false);
+            foreach (var s in new[] { new Vector3(4.08f, 1.4f, 1.75f), new Vector3(4.08f, 1.9f, 1.85f), new Vector3(4.08f, 1.5f, 2.6f) })
+                P.Part(night.transform, "Star", A.SphereMesh, Glow("Star", "#FFFFFF"), s, null, Vector3.one * 0.06f, false);
+
+            // Window: tap to change the weather/mood.
+            GameObject win = GameObject.Find("Environment/Decorations/Prop_Window");
+            TapButton3D windowButton = null;
+            if (win != null)
+            {
+                win.layer = FoodItem.InteractableLayer;
+                var col = win.AddComponent<BoxCollider>();
+                col.size = new Vector3(1.7f, 1.3f, 0.4f);
+                windowButton = win.AddComponent<TapButton3D>();
+                E.Set(windowButton, "m_Priority", 3);
+                E.Set(windowButton, "m_Sound", (int)Audio.SfxId.Chime);
+                P.Key(win, "Window");
+            }
+
+            Light sun = GameObject.Find("Sun").GetComponent<Light>();
+            Renderer ground = GameObject.Find("Environment/Ground").GetComponent<Renderer>();
+            var tm = systems.gameObject.AddComponent<ThemeManager>();
+            var so = new SerializedObject(tm);
+            SerializedProperty looks = so.FindProperty("m_Looks");
+            looks.arraySize = 4;
+            Color baseGround = E.Hex("#C6EDC4");
+            void Look(int i, RestaurantTheme t, GameObject deco, string sunCol, float sunI, Color sky, Color eq, Color gr, string bg, Color groundCol, Audio.SfxId loop)
+            {
+                SerializedProperty l = looks.GetArrayElementAtIndex(i);
+                l.FindPropertyRelative("theme").enumValueIndex = (int)t;
+                l.FindPropertyRelative("decorations").objectReferenceValue = deco;
+                l.FindPropertyRelative("sunColor").colorValue = E.Hex(sunCol);
+                l.FindPropertyRelative("sunIntensity").floatValue = sunI;
+                l.FindPropertyRelative("ambientSky").colorValue = sky;
+                l.FindPropertyRelative("ambientEquator").colorValue = eq;
+                l.FindPropertyRelative("ambientGround").colorValue = gr;
+                l.FindPropertyRelative("background").colorValue = E.Hex(bg);
+                l.FindPropertyRelative("ground").colorValue = groundCol;
+                l.FindPropertyRelative("loop").intValue = (int)loop;
+            }
+            const float amb = 0.82f;
+            Look(0, RestaurantTheme.Sunny, sunny, "#FFF2E0", 0.95f, new Color(0.86f, 0.89f, 0.96f) * amb, new Color(0.86f, 0.82f, 0.78f) * amb, new Color(0.62f, 0.56f, 0.52f) * amb,
+                "#CFE8F7", baseGround, Audio.SfxId.None);
+            Look(1, RestaurantTheme.Birthday, party, "#FFEDEA", 0.98f, new Color(0.95f, 0.86f, 0.94f) * amb, new Color(0.92f, 0.82f, 0.82f) * amb, new Color(0.66f, 0.56f, 0.56f) * amb,
+                "#FBE3EE", E.Hex("#F6D9E6"), Audio.SfxId.None);
+            Look(2, RestaurantTheme.Rainy, rainy, "#E4ECF7", 0.78f, new Color(0.8f, 0.86f, 0.95f) * amb, new Color(0.78f, 0.8f, 0.84f) * amb, new Color(0.56f, 0.56f, 0.6f) * amb,
+                "#B9C9D6", E.Hex("#A9C7B2"), Audio.SfxId.Rain);
+            Look(3, RestaurantTheme.Night, night, "#FFD9A8", 0.62f, new Color(0.55f, 0.58f, 0.85f), new Color(0.62f, 0.56f, 0.66f), new Color(0.42f, 0.38f, 0.46f),
+                "#28335C", E.Hex("#2F4A5E"), Audio.SfxId.None);
+            so.FindProperty("m_Sun").objectReferenceValue = sun;
+            so.FindProperty("m_Camera").objectReferenceValue = cam;
+            so.FindProperty("m_Window").objectReferenceValue = windowButton;
+            so.FindProperty("m_Ground").objectReferenceValue = ground;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            party.SetActive(false);
+            rainy.SetActive(false);
+            night.SetActive(false);
+        }
+
+        private static void Rain(Transform parent, Vector3 pos, Vector3 size, Material mat)
+        {
+            GameObject go = P.Node(parent, "Rain", pos);
+            var ps = go.AddComponent<ParticleSystem>();
+            var main = ps.main;
+            main.loop = true;
+            main.startLifetime = 0.9f;
+            main.startSpeed = 0f;
+            main.startSize = 0.11f;
+            main.startColor = new Color(0.95f, 0.98f, 1f, 0.95f);
+            main.maxParticles = 200;
+            main.simulationSpace = ParticleSystemSimulationSpace.World;
+            main.prewarm = true;
+            var emission = ps.emission;
+            emission.rateOverTime = 170f;
+            var shape = ps.shape;
+            shape.shapeType = ParticleSystemShapeType.Box;
+            shape.scale = size;
+            var vel = ps.velocityOverLifetime;
+            vel.enabled = true;
+            vel.space = ParticleSystemSimulationSpace.World;
+            vel.x = new ParticleSystem.MinMaxCurve(-0.6f);
+            vel.y = new ParticleSystem.MinMaxCurve(-8.5f);
+            vel.z = new ParticleSystem.MinMaxCurve(0f);
+            var r = go.GetComponent<ParticleSystemRenderer>();
+            r.renderMode = ParticleSystemRenderMode.Stretch;
+            r.velocityScale = 0.05f;
+            r.lengthScale = 4f;
+            r.sharedMaterial = mat;
+            r.shadowCastingMode = ShadowCastingMode.Off;
+            r.receiveShadows = false;
         }
 
         private static void AddFreeSurface(Transform parent, string name, Vector3 pos, Vector2 size, float yaw)
@@ -498,6 +670,107 @@ namespace LittleBurgerWorld.EditorTools
             }
         }
 
+        /// <summary>Sink button (left column) + washing-up overlay.</summary>
+        private static WashingUpUI BuildWashingUp(Transform root)
+        {
+            RectTransform wr = UIFactory.Stretch("WashingUp", root);
+            SquishyButton open = UIFactory.RoundButton("SinkButton", wr, IconLibrary.Get("icon_sink"), Color.white, new Vector2(0f, 1f), new Vector2(100f, -255f), 120f, 0.72f);
+            P.Key(open.gameObject, "Sink");
+            Image badge = UIFactory.Image("Badge", open.transform, IconLibrary.Get("ui_circle"), E.Hex("#E96A52"), new Vector2(0.5f, 0.5f), new Vector2(44f, 44f), new Vector2(54f, 54f), false);
+            Text badgeText = UIFactory.Text("Count", badge.transform, "1", 36, Color.white, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(54f, 54f), TextAnchor.MiddleCenter, false);
+
+            RectTransform overlay = UIFactory.Stretch("Overlay", wr);
+            var group = overlay.gameObject.AddComponent<CanvasGroup>();
+            UIFactory.Dim(overlay, 0.5f);
+            Image panel = UIFactory.Panel("Panel", overlay, E.Hex("#E3F3FF"), new Vector2(0.5f, 0.5f), new Vector2(0f, -20f), new Vector2(1320f, 800f));
+            // Sink basin on the left, drying rack on the right
+            Image basin = UIFactory.Image("Basin", panel.transform, IconLibrary.Get("ui_panel"), E.Hex("#9ED3F5"), new Vector2(0.5f, 0.5f), new Vector2(-190f, -10f),
+                new Vector2(760f, 640f), false, true);
+            basin.pixelsPerUnitMultiplier = 0.3f;
+            UIFactory.Image("Water", basin.transform, IconLibrary.Get("ui_panel"), new Color(1f, 1f, 1f, 0.35f), new Vector2(0.5f, 0.5f), new Vector2(0f, -40f),
+                new Vector2(700f, 480f), false, true).pixelsPerUnitMultiplier = 0.3f;
+            RectTransform plateHome = UIFactory.Rect("PlateHome", basin.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 10f), new Vector2(10f, 10f));
+            RectTransform plateSpawn = UIFactory.Rect("PlateSpawn", panel.transform, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(-200f, 120f), new Vector2(10f, 10f));
+            Image plate = UIFactory.Image("Plate", basin.transform, IconLibrary.Get("ui_plate"), Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 10f), new Vector2(460f, 460f), true);
+            P.Key(plate.gameObject, "Sink.Plate");
+            Image rack = UIFactory.Image("Rack", panel.transform, IconLibrary.Get("ui_panel"), E.Hex("#F3D7B3"), new Vector2(0.5f, 0.5f), new Vector2(420f, -40f),
+                new Vector2(300f, 560f), false, true);
+            rack.pixelsPerUnitMultiplier = 0.35f;
+            var rackPlates = new Object[5];
+            for (int i = 0; i < 5; i++)
+            {
+                Image rp = UIFactory.Image("RackPlate" + i, rack.transform, IconLibrary.Get("icon_plate_clean"), Color.white, new Vector2(0.5f, 0f),
+                    new Vector2(0f, 90f + i * 92f), new Vector2(160f, 160f), false);
+                rp.rectTransform.localEulerAngles = new Vector3(0f, 0f, i % 2 == 0 ? -6f : 6f);
+                rackPlates[i] = rp;
+            }
+            RectTransform bubbles = UIFactory.Stretch("Bubbles", panel.transform);
+            RectTransform spongeHome = UIFactory.Rect("SpongeHome", panel.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(110f, -270f), new Vector2(10f, 10f));
+            Image sponge = UIFactory.Image("Sponge", panel.transform, IconLibrary.Get("icon_sponge"), Color.white, new Vector2(0.5f, 0.5f), new Vector2(110f, -270f),
+                new Vector2(190f, 190f), false);
+            SquishyButton close = UIFactory.RoundButton("Close", panel.transform, IconLibrary.Get("icon_close"), new Color(1, 1, 1, 0), new Vector2(1f, 1f),
+                new Vector2(-30f, -30f), 110f, 1f);
+
+            var ui = wr.gameObject.AddComponent<WashingUpUI>();
+            E.Set(ui, "m_OpenButton", open);
+            E.Set(ui, "m_Badge", badge.rectTransform);
+            E.Set(ui, "m_BadgeText", badgeText);
+            E.Set(ui, "m_Overlay", overlay.gameObject);
+            E.Set(ui, "m_Group", group);
+            E.Set(ui, "m_Plate", plate.rectTransform);
+            E.Set(ui, "m_PlateHome", plateHome);
+            E.Set(ui, "m_PlateSpawn", plateSpawn);
+            E.Set(ui, "m_Sponge", sponge.rectTransform);
+            E.Set(ui, "m_SpongeHome", spongeHome);
+            E.Set(ui, "m_BubbleLayer", bubbles);
+            E.SetArray(ui, "m_RackPlates", rackPlates);
+            E.Set(ui, "m_Close", close);
+            E.Set(ui, "m_SplotchSprite", IconLibrary.Get("ui_splotch"));
+            E.Set(ui, "m_BubbleSprite", IconLibrary.Get("ui_soap_bubble"));
+            plate.gameObject.AddComponent<ScrubSurface>();
+            overlay.gameObject.SetActive(false);
+            return ui;
+        }
+
+        /// <summary>Surprise capsule machine (right column) + reveal overlay.</summary>
+        private static ToyCapsuleUI BuildCapsuleMachine(Transform root)
+        {
+            RectTransform cr = UIFactory.Stretch("Capsules", root);
+            SquishyButton machine = UIFactory.RoundButton("CapsuleMachine", cr, IconLibrary.Get("icon_capsule_machine"), Color.white, new Vector2(1f, 1f),
+                new Vector2(-100f, -255f), 120f, 0.8f);
+            P.Key(machine.gameObject, "Capsules");
+            Image waiting = UIFactory.Image("WaitingCapsule", machine.transform, IconLibrary.Get("ui_circle"), E.Hex("#FF6F91"), new Vector2(0.5f, 0.5f),
+                new Vector2(-46f, -44f), new Vector2(56f, 56f), false);
+            UIFactory.Image("Shine", waiting.transform, IconLibrary.Get("ui_circle"), new Color(1, 1, 1, 0.6f), new Vector2(0.5f, 0.5f), new Vector2(-9f, 10f), new Vector2(18f, 18f), false);
+            Text count = UIFactory.Text("Count", machine.transform, "", 34, Color.white, new Vector2(0.5f, 0.5f), new Vector2(-46f, -44f), new Vector2(56f, 56f));
+
+            RectTransform reveal = UIFactory.Stretch("Reveal", cr);
+            var group = reveal.gameObject.AddComponent<CanvasGroup>();
+            UIFactory.Dim(reveal, 0.55f);
+            Image catcher = UIFactory.Image("TapCatcher", reveal, IconLibrary.Get("ui_circle"), new Color(1, 1, 1, 0), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1600f, 1000f), true);
+            var catchButton = catcher.gameObject.AddComponent<SquishyButton>();
+            Image burst = UIFactory.Image("Burst", reveal, IconLibrary.Get("ui_burst"), Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 10f), new Vector2(760f, 760f), false);
+            Image bottom = UIFactory.Image("CapsuleBottom", reveal, IconLibrary.Get("ui_capsule_bottom"), Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, -40f), new Vector2(380f, 380f), false);
+            Image top = UIFactory.Image("CapsuleTop", reveal, IconLibrary.Get("ui_capsule_top"), E.Hex("#FF6F91"), new Vector2(0.5f, 0.5f), new Vector2(0f, 40f), new Vector2(380f, 380f), false);
+            Image toy = UIFactory.Image("Toy", reveal, null, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 20f), new Vector2(380f, 380f), false);
+
+            var ui = cr.gameObject.AddComponent<ToyCapsuleUI>();
+            E.Set(ui, "m_Machine", machine);
+            E.Set(ui, "m_WaitingCapsule", waiting.rectTransform);
+            E.Set(ui, "m_CountText", count);
+            E.Set(ui, "m_Reveal", reveal.gameObject);
+            E.Set(ui, "m_RevealGroup", group);
+            E.Set(ui, "m_CapsuleTop", top.rectTransform);
+            E.Set(ui, "m_CapsuleBottom", bottom.rectTransform);
+            E.Set(ui, "m_CapsuleTopImage", top);
+            E.Set(ui, "m_CapsuleBottomImage", bottom);
+            E.Set(ui, "m_Toy", toy);
+            E.Set(ui, "m_Burst", burst.rectTransform);
+            E.Set(ui, "m_TapCatcher", catchButton);
+            reveal.gameObject.SetActive(false);
+            return ui;
+        }
+
         private static UIManager BuildHud()
         {
             Canvas canvas = UIFactory.Canvas("HUD", 10);
@@ -562,6 +835,9 @@ namespace LittleBurgerWorld.EditorTools
                 "Hold to tidy up", "hold_tidy", 0.85f);
             SquishyButton replay = UIFactory.RoundButton("ReplayButton", root, IconLibrary.Get("icon_replay"), E.Hex("#F5A623"), new Vector2(1f, 1f), new Vector2(-100f, -100f), 120f);
             SquishyButton list = UIFactory.RoundButton("ActivitiesButton", root, IconLibrary.Get("icon_grid"), Color.white, new Vector2(1f, 1f), new Vector2(-245f, -100f), 120f);
+
+            BuildWashingUp(root);
+            BuildCapsuleMachine(root);
 
             // Celebration
             RectTransform celebration = UIFactory.Stretch("Celebration", root);

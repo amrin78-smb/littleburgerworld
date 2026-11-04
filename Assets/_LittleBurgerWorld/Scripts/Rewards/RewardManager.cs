@@ -31,6 +31,39 @@ namespace LittleBurgerWorld.Rewards
 
         public bool HasSticker(string id) => Data.stickers.Contains(id);
 
+        // ------------------------------------------------------------------ surprise capsules
+        public const int MaxPendingCapsules = 3;
+
+        public int PendingCapsules => Data.pendingCapsules;
+        public bool HasToy(string id) => Data.toys != null && Data.toys.Contains(id);
+        public int ToyCount => Data.toys != null ? Data.toys.Count : 0;
+
+        /// <summary>Drops a free capsule into the machine (capped so it never piles up).</summary>
+        public void EarnCapsule()
+        {
+            if (Data.pendingCapsules >= MaxPendingCapsules) return;
+            Data.pendingCapsules++;
+            m_Save.MarkDirty();
+            GameEvents.RaiseToyCapsuleEarned();
+        }
+
+        /// <summary>Opens a waiting capsule: a toy not found yet when possible. Returns its id (null if none waiting).</summary>
+        public string OpenCapsule()
+        {
+            if (Data.pendingCapsules <= 0 || m_Config == null || m_Config.toys.Count == 0) return null;
+            Data.pendingCapsules--;
+            if (Data.toys == null) Data.toys = new List<string>();
+            var fresh = new List<string>();
+            foreach (var t in m_Config.toys) if (t != null && !Data.toys.Contains(t.name)) fresh.Add(t.name);
+            string id;
+            if (fresh.Count > 0) id = fresh[UnityEngine.Random.Range(0, fresh.Count)];
+            else id = m_Config.toys[UnityEngine.Random.Range(0, m_Config.toys.Count)].name;
+            if (!Data.toys.Contains(id)) Data.toys.Add(id);
+            m_Save.MarkDirty();
+            GameEvents.Raise(new GameplayEvent(GameplayEventType.ToyCollected, id));
+            return id;
+        }
+
         public bool IsIngredientUnlocked(Food.IngredientData ing)
         {
             if (ing == null) return false;
@@ -78,12 +111,14 @@ namespace LittleBurgerWorld.Rewards
                 case GameplayEventType.MealReady: s.mealsMade++; break;
                 case GameplayEventType.CustomerServed:
                     s.customersServed++;
+                    EarnCapsule();
                     if (s.animalsServed == null) s.animalsServed = new System.Collections.Generic.List<string>();
                     if (!string.IsNullOrEmpty(e.ExtraId) && !s.animalsServed.Contains(e.ExtraId)) s.animalsServed.Add(e.ExtraId);
                     break;
                 case GameplayEventType.BalloonPopped: s.balloonsPopped++; break;
                 case GameplayEventType.IceCreamCompleted: s.iceCreamsMade++; break;
                 case GameplayEventType.DishWashed: s.dishesWashed++; break;
+                case GameplayEventType.ToyCollected: break;
                 default: return;
             }
             m_Save.MarkDirty();
@@ -92,6 +127,7 @@ namespace LittleBurgerWorld.Rewards
 
         private void OnActivityCompleted(string id)
         {
+            EarnCapsule();
             EvaluateStickers();
             if (m_Config == null) return;
             Activities.ActivityData a = m_Config.FindActivity(id);
@@ -134,6 +170,7 @@ namespace LittleBurgerWorld.Rewards
                 case StickerCondition.PopBalloons: return s.balloonsPopped >= st.threshold;
                 case StickerCondition.FirstIceCream: return s.iceCreamsMade >= st.threshold;
                 case StickerCondition.WashDishes: return s.dishesWashed >= st.threshold;
+                case StickerCondition.CollectToys: return ToyCount >= st.threshold;
                 case StickerCondition.ServeDifferentAnimals: return s.animalsServed != null && s.animalsServed.Count >= st.threshold;
                 case StickerCondition.CompleteActivity: return Data.IsActivityCompleted(st.activityId);
                 case StickerCondition.CompleteAllActivities:

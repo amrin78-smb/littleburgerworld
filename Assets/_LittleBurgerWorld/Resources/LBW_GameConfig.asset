@@ -52,6 +52,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ded422c8f11b65876b8cf126979af9b1, type: 2}
   - {fileID: 11400000, guid: b026a02063ccd454e8a5ee6c49cfdc5e, type: 2}
   - {fileID: 11400000, guid: 3df22912cee8a659580f12383610e92b, type: 2}
+  - {fileID: 11400000, guid: 89a45b97c1ff5e849a50a5dc89a30565, type: 2}
   - {fileID: 11400000, guid: e9df8b2ce46d71bff8e992fb2021b0b0, type: 2}
   stickers:
   - {fileID: 11400000, guid: 9a2f144b34db6463f8d8dfd654f0785b, type: 2}
@@ -63,12 +64,35 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4f2e1f4be67dee4e6960b402ece82cdb, type: 2}
   - {fileID: 11400000, guid: 9e717171c23ac9d3e86c28a57da2ff06, type: 2}
   - {fileID: 11400000, guid: 234530cf669b94dd6821b078ddc34c42, type: 2}
+  - {fileID: 11400000, guid: 355b16c4f84e83224ab233058908b05f, type: 2}
+  - {fileID: 11400000, guid: c6f0b892bc2041424909f843d7fc0b69, type: 2}
   - {fileID: 11400000, guid: c4dcb7b47ff4d37ff9daea295afab002, type: 2}
   - {fileID: 11400000, guid: 1ec6150d441fff80aa67c64da7f29e8e, type: 2}
   audioLibrary: {fileID: 11400000, guid: 0843c303cbba9cc59bb154d788b140ab, type: 2}
   localization: {fileID: 11400000, guid: 39cc4fa437cae6e839c36cf756558dda, type: 2}
   friesIcon: {fileID: 21300000, guid: b51f892dd8cbced358070ed91f587521, type: 3}
   iceCreamIcon: {fileID: 21300000, guid: 4527d89b31ffe7cb39d7cf0ebd46d40e, type: 3}
+  toys:
+  - {fileID: 21300000, guid: 9c6416b216d3e409ab8f94f8d3aac36b, type: 3}
+  - {fileID: 21300000, guid: b423e59bf5df5f3cd8c13ccd84d6fe7b, type: 3}
+  - {fileID: 21300000, guid: c3c6c477f87be2cf1b6f87a4f5f40bc6, type: 3}
+  - {fileID: 21300000, guid: 0b52a2689b8ae044caaa85c02003d960, type: 3}
+  - {fileID: 21300000, guid: cf8df04b7b3cbfc10841eb8b1fcd82c4, type: 3}
+  - {fileID: 21300000, guid: e75336b752710162faed394b1bfec585, type: 3}
+  - {fileID: 21300000, guid: cf0d69a3d4eca1f6486b7a4f2d2f6cee, type: 3}
+  - {fileID: 21300000, guid: 657aa1480ccd673dc8c0688dee3952e9, type: 3}
+  - {fileID: 21300000, guid: bf68fd527a7d8e02cbaa4608081b9b28, type: 3}
+  - {fileID: 21300000, guid: b65b7171e2a95479d97202e116707718, type: 3}
+  - {fileID: 21300000, guid: 49ddb6ff328d81399bb99f7536930bb9, type: 3}
+  - {fileID: 21300000, guid: b67b45fcd92e1aaa9ad7fa241fc27a0f, type: 3}
+  - {fileID: 21300000, guid: 109e6fa354879fc9399a7b6b399f9290, type: 3}
+  - {fileID: 21300000, guid: b21c755a85f3821c89380fd0353725c0, type: 3}
+  - {fileID: 21300000, guid: d35ea4790876e06739dc246b464fc75e, type: 3}
+  - {fileID: 21300000, guid: 277188b5b46abbd3a8edb289eb94157d, type: 3}
+  - {fileID: 21300000, guid: 973e9887821b291f59816dc772a62f29, type: 3}
+  - {fileID: 21300000, guid: 1a7e97ccb99801c2d9dd90aeb556847b, type: 3}
+  - {fileID: 21300000, guid: 4c29d41d433a730e49c77f928c44506c, type: 3}
+  - {fileID: 21300000, guid: 6cecb52666c0a8bd58694521f76addbc, type: 3}
   trayIcon: {fileID: 21300000, guid: 84f6e1a98b07775f3a09490ee01c7647, type: 3}
   burgerIcon: {fileID: 21300000, guid: 48597f491d4c0b161b959dff1595c793, type: 3}
   starIcon: {fileID: 21300000, guid: c77f213b2a27c96bd83abbcf109851f7, type: 3}

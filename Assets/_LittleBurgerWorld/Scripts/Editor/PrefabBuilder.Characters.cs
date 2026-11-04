@@ -1,4 +1,5 @@
 using LittleBurgerWorld.Customers;
+using LittleBurgerWorld.Core;
 using LittleBurgerWorld.Food;
 using UnityEngine;
 using A = LittleBurgerWorld.EditorTools.ArtLibrary;
@@ -165,6 +166,13 @@ namespace LittleBurgerWorld.EditorTools
             Part(head, "CheekL", A.SphereMesh, A.Blush, new Vector3(-0.38f, 0.32f, 0.36f), null, new Vector3(0.17f, 0.1f, 0.08f), false);
             Part(head, "CheekR", A.SphereMesh, A.Blush, new Vector3(0.38f, 0.32f, 0.36f), null, new Vector3(0.17f, 0.1f, 0.08f), false);
 
+            // Party hat (shown on birthday days by AnimalCustomerController)
+            GameObject hat = Node(head, "PartyHat", new Vector3(look.Ears == EarStyle.Long ? 0f : 0.1f, 0.92f, 0f), new Vector3(0f, 0f, look.Ears == EarStyle.Long ? 0f : -14f));
+            Part(hat.transform, "Cone", A.SoftCone, A.Lit("PartyHatPink", EditorAssetUtil.Hex("#FF6F91"), 0.4f), Vector3.zero, null, new Vector3(0.36f, 0.5f, 0.36f), false);
+            Part(hat.transform, "Stripe", A.Mesh("PartyHatBand", () => MeshFactory.Torus(0.14f, 0.025f, 20, 6)), A.CheeseYellow, new Vector3(0f, 0.12f, 0f), null, null, false);
+            Part(hat.transform, "PomPom", A.SphereMesh, A.CheeseYellow, new Vector3(0f, 0.52f, 0f), null, Vector3.one * 0.13f, false);
+            hat.SetActive(false);
+
             // Arms (pivot at shoulder) and legs (pivot at hip)
             Transform armL = Node(model, "ArmL", new Vector3(-0.47f, 1.08f, 0.02f)).transform;
             Transform armR = Node(model, "ArmR", new Vector3(0.47f, 1.08f, 0.02f)).transform;
@@ -243,6 +251,7 @@ namespace LittleBurgerWorld.EditorTools
             EditorAssetUtil.Set(ctrl, "m_Data", data);
             EditorAssetUtil.Set(ctrl, "m_Rig", rig);
             EditorAssetUtil.Set(ctrl, "m_Bubble", rb);
+            EditorAssetUtil.Set(ctrl, "m_PartyHat", hat);
             EditorAssetUtil.Set(ctrl, "m_AcceptRadius", 1.6f);
             EditorAssetUtil.Set(ctrl, "m_RingRadius", 1.1f);
             EditorAssetUtil.Set(ctrl, "m_DropPriority", 20);

@@ -116,6 +116,7 @@ namespace LittleBurgerWorld.EditorTools
         }
 
         public Shape Subtract(Shape other) => new Shape(p => Mathf.Max(Dist(p), -other.Dist(p)), Bounds);
+        public Shape Union(Shape other) => Union(this, other);
         public Shape Intersect(Shape other) => new Shape(p => Mathf.Max(Dist(p), other.Dist(p)), Bounds);
         public Shape Round(float r) => new Shape(p => Dist(p) - r, Grow(Bounds, r));
         public Shape Annular(float thickness) => new Shape(p => Mathf.Abs(Dist(p)) - thickness * 0.5f, Grow(Bounds, thickness));

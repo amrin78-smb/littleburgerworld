@@ -10,7 +10,7 @@ namespace LittleBurgerWorld.EditorTools
     /// All original 2D artwork, painted procedurally (no external or copyrighted assets).
     /// Icons are authored in a 256×256 space, y up.
     /// </summary>
-    public static class IconLibrary
+    public static partial class IconLibrary
     {
         public const string IconFolder = EditorAssetUtil.Root + "/Art/UI/Icons";
         public const string TextureFolder = EditorAssetUtil.Root + "/Art/Textures";
@@ -70,6 +70,7 @@ namespace LittleBurgerWorld.EditorTools
             RegisterUi();
             RegisterStickers();
             RegisterParticles();
+            RegisterToysAndMinigames();
 
             var paths = new List<(string path, IconDef def)>();
             foreach (IconDef d in s_Defs)
