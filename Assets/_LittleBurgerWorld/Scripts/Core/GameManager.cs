@@ -77,7 +77,10 @@ namespace LittleBurgerWorld.Core
             Save = new SaveManager(m_SavePathOverride);
             Save.Load();
 
-            Localization.Initialize(m_Config.localization, Save.Data.settings.language);
+            // A language that is no longer shipped (e.g. an old save) falls back to English.
+            LocalizationTable table = m_Config.localization;
+            if (table != null && !table.languages.Contains(Save.Data.settings.language)) Save.Data.settings.language = "en";
+            Localization.Initialize(table, Save.Data.settings.language);
 
             Modes = new GameModeManager();
             Recipes = new RecipeManager(m_Config.recipes);

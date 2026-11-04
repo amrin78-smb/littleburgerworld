@@ -10,7 +10,9 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Fredoka
-  fallbackFontReferences: []
+  - Mitr
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c037ed953504bc6d7a33f2d9edc274ae, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

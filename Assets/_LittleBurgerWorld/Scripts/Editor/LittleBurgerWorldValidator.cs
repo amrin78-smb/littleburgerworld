@@ -166,6 +166,11 @@ namespace LittleBurgerWorld.EditorTools
                     var e = cfg.audioLibrary.Get(id);
                     if (e == null || e.clips.Length == 0 || e.clips.Any(c => c == null)) problems.Add("No clip for sound " + id);
                 }
+                // Thai text needs the Mitr fallback on the UI font.
+                var fontImp = AssetImporter.GetAtPath(PrefabBuilder.FontPath) as TrueTypeFontImporter;
+                if (fontImp == null || fontImp.fontReferences == null || !fontImp.fontReferences.Any(f => f != null && f.name.Contains("Mitr")))
+                    problems.Add("UI font has no Thai fallback (Mitr) – Thai text would be invisible");
+
                 // Every spoken step needs a clip in every language (Tools/voice/generate_voice.sh).
                 var languages = cfg.localization != null ? cfg.localization.languages : new List<string> { "en" };
                 var voiceKeys = new HashSet<string>(cfg.activities.Where(a => a != null).SelectMany(a => a.steps)

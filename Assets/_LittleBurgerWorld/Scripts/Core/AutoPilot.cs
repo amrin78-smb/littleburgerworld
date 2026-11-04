@@ -64,6 +64,13 @@ namespace LittleBurgerWorld.Core
             GameManager gm = GameManager.Instance;
             gm.UseSaveFile(Path.Combine(m_Dir, "autopilot_save.json"));
             gm.Save.ResetProgress();
+            string[] args = Environment.GetCommandLineArgs();
+            int li = Array.IndexOf(args, "-lbw-lang");
+            if (li >= 0 && li + 1 < args.Length)
+            {
+                gm.Save.Data.settings.language = args[li + 1];
+                Localization.SetLanguage(args[li + 1]);
+            }
 
             yield return Until(() => SceneManager.GetActiveScene().name == "MainMenu" && !gm.Scenes.IsLoading, 15f);
             yield return new WaitForSeconds(1.5f);

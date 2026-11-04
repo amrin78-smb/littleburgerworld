@@ -336,7 +336,7 @@ namespace LittleBurgerWorld.EditorTools
             lib.voice = new List<VoiceEntry>();
             foreach (VoiceLine line in VoiceLines())
             {
-                foreach (string lang in new[] { "en", "es" })
+                foreach (string lang in new[] { "en", "th" })
                 {
                     string text = line.Text(lang);
                     if (string.IsNullOrEmpty(text)) continue;
@@ -360,8 +360,8 @@ namespace LittleBurgerWorld.EditorTools
         [System.Serializable]
         public sealed class VoiceLine
         {
-            public string key, en, es;
-            public string Text(string lang) => lang == "es" ? es : en;
+            public string key, en, th;
+            public string Text(string lang) => lang == "th" ? th : en;
         }
 
         [System.Serializable]
@@ -380,31 +380,31 @@ namespace LittleBurgerWorld.EditorTools
         public static LocalizationTable BuildLocalization()
         {
             var t = E.LoadOrCreateSO<LocalizationTable>($"{SO}/Settings/LocalizationTable.asset");
-            t.languages = new List<string> { "en", "es" };
-            t.languageNames = new List<string> { "English", "Español" };
+            t.languages = new List<string> { "en", "th" };
+            t.languageNames = new List<string> { "English", "ไทย" };
             t.entries = new List<LocalizedEntry>();
-            void L(string key, string en, string es) => t.entries.Add(new LocalizedEntry { key = key, values = new List<string> { en, es } });
-            L("lets_play", "LET'S PLAY!", "¡A JUGAR!");
-            L("free_play", "FREE PLAY", "JUEGO LIBRE");
-            L("parent_gate_question", "Grown-ups only! Tap the answer:", "¡Solo adultos! Toca la respuesta:");
-            L("settings_title", "Parent Settings", "Ajustes para padres");
-            L("music", "Music", "Música");
-            L("sounds", "Sounds", "Sonidos");
-            L("voice", "Voice", "Voz");
-            L("voice_prompts", "Spoken hints", "Pistas habladas");
-            L("language", "Language", "Idioma");
-            L("reset_progress", "Hold to reset progress", "Mantén pulsado para reiniciar");
-            L("progress_reset_done", "Progress has been reset.", "Se ha reiniciado el progreso.");
-            L("privacy", "Privacy", "Privacidad");
+            void L(string key, string en, string th) => t.entries.Add(new LocalizedEntry { key = key, values = new List<string> { en, th } });
+            L("lets_play", "LET'S PLAY!", "มาเล่นกัน!");
+            L("free_play", "FREE PLAY", "เล่นอิสระ");
+            L("parent_gate_question", "Grown-ups only! Tap the answer:", "สำหรับผู้ใหญ่เท่านั้น! แตะคำตอบ:");
+            L("settings_title", "Parent Settings", "การตั้งค่าสำหรับผู้ปกครอง");
+            L("music", "Music", "เพลง");
+            L("sounds", "Sounds", "เสียงประกอบ");
+            L("voice", "Voice", "เสียงพูด");
+            L("voice_prompts", "Spoken hints", "คำแนะนำด้วยเสียง");
+            L("language", "Language", "ภาษา");
+            L("reset_progress", "Hold to reset progress", "กดค้างเพื่อเริ่มใหม่ทั้งหมด");
+            L("progress_reset_done", "Progress has been reset.", "เริ่มใหม่ทั้งหมดแล้ว");
+            L("privacy", "Privacy", "ความเป็นส่วนตัว");
             L("privacy_text",
                 "Little Burger World works completely offline.\nIt does not collect, store or share any personal information.\nThere are no ads, no purchases, no accounts, no analytics and no third-party tracking.\nProgress (stars, stickers and settings) is saved only on this device and can be erased with \"Reset progress\".",
-                "Little Burger World funciona totalmente sin conexión.\nNo recopila, guarda ni comparte información personal.\nNo hay anuncios, compras, cuentas, analíticas ni rastreo de terceros.\nEl progreso (estrellas, pegatinas y ajustes) se guarda solo en este dispositivo y se puede borrar con \"Reiniciar progreso\".");
-            L("stickers", "Stickers", "Pegatinas");
-            L("hold_home", "Hold to go home", "Mantén pulsado para salir");
-            L("hold_tidy", "Hold to tidy up", "Mantén pulsado para recoger");
+                "Little Burger World ทำงานแบบออฟไลน์ทั้งหมด\nไม่เก็บ ไม่บันทึก และไม่แชร์ข้อมูลส่วนตัวใด ๆ\nไม่มีโฆษณา ไม่มีการซื้อ ไม่มีบัญชีผู้ใช้ ไม่มีการวิเคราะห์ และไม่มีการติดตามจากบุคคลที่สาม\nความคืบหน้า (ดาว สติกเกอร์ และการตั้งค่า) บันทึกไว้ในเครื่องนี้เท่านั้น และลบได้ด้วยปุ่ม \"เริ่มใหม่ทั้งหมด\"");
+            L("stickers", "Stickers", "สติกเกอร์");
+            L("hold_home", "Hold to go home", "กดค้างเพื่อกลับหน้าหลัก");
+            L("hold_tidy", "Hold to tidy up", "กดค้างเพื่อเก็บของ");
 
             // On-screen instructions for guided steps ("say." + voice key), same text as the voice.
-            foreach (VoiceLine line in VoiceLines()) L("say." + line.key, line.en, line.es);
+            foreach (VoiceLine line in VoiceLines()) L("say." + line.key, line.en, line.th);
             EditorUtility.SetDirty(t);
             return t;
         }

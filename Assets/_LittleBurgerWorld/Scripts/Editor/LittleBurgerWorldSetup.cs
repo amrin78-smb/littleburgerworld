@@ -76,6 +76,8 @@ namespace LittleBurgerWorld.EditorTools
             IconLibrary.GenerateAll();
             progress.Step("Synthesising audio", 0.25f);
             AudioSynth.GenerateAll();
+            ConfigureFonts();
+            ConfigureSplash();
 
             progress.Step("Materials, meshes & food prefabs", 0.4f);
             ArtLibrary.ClearCache();
@@ -256,6 +258,56 @@ namespace LittleBurgerWorld.EditorTools
                 if (!p.Next(true)) break;
             }
             return null;
+        }
+
+        public const string ThaiFontPath = EditorAssetUtil.Root + "/Art/UI/Fonts/Mitr-Medium.ttf";
+
+        /// <summary>Fredoka has Latin glyphs only; Mitr (OFL, rounded) supplies Thai through Unity's font fallback.</summary>
+        public static void ConfigureFonts()
+        {
+            var thai = AssetImporter.GetAtPath(ThaiFontPath) as TrueTypeFontImporter;
+            var main = AssetImporter.GetAtPath(PrefabBuilder.FontPath) as TrueTypeFontImporter;
+            if (thai == null || main == null) { Debug.LogError("[LBW Setup] Fonts missing"); return; }
+            thai.includeFontData = true;
+            thai.fontTextureCase = FontTextureCase.Dynamic;
+            thai.SaveAndReimport();
+            Font thaiFont = AssetDatabase.LoadAssetAtPath<Font>(ThaiFontPath);
+            // Set the serialized fields directly (the C# property setters do not persist reliably in batch mode).
+            var so = new SerializedObject(main);
+            SerializedProperty P(string n) => so.FindProperty(n) ?? so.FindProperty("m_" + char.ToUpperInvariant(n[0]) + n.Substring(1));
+            SerializedProperty refs = P("fallbackFontReferences") ?? P("fontReferences");
+            SerializedProperty names = P("fontNames");
+            if (refs == null || names == null)
+            {
+                var all = new List<string>();
+                SerializedProperty it = so.GetIterator();
+                while (it.NextVisible(true)) all.Add(it.propertyPath);
+                Debug.LogError("[LBW Setup] Font importer properties: " + string.Join(", ", all));
+                return;
+            }
+            SerializedProperty include = P("includeFontData");
+            if (include != null) include.boolValue = true;
+            refs.arraySize = 1;
+            refs.GetArrayElementAtIndex(0).objectReferenceValue = thaiFont;
+            names.arraySize = 2;
+            names.GetArrayElementAtIndex(0).stringValue = "Fredoka";
+            names.GetArrayElementAtIndex(1).stringValue = "Mitr";
+            so.ApplyModifiedPropertiesWithoutUndo();
+            main.SaveAndReimport();
+            Font fredoka = AssetDatabase.LoadAssetAtPath<Font>(PrefabBuilder.FontPath);
+            Debug.Log($"[LBW Setup] Font fallback: {string.Join(",", fredoka.fontNames)} refs={refs.arraySize} thai={(thaiFont != null)}");
+        }
+
+        /// <summary>Unity's start-up splash: our burger logo with the Unity logo below, on the game's cream colour.</summary>
+        public static void ConfigureSplash()
+        {
+            Sprite logo = IconLibrary.Get("logo_burger");
+            PlayerSettings.SplashScreen.show = true;
+            PlayerSettings.SplashScreen.backgroundColor = E.Hex("#FFEFD8");
+            PlayerSettings.SplashScreen.unityLogoStyle = PlayerSettings.SplashScreen.UnityLogoStyle.DarkOnLight;
+            PlayerSettings.SplashScreen.drawMode = PlayerSettings.SplashScreen.DrawMode.UnityLogoBelow;
+            PlayerSettings.SplashScreen.animationMode = PlayerSettings.SplashScreen.AnimationMode.Dolly;
+            PlayerSettings.SplashScreen.logos = logo != null ? new[] { PlayerSettings.SplashScreenLogo.Create(2.5f, logo) } : null;
         }
 
         public static void ApplyAppIcon()

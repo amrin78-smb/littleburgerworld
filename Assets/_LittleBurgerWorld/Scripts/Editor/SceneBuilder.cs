@@ -95,9 +95,10 @@ namespace LittleBurgerWorld.EditorTools
             Canvas canvas = UIFactory.Canvas("BootCanvas", 0);
             RectTransform logo = UIFactory.Rect("Logo", canvas.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 40f), new Vector2(900f, 600f));
             UIFactory.Image("Burger", logo, IconLibrary.Get("logo_burger"), Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 90f), new Vector2(360f, 360f), false);
-            UIFactory.Text("Title", logo, "Little Burger World", 110, E.Hex("#F5A623"), new Vector2(0.5f, 0.5f), new Vector2(0f, -170f), new Vector2(1400f, 160f));
+            Text title = UIFactory.Text("Title", logo, "Little Burger World", 110, E.Hex("#F5A623"), new Vector2(0.5f, 0.5f), new Vector2(0f, -170f), new Vector2(1400f, 160f));
             var boot = new GameObject("BootLoader").AddComponent<BootLoader>();
             E.Set(boot, "m_Logo", logo);
+            E.Set(boot, "m_Title", title.rectTransform);
             EditorSceneManager.SaveScene(SceneManager.GetActiveScene(), BootPath);
         }
 

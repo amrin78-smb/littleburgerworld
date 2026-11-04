@@ -142,166 +142,167 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 8306efdabaec5a3389d3db53515d040c, type: 3}
     transcript: Put the bottom bun on the board!
   - key: add_bun
-    language: es
-    clip: {fileID: 8300000, guid: 0fcbef6b24832cd9186a0c55cecbc06a, type: 3}
-    transcript: "\xA1Pon el pan de abajo en la tabla!"
+    language: th
+    clip: {fileID: 8300000, guid: c5e601f2affe32a629fc00d1f490e6fa, type: 3}
+    transcript: "\u0E27\u0E32\u0E07\u0E02\u0E19\u0E21\u0E1B\u0E31\u0E07\u0E0A\u0E34\u0E49\u0E19\u0E25\u0E48\u0E32\u0E07\u0E1A\u0E19\u0E40\u0E02\u0E35\u0E22\u0E07\u0E19\u0E30!"
   - key: patty_on_grill
     language: en
     clip: {fileID: 8300000, guid: 472524a1c2d76829d8bc9f9f0f987abf, type: 3}
     transcript: Put the patty on the grill.
   - key: patty_on_grill
-    language: es
-    clip: {fileID: 8300000, guid: 0af16138c51f38d6d97d6afea8199b48, type: 3}
-    transcript: Pon la carne en la parrilla.
+    language: th
+    clip: {fileID: 8300000, guid: 237f2b287c6291e1eb166587c2ff56b7, type: 3}
+    transcript: "\u0E27\u0E32\u0E07\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E1A\u0E19\u0E40\u0E15\u0E32\u0E22\u0E48\u0E32\u0E07\u0E19\u0E30"
   - key: flip_patty
     language: en
     clip: {fileID: 8300000, guid: 7439d5444cd52b053a0f8a4cbd14d40d, type: 3}
     transcript: Tap the patty to flip it!
   - key: flip_patty
-    language: es
-    clip: {fileID: 8300000, guid: 44255754c257594fc9e904040c82787f, type: 3}
-    transcript: "\xA1Toca la carne para darle la vuelta!"
+    language: th
+    clip: {fileID: 8300000, guid: 7963d2405571cf7f288c83cae438cc33, type: 3}
+    transcript: "\u0E41\u0E15\u0E30\u0E17\u0E35\u0E48\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E01\u0E25\u0E31\u0E1A\u0E14\u0E49\u0E32\u0E19!"
   - key: patty_cooking
     language: en
     clip: {fileID: 8300000, guid: bdae49c07a123df5a82808d0a42ce3a9, type: 3}
     transcript: Sizzle sizzle! The patty is cooking.
   - key: patty_cooking
-    language: es
-    clip: {fileID: 8300000, guid: 7743a795c9e9ad245a9fb2aa8094a7a6, type: 3}
-    transcript: "\xA1Chisporrotea! La carne se est\xE1 cocinando."
+    language: th
+    clip: {fileID: 8300000, guid: 6dfe156f58e707369bbe7e1c523f7ff2, type: 3}
+    transcript: "\u0E09\u0E48\u0E32 \u0E09\u0E48\u0E32! \u0E01\u0E33\u0E25\u0E31\u0E07\u0E22\u0E48\u0E32\u0E07\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2D\u0E22\u0E39\u0E48\u0E19\u0E30"
   - key: patty_on_bun
     language: en
     clip: {fileID: 8300000, guid: 4e127513070ef47f188b2def3c912929, type: 3}
     transcript: Yummy! Put the patty on the bun.
   - key: patty_on_bun
-    language: es
-    clip: {fileID: 8300000, guid: cb11b22eb1d53947db460818ccf4a093, type: 3}
-    transcript: "\xA1Qu\xE9 rico! Pon la carne sobre el pan."
+    language: th
+    clip: {fileID: 8300000, guid: 25681a6555e55c6b795d58849796b78d, type: 3}
+    transcript: "\u0E19\u0E48\u0E32\u0E2D\u0E23\u0E48\u0E2D\u0E22\u0E08\u0E31\u0E07!
+      \u0E27\u0E32\u0E07\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E1A\u0E19\u0E02\u0E19\u0E21\u0E1B\u0E31\u0E07\u0E40\u0E25\u0E22"
   - key: add_cheese
     language: en
     clip: {fileID: 8300000, guid: 58291ee9467cc2384af75af5871eb899, type: 3}
     transcript: Add some cheese!
   - key: add_cheese
-    language: es
-    clip: {fileID: 8300000, guid: 1ed8655e129bad965beee793a2ed65af, type: 3}
-    transcript: "\xA1A\xF1ade queso!"
+    language: th
+    clip: {fileID: 8300000, guid: 070f0a301c399867d9cbced6e14e712b, type: 3}
+    transcript: "\u0E43\u0E2A\u0E48\u0E0A\u0E35\u0E2A\u0E2B\u0E19\u0E48\u0E2D\u0E22\u0E19\u0E30!"
   - key: add_top_bun
     language: en
     clip: {fileID: 8300000, guid: f1306103f2db3b2dea9b8667a2fe9cf4, type: 3}
     transcript: Now the top bun!
   - key: add_top_bun
-    language: es
-    clip: {fileID: 8300000, guid: 1f641052b4f125425877f6a486ca1af0, type: 3}
-    transcript: "\xA1Ahora el pan de arriba!"
+    language: th
+    clip: {fileID: 8300000, guid: 538be68cc5dcb7156b3b15392b7b4b00, type: 3}
+    transcript: "\u0E15\u0E48\u0E2D\u0E44\u0E1B \u0E02\u0E19\u0E21\u0E1B\u0E31\u0E07\u0E0A\u0E34\u0E49\u0E19\u0E1A\u0E19!"
   - key: serve_benny
     language: en
     clip: {fileID: 8300000, guid: d904f84233ef9d5a5ab5423edd6d1390, type: 3}
     transcript: Give the burger to Benny!
   - key: serve_benny
-    language: es
-    clip: {fileID: 8300000, guid: 4b613f034165f68dda2a46106e37a3c6, type: 3}
-    transcript: "\xA1Dale la hamburguesa a Benny!"
+    language: th
+    clip: {fileID: 8300000, guid: 277e72c0b3bf6b806ad35b14544ae957, type: 3}
+    transcript: "\u0E40\u0E2D\u0E32\u0E40\u0E1A\u0E2D\u0E23\u0E4C\u0E40\u0E01\u0E2D\u0E23\u0E4C\u0E43\u0E2B\u0E49\u0E40\u0E1A\u0E19\u0E19\u0E35\u0E48\u0E40\u0E25\u0E22!"
   - key: tap_potato
     language: en
     clip: {fileID: 8300000, guid: cc658ab065af58302bdbefe2faae4318, type: 3}
     transcript: Tap the potatoes!
   - key: tap_potato
-    language: es
-    clip: {fileID: 8300000, guid: a5ac32d928fe956b2a21244050aac5ed, type: 3}
-    transcript: "\xA1Toca las patatas!"
+    language: th
+    clip: {fileID: 8300000, guid: ed80b995db6262cac90851332043cedc, type: 3}
+    transcript: "\u0E41\u0E15\u0E30\u0E17\u0E35\u0E48\u0E21\u0E31\u0E19\u0E1D\u0E23\u0E31\u0E48\u0E07\u0E40\u0E25\u0E22!"
   - key: fries_cooking
     language: en
     clip: {fileID: 8300000, guid: e37322873891cbabf9bc2193ff61be38, type: 3}
     transcript: The fries are cooking!
   - key: fries_cooking
-    language: es
-    clip: {fileID: 8300000, guid: 603af881e298ce741bd4a130a74a51dc, type: 3}
-    transcript: "\xA1Las patatas se est\xE1n friendo!"
+    language: th
+    clip: {fileID: 8300000, guid: e22983e5300696944bfcd7326eeecf47, type: 3}
+    transcript: "\u0E01\u0E33\u0E25\u0E31\u0E07\u0E17\u0E2D\u0E14\u0E40\u0E1F\u0E23\u0E19\u0E0A\u0E4C\u0E1F\u0E23\u0E32\u0E22\u0E2A\u0E4C\u0E2D\u0E22\u0E39\u0E48!"
   - key: fries_in_box
     language: en
     clip: {fileID: 8300000, guid: b7a591aeab63330b09d52df1bfce554c, type: 3}
     transcript: Put the fries in the box.
   - key: fries_in_box
-    language: es
-    clip: {fileID: 8300000, guid: d49b7e8a680f16b8e9155ca5888139a3, type: 3}
-    transcript: Pon las patatas en la caja.
+    language: th
+    clip: {fileID: 8300000, guid: 5bbafcee717a4ace891dd612dc08572b, type: 3}
+    transcript: "\u0E43\u0E2A\u0E48\u0E40\u0E1F\u0E23\u0E19\u0E0A\u0E4C\u0E1F\u0E23\u0E32\u0E22\u0E2A\u0E4C\u0E25\u0E07\u0E43\u0E19\u0E01\u0E25\u0E48\u0E2D\u0E07\u0E19\u0E30"
   - key: pick_flavour
     language: en
     clip: {fileID: 8300000, guid: f1b59d4a1ec07707ab85f8326c64a88c, type: 3}
     transcript: Tap the strawberry flavour!
   - key: pick_flavour
-    language: es
-    clip: {fileID: 8300000, guid: 18214d8ebfea00effae0f382b9004695, type: 3}
-    transcript: "\xA1Toca el sabor de fresa!"
+    language: th
+    clip: {fileID: 8300000, guid: 759d0f49270f7d03ba285c9c42dc4642, type: 3}
+    transcript: "\u0E41\u0E15\u0E30\u0E23\u0E2A\u0E2A\u0E15\u0E23\u0E2D\u0E27\u0E4C\u0E40\u0E1A\u0E2D\u0E23\u0E4C\u0E23\u0E35\u0E40\u0E25\u0E22!"
   - key: pick_cup
     language: en
     clip: {fileID: 8300000, guid: 205be73fc59d0b254a1d62569fc3902a, type: 3}
     transcript: Get a cup.
   - key: pick_cup
-    language: es
-    clip: {fileID: 8300000, guid: 2a57167b30b7a15c28649dc12d1b4a45, type: 3}
-    transcript: Coge un vaso.
+    language: th
+    clip: {fileID: 8300000, guid: 51c9b7e6300a389bc9f71127da279d62, type: 3}
+    transcript: "\u0E2B\u0E22\u0E34\u0E1A\u0E41\u0E01\u0E49\u0E27\u0E21\u0E32\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E43\u0E1A"
   - key: press_lever
     language: en
     clip: {fileID: 8300000, guid: b6df5e6a25dfd3e67a23e2732fef80da, type: 3}
     transcript: Press the big button!
   - key: press_lever
-    language: es
-    clip: {fileID: 8300000, guid: c215c611c8250eae9857c7a35cac5634, type: 3}
-    transcript: "\xA1Pulsa el bot\xF3n grande!"
+    language: th
+    clip: {fileID: 8300000, guid: e929c463540a799b68db2ac5b565dae5, type: 3}
+    transcript: "\u0E01\u0E14\u0E1B\u0E38\u0E48\u0E21\u0E43\u0E2B\u0E0D\u0E48\u0E40\u0E25\u0E22!"
   - key: add_cream
     language: en
     clip: {fileID: 8300000, guid: 67d3c6b089cce9ee0b4d0ba9ff666fc5, type: 3}
     transcript: Add whipped cream!
   - key: add_cream
-    language: es
-    clip: {fileID: 8300000, guid: 40d7e3ba3fac19712b18059dcf3bbb59, type: 3}
-    transcript: "\xA1A\xF1ade nata montada!"
+    language: th
+    clip: {fileID: 8300000, guid: c51a036b0cb3d1c8a867d14830547298, type: 3}
+    transcript: "\u0E43\u0E2A\u0E48\u0E27\u0E34\u0E1B\u0E04\u0E23\u0E35\u0E21\u0E14\u0E49\u0E27\u0E22!"
   - key: add_straw
     language: en
     clip: {fileID: 8300000, guid: a976b163dc799fe26b1d2f239888cddd, type: 3}
     transcript: And a straw!
   - key: add_straw
-    language: es
-    clip: {fileID: 8300000, guid: 21a253dc517aa645bb7ec69097190014, type: 3}
-    transcript: "\xA1Y una pajita!"
+    language: th
+    clip: {fileID: 8300000, guid: a3f2e2ab480c88fd9945e40be8012f30, type: 3}
+    transcript: "\u0E41\u0E25\u0E49\u0E27\u0E01\u0E47\u0E2B\u0E25\u0E2D\u0E14\u0E14\u0E39\u0E14!"
   - key: burger_on_tray
     language: en
     clip: {fileID: 8300000, guid: 733174fc53592508899e4c3b5b0f473b, type: 3}
     transcript: Put the burger on the tray.
   - key: burger_on_tray
-    language: es
-    clip: {fileID: 8300000, guid: 3a558b028beb4a496b42245aa5e1287a, type: 3}
-    transcript: Pon la hamburguesa en la bandeja.
+    language: th
+    clip: {fileID: 8300000, guid: 18806adb443283236beeeec2e35c2498, type: 3}
+    transcript: "\u0E27\u0E32\u0E07\u0E40\u0E1A\u0E2D\u0E23\u0E4C\u0E40\u0E01\u0E2D\u0E23\u0E4C\u0E1A\u0E19\u0E16\u0E32\u0E14\u0E19\u0E30"
   - key: fries_on_tray
     language: en
     clip: {fileID: 8300000, guid: 88cbfb4e340c01dccae37a047f03efb2, type: 3}
     transcript: Put the fries on the tray.
   - key: fries_on_tray
-    language: es
-    clip: {fileID: 8300000, guid: 643eb2fa5e3da4b23bc317b5d483489f, type: 3}
-    transcript: Pon las patatas en la bandeja.
+    language: th
+    clip: {fileID: 8300000, guid: 537047123108128ee9f6d87aa00e0e9b, type: 3}
+    transcript: "\u0E27\u0E32\u0E07\u0E40\u0E1F\u0E23\u0E19\u0E0A\u0E4C\u0E1F\u0E23\u0E32\u0E22\u0E2A\u0E4C\u0E1A\u0E19\u0E16\u0E32\u0E14\u0E19\u0E30"
   - key: shake_on_tray
     language: en
     clip: {fileID: 8300000, guid: ec4f4e75760b6ad35893a9cf5ff9a9b7, type: 3}
     transcript: Put the milkshake on the tray.
   - key: shake_on_tray
-    language: es
-    clip: {fileID: 8300000, guid: 36e84d4cb1fb9a669aa0ef24314e4edf, type: 3}
-    transcript: Pon el batido en la bandeja.
+    language: th
+    clip: {fileID: 8300000, guid: 3f1c1b64d358169fabfc1d1194dfde19, type: 3}
+    transcript: "\u0E27\u0E32\u0E07\u0E21\u0E34\u0E25\u0E04\u0E4C\u0E40\u0E0A\u0E04\u0E1A\u0E19\u0E16\u0E32\u0E14\u0E19\u0E30"
   - key: meal_ready
     language: en
     clip: {fileID: 8300000, guid: cf29cb2303e55e97eb95ac00818a96ad, type: 3}
     transcript: What a yummy meal!
   - key: meal_ready
-    language: es
-    clip: {fileID: 8300000, guid: 8e5c5490edaede47496d9a6acd4d73e7, type: 3}
-    transcript: "\xA1Qu\xE9 comida tan rica!"
+    language: th
+    clip: {fileID: 8300000, guid: ca51c2832ab29ecdebc56d01ede088ea, type: 3}
+    transcript: "\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E19\u0E48\u0E32\u0E2D\u0E23\u0E48\u0E2D\u0E22\u0E21\u0E32\u0E01\u0E40\u0E25\u0E22!"
   - key: well_done
     language: en
     clip: {fileID: 8300000, guid: 372d368c366d814efb4f0df38b007991, type: 3}
     transcript: Hooray! You did it!
   - key: well_done
-    language: es
-    clip: {fileID: 8300000, guid: e8adead564b02f428b8d33039b0540b0, type: 3}
-    transcript: "\xA1Hurra! \xA1Lo has conseguido!"
+    language: th
+    clip: {fileID: 8300000, guid: 99800bc4c7cde31d7a7b0be4756d052e, type: 3}
+    transcript: "\u0E44\u0E0A\u0E42\u0E22! \u0E2B\u0E19\u0E39\u0E17\u0E33\u0E44\u0E14\u0E49\u0E41\u0E25\u0E49\u0E27!"

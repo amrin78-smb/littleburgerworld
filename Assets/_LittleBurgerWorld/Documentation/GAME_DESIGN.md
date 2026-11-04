@@ -46,7 +46,7 @@ Benny the Bear (original design: round head, big glossy eyes, small nose, smile,
 ## Game modes
 
 ### Guided Play ("LET'S PLAY!")
-Six picture cards (stars earned shown on each). Steps are communicated with a picture prompt bubble, a pulsing highlight and an animated hand that taps or drags. Each step also shows a one-line instruction and speaks it (English or Spanish, following the language setting); the line repeats with the hand hint at most every 9 s, music dips while the voice talks, and "Hooray! You did it!" plays on completion.
+Six picture cards (stars earned shown on each). Steps are communicated with a picture prompt bubble, a pulsing highlight and an animated hand that taps or drags. Each step also shows a one-line instruction and speaks it (English or Thai, following the language setting); the line repeats with the hand hint at most every 9 s, music dips while the voice talks, and "Hooray! You did it!" plays on completion.
 
 1. **My First Burger** – bun, patty on grill, flip, patty on bun, top bun, Benny cheers.
 2. **Add Some Cheese** – as above + cheese, then give it to Benny. Unlocks **pickles**.
@@ -64,4 +64,4 @@ Everything unlocked is available at once, any order, tall towers (12 layers), fo
 Stars per activity (up to 3, earned by replaying), 9 stickers (first burger, cheese champ, fries fan, shake maker, meal master, bear buddy, tall tower ≥ 8 layers, balloon popper, super chef), unlocks (pickles, Penny), celebration balloons. Nothing is ever taken away.
 
 ## Parent area
-Gear button → grown-up gate (simple sum, three big answers; a wrong answer just shows a new question) → music / sounds / voice volumes, spoken-hint toggle, language (English / Español, data-driven), hold-to-reset progress, privacy information. No links, purchases or accounts.
+Gear button → grown-up gate (simple sum, three big answers; a wrong answer just shows a new question) → music / sounds / voice volumes, spoken-hint toggle, language (English / ไทย, data-driven), hold-to-reset progress, privacy information. No links, purchases or accounts.

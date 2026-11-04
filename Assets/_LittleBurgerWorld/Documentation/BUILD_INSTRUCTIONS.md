@@ -71,8 +71,8 @@ Add it to config `activities`; a card appears automatically. **Validate Project*
 
 ### Voice prompts and instruction text
 `Tools/voice/voice_lines.json` is the single source for each step's on-screen instruction (`say.<key>`) and its spoken clip.
-1. Edit or add a line (key + `en` + `es`; reference it from an activity step's `voiceKey`).
-2. `Tools/voice/generate_voice.sh [key...]` – generates `Audio/Voice/<lang>/<key>.wav` offline with Kokoro TTS (first run installs it into `~/.cache/lbw-tts`, ~350 MB). Voices and speed are set in the JSON (`af_heart`, `ef_dora`).
+1. Edit or add a line (key + `en` + `th`; reference it from an activity step's `voiceKey`).
+2. `Tools/voice/generate_voice.sh [key...]` – generates `Audio/Voice/<lang>/<key>.wav` offline – English with Kokoro TTS, Thai with VachanaTTS (first run installs both into `~/.cache/lbw-tts`, ~450 MB). Engine, voice and speed per language are set in the JSON (`kokoro:af_heart`, `vachana:th_f_2`).
 3. **Setup Project** – rebuilds the AudioLibrary and localization table. The validator fails if a spoken step has no clip in some language.
 To use a recorded voice actor instead, replace the WAVs with files of the same name.
 

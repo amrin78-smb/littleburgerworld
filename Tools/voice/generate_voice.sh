@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# One-time setup + generation of the guided-step voice clips (Kokoro TTS, offline, Apache-2.0).
+# One-time setup + generation of the guided-step voice clips, offline (English: Kokoro, Apache-2.0; Thai: VachanaTTS, MIT).
 # Output: Assets/_LittleBurgerWorld/Audio/Voice/<lang>/<key>.wav. Then run Little Burger World > Setup Project.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 T="${LBW_TTS_HOME:-$HOME/.cache/lbw-tts}"
 if [ ! -x "$T/venv/bin/python" ]; then
   python3 -m venv "$T/venv"
-  "$T/venv/bin/pip" install -q kokoro-onnx==0.6.1 soundfile
+  "$T/venv/bin/pip" install -q kokoro-onnx==0.6.1 vachanatts==0.0.7 requests soundfile
 fi
 mkdir -p "$T/models"
 for f in kokoro-v1.0.onnx voices-v1.0.bin; do

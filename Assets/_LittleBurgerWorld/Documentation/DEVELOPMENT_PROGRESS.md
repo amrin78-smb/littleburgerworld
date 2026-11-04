@@ -56,7 +56,7 @@ Legend: `[x]` done and verified · `[~]` implemented, needs on-device verificati
 - [x] FX: sparkles, stars, confetti, hearts, crumbs, steam, bubbles, poofs, tappable balloons
 - [x] Rewards: stars, 9 stickers, unlocks; save system (versioned, backup, corruption recovery, migration)
 - [x] Parent gate + settings (volumes, voice toggle, language, reset, privacy)
-- [x] Voice prompts: 21 lines in English + Spanish, generated offline with Kokoro TTS; intelligibility checked by transcribing every clip back with Whisper
+- [x] Voice prompts: 21 lines in English (Kokoro TTS) + Thai (VachanaTTS), generated offline; intelligibility checked by transcribing every clip back with Whisper
 
 ### Phase 8 – Android
 - [x] Validator passes (setup batch exits 0)
@@ -79,4 +79,4 @@ Legend: `[x]` done and verified · `[~]` implemented, needs on-device verificati
 * Visuals were verified with a software renderer (llvmpipe) and a desktop player; touch feel and frame rate still need checking on real phones and tablets, especially the Redmi A3 on OpenGL ES 3.
 * Models are procedural (rounded primitives); see ASSET_INVENTORY.md for recommended professional replacements.
 * Debug keystore and APK only; store release needs a release keystore and an AAB.
-* Only English and Spanish are present (more languages are data-only additions).
+* Only English and Thai are present (more languages are data-only additions). Thai uses uGUI legacy text without complex shaping; stacked tone marks may sit slightly close to vowels.
