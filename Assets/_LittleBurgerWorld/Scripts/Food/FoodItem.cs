@@ -79,6 +79,7 @@ namespace LittleBurgerWorld.Food
                     case FoodType.Fries: return "fries";
                     case FoodType.Milkshake: return "milkshake";
                     case FoodType.Tray: return "tray";
+                    case FoodType.IceCream: return "ice_cream";
                 }
                 return "food";
             }
@@ -209,7 +210,8 @@ namespace LittleBurgerWorld.Food
                 {
                     case FoodType.Burger: return 14;
                     case FoodType.Fries:
-                    case FoodType.Milkshake: return 13;
+                    case FoodType.Milkshake:
+                    case FoodType.IceCream: return 13;
                     case FoodType.FriesBatch: return 12;
                     case FoodType.Tray: return 8;
                     default: return 10;

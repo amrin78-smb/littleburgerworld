@@ -286,7 +286,7 @@ namespace LittleBurgerWorld.Tests
 
         [UnityTest]
         public IEnumerator NewAnimalActivities_CompleteAndServeTheRightFriend(
-            [Values("milos_snack:milo", "dottys_milkshake:dotty")] string pair)
+            [Values("milos_snack:milo", "dottys_milkshake:dotty", "ice_cream_time:benny")] string pair)
         {
             string activity = pair.Split(':')[0], animal = pair.Split(':')[1];
             yield return LoadRestaurant(GameMode.Guided);
@@ -306,6 +306,24 @@ namespace LittleBurgerWorld.Tests
             Assert.AreEqual(1, finished, activity + " completed");
             Assert.IsTrue(m_Events.Exists(e => e.Type == GameplayEventType.CustomerServed && e.ExtraId == animal), animal + " was served");
             CollectionAssert.Contains(GM.Save.Data.stats.animalsServed, animal);
+        }
+
+        [UnityTest]
+        public IEnumerator IngredientTray_AllButtonsFitOnScreen()
+        {
+            yield return LoadRestaurant(GameMode.FreePlay);
+            GM.Rewards.Unlock("pickle");
+            yield return null;
+            yield return null;
+            IngredientTrayUI tray = Object.FindFirstObjectByType<UIManager>().Tray;
+            Assert.GreaterOrEqual(tray.Buttons.Count, 11, "All ingredients incl. new foods are in the tray");
+            var corners = new Vector3[4];
+            foreach (IngredientTrayButton b in tray.Buttons)
+            {
+                ((RectTransform)b.transform).GetWorldCorners(corners);
+                Assert.GreaterOrEqual(corners[0].x, -1f, b.Data.id + " off the left edge");
+                Assert.LessOrEqual(corners[2].x, Screen.width + 1f, b.Data.id + " off the right edge");
+            }
         }
 
         [UnityTest]

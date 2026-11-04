@@ -25,6 +25,6 @@ MonoBehaviour:
   cookedVariant: {fileID: 0}
   showInTray: 1
   unlockedByDefault: 1
-  trayOrder: 4
+  trayOrder: 5
   pickSound: 1
   placeSound: 3

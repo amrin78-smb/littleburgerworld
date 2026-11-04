@@ -368,6 +368,8 @@ namespace LittleBurgerWorld.EditorTools
             GameObject grill = Instantiate($"{P.KitchenFolder}/Station_Grill.prefab", kitchen, new Vector3(-2.55f, top, 0.2f));
             GameObject board = Instantiate($"{P.KitchenFolder}/BurgerBoard.prefab", kitchen, new Vector3(0.05f, top, 0.2f), new Vector3(0f, 90f, 0f));
             GameObject tray = Instantiate($"{P.KitchenFolder}/ServingTray.prefab", kitchen, new Vector3(2.45f, top, -1.85f), new Vector3(0f, 90f, 0f));
+            // Ice cream cart stands on the floor in the dining area, facing the camera.
+            GameObject iceCream = Instantiate($"{P.KitchenFolder}/Station_IceCream.prefab", kitchen, new Vector3(-0.4f, 0f, -2.8f), new Vector3(0f, 45f, 0f));
 
             // Free counter space for experimenting
             AddFreeSurface(kitchen, "FreeSurface_Island", new Vector3(-1.35f, 0f, 0.2f), new Vector2(4.6f, 1.1f), 0f);
@@ -393,6 +395,7 @@ namespace LittleBurgerWorld.EditorTools
             E.Set(km, "m_FriesBox", friesBox.GetComponent<FriesBoxHolder>());
             E.Set(km, "m_Drinks", drinks.GetComponent<DrinkStation>());
             E.Set(km, "m_Tray", tray.GetComponent<ServingTray>());
+            E.Set(km, "m_IceCream", iceCream.GetComponent<IceCreamStation>());
 
             // Customers: enter through the door on the right wall, wait behind the serving counter.
             Transform paths = new GameObject("CustomerPaths").transform;
@@ -484,7 +487,7 @@ namespace LittleBurgerWorld.EditorTools
             // Dining area
             Transform dining = new GameObject("Dining").transform;
             dining.SetParent(env, false);
-            foreach (Vector3 t in new[] { new Vector3(-2.3f, 0f, -2.4f), new Vector3(0.3f, 0f, -3.0f) })
+            foreach (Vector3 t in new[] { new Vector3(-2.75f, 0f, -2.1f) })
             {
                 Instantiate($"{P.EnvFolder}/Prop_Table.prefab", dining, t);
                 for (int i = 0; i < 3; i++)
@@ -542,8 +545,8 @@ namespace LittleBurgerWorld.EditorTools
             UIFactory.Image("Header", pickPanel.transform, IconLibrary.Get("icon_star"), Color.white, new Vector2(0.5f, 1f), new Vector2(0f, 0f), new Vector2(150f, 150f), false);
             RectTransform grid = UIFactory.Rect("Grid", pickPanel.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, -20f), new Vector2(1300f, 700f));
             var g = grid.gameObject.AddComponent<GridLayoutGroup>();
-            g.cellSize = new Vector2(300f, 240f);
-            g.spacing = new Vector2(34f, 40f);
+            g.cellSize = new Vector2(260f, 208f);
+            g.spacing = new Vector2(34f, 26f);
             g.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             g.constraintCount = 4;
             g.childAlignment = TextAnchor.MiddleCenter;

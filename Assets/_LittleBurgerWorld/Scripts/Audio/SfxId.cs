@@ -27,6 +27,10 @@ namespace LittleBurgerWorld.Audio
         Star,           // star earned
         DoorChime,      // customer enters
         Boing,          // gentle "not here" bounce (never negative)
-        Footstep
+        Footstep,
+        Squeeze,        // sauce bottle
+        Scrub,          // washing-up sponge
+        Capsule,        // toy capsule machine
+        Chime           // theme / surprise reveal
     }
 }

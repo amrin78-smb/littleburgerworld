@@ -25,6 +25,12 @@
     { "key": "shake_on_tray",  "en": "Put the milkshake on the tray.",        "th": "วางมิลค์เชคบนถาดนะ" },
     { "key": "serve_milo",     "en": "Give the fries to Milo!",               "th": "เอาเฟรนช์ฟรายส์ให้ไมโลเลย!" },
     { "key": "serve_dotty",    "en": "Give the milkshake to Dotty!",          "th": "เอามิลค์เชคให้ดอตตี้เลย!" },
+    { "key": "get_cone",        "en": "Get an ice cream cone!",               "th": "หยิบโคนไอศกรีมมาหนึ่งอันนะ!" },
+    { "key": "add_scoop",       "en": "Tap a flavour to add a scoop!",        "th": "แตะรสที่ชอบเพื่อตักไอศกรีม!" },
+    { "key": "one_more_scoop",  "en": "One more scoop!",                      "th": "อีกหนึ่งสกู๊ป!" },
+    { "key": "add_sprinkles",   "en": "Shake on the sprinkles!",              "th": "โรยเม็ดสีสันลงไปเลย!" },
+    { "key": "add_cherry",      "en": "And a cherry on top!",                 "th": "แล้วก็เชอร์รีไว้ข้างบน!" },
+    { "key": "serve_ice_cream", "en": "Give the ice cream to Benny!",         "th": "เอาไอศกรีมให้เบนนี่เลย!" },
     { "key": "meal_ready",     "en": "What a yummy meal!",                    "th": "อาหารน่าอร่อยมากเลย!" },
     { "key": "well_done",      "en": "Hooray! You did it!",                   "th": "ไชโย! หนูทำได้แล้ว!" }
   ]

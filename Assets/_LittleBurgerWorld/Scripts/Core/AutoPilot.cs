@@ -122,9 +122,16 @@ namespace LittleBurgerWorld.Core
             yield return new WaitForSeconds(0.5f);
             Check(cheese != null && cheese.Container == (IFoodContainer)k.Board, "Drag-and-drop snaps cheese onto the burger");
 
+            Tray("egg").Assist(null, "Board");
             Tray("lettuce").Assist(null, "Board");
             Tray("tomato").Assist(null, "Board");
+            Tray("onion").Assist(null, "Board");
             yield return new WaitForSeconds(0.3f);
+            Tray("ketchup").Assist(null, "Board");
+            Tray("mustard").Assist(null, "Board");
+            yield return new WaitForSeconds(0.4f);
+            yield return Shot("05b_new_toppings");
+            Check(k.Board.Items.Any(i => i.ItemId == "egg") && k.Board.Items.Any(i => i.ItemId == "ketchup"), "New toppings (egg, onion, sauces) stack on the burger");
             Tray("bun_top").Assist(null, "Board");
             yield return new WaitForSeconds(0.6f);
             yield return Shot("06_burger_complete");
@@ -183,6 +190,22 @@ namespace LittleBurgerWorld.Core
                 Check(gm.Save.Data.stats.customersServed > 0, "Customer served");
             }
 
+            // Ice cream cart: cone, two scoops, sprinkles, cherry, serve the next customer.
+            IceCreamStation ice = k.IceCream;
+            Check(ice != null, "Ice cream cart present");
+            if (ice != null)
+            {
+                for (int i = 0; i < 5; i++) { ice.Assist(null, null); yield return new WaitForSeconds(0.6f); }
+                yield return Shot("13b_ice_cream");
+                Check(ice.IsComplete && ice.ScoopCount == 2 && ice.HasSprinkles, "Ice cream built (2 scoops, sprinkles, cherry)");
+                yield return Until(() => CustomerManager.Instance.Current != null && CustomerManager.Instance.Current.State == CustomerState.Waiting, 20f);
+                int before = gm.Save.Data.stats.customersServed;
+                ice.Assist(null, "Customer");
+                yield return new WaitForSeconds(1.0f);
+                yield return Shot("13c_ice_cream_served");
+                Check(gm.Save.Data.stats.customersServed > before, "Ice cream served to a customer");
+            }
+
             // ---------------------------------------------------------------- Guided Play
             FindFirstObjectByType<RestaurantController>().GoHome();
             yield return Until(() => SceneManager.GetActiveScene().name == "MainMenu" && !gm.Scenes.IsLoading, 15f);
@@ -192,7 +215,7 @@ namespace LittleBurgerWorld.Core
             yield return new WaitForSeconds(1.2f);
             yield return Shot("14_activity_select");
             ActivitySelectUI select = FindFirstObjectByType<ActivitySelectUI>();
-            Check(select != null && select.Cards.Count == 8, "Eight activity cards shown");
+            Check(select != null && select.Cards.Count == gm.Config.activities.Count, "All activity cards shown");
             select.Cards[0].Button.Click();
             yield return new WaitForSeconds(4.5f);
             yield return Shot("15_guided_hint");

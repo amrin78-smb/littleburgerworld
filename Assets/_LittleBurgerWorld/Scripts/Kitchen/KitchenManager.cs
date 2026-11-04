@@ -20,6 +20,7 @@ namespace LittleBurgerWorld.Kitchen
         [SerializeField] private FriesBoxHolder m_FriesBox;
         [SerializeField] private DrinkStation m_Drinks;
         [SerializeField] private ServingTray m_Tray;
+        [SerializeField] private IceCreamStation m_IceCream;
 
         public BurgerAssemblyController Board => m_Board;
         public GrillStation Grill => m_Grill;
@@ -27,6 +28,7 @@ namespace LittleBurgerWorld.Kitchen
         public FriesBoxHolder FriesBox => m_FriesBox;
         public DrinkStation Drinks => m_Drinks;
         public ServingTray Tray => m_Tray;
+        public IceCreamStation IceCream => m_IceCream;
 
         private void Awake()
         {
@@ -65,6 +67,7 @@ namespace LittleBurgerWorld.Kitchen
                     if (customer != null && customer.CanAccept(item)) return customer;
                     return null;
                 case FoodType.Tray:
+                case FoodType.IceCream:
                     return customer != null && customer.CanAccept(item) ? customer : null;
             }
             return null;
@@ -78,6 +81,7 @@ namespace LittleBurgerWorld.Kitchen
             if (m_Fryer != null) m_Fryer.Clear();
             if (m_FriesBox != null) m_FriesBox.Clear();
             if (m_Drinks != null) m_Drinks.Clear();
+            if (m_IceCream != null) m_IceCream.Clear();
             if (m_Tray != null)
             {
                 m_Tray.Clear();

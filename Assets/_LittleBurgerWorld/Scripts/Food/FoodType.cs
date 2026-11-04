@@ -12,6 +12,7 @@ namespace LittleBurgerWorld.Food
         FriesBatch,
         Fries,
         Milkshake,
-        Tray
+        Tray,
+        IceCream
     }
 }

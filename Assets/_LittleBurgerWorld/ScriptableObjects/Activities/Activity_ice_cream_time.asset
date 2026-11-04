@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beb0be676cf8c127aa9d0e523a1a5836, type: 3}
+  m_Name: Activity_ice_cream_time
+  m_EditorClassIdentifier: LittleBurgerWorld.Runtime::LittleBurgerWorld.Activities.ActivityData
+  id: ice_cream_time
+  displayName: Ice Cream Time
+  thumbnail: {fileID: 21300000, guid: 4527d89b31ffe7cb39d7cf0ebd46d40e, type: 3}
+  cardColor: {r: 1, g: 0.88235295, b: 0.9254902, a: 1}
+  steps:
+  - type: 0
+    targetKey: 
+    sourceKey: 
+    itemId: 
+    eventType: 0
+    promptIcon: {fileID: 0}
+    voiceKey: 
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 1
+    targetKey: 
+    sourceKey: 
+    itemId: 
+    eventType: 0
+    promptIcon: {fileID: 0}
+    voiceKey: 
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 0.4
+    characterId: benny
+    requestItems:
+    - ice_cream
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 8
+    targetKey: IceCream.Cones
+    sourceKey: 
+    itemId: 
+    eventType: 26
+    promptIcon: {fileID: 21300000, guid: 23f2a0d7a1cb610b48b608f536ca2d59, type: 3}
+    voiceKey: get_cone
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 8
+    targetKey: IceCream.Tub.strawberry
+    sourceKey: 
+    itemId: 
+    eventType: 27
+    promptIcon: {fileID: 21300000, guid: 4527d89b31ffe7cb39d7cf0ebd46d40e, type: 3}
+    voiceKey: add_scoop
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 8
+    targetKey: IceCream.Tub.vanilla
+    sourceKey: 
+    itemId: 
+    eventType: 27
+    promptIcon: {fileID: 21300000, guid: 4527d89b31ffe7cb39d7cf0ebd46d40e, type: 3}
+    voiceKey: one_more_scoop
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 8
+    targetKey: IceCream.Sprinkles
+    sourceKey: 
+    itemId: 
+    eventType: 28
+    promptIcon: {fileID: 21300000, guid: 455b08230725d497facaa5a73847ab1f, type: 3}
+    voiceKey: add_sprinkles
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 8
+    targetKey: IceCream.Cherry
+    sourceKey: 
+    itemId: 
+    eventType: 29
+    promptIcon: {fileID: 21300000, guid: bcdb96834cd6fb634a89abb330c48f80, type: 3}
+    voiceKey: add_cherry
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 6
+    targetKey: Customer
+    sourceKey: IceCream.Holder
+    itemId: ice_cream
+    eventType: 0
+    promptIcon: {fileID: 21300000, guid: 4527d89b31ffe7cb39d7cf0ebd46d40e, type: 3}
+    voiceKey: serve_ice_cream
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 11
+    targetKey: 
+    sourceKey: 
+    itemId: 
+    eventType: 0
+    promptIcon: {fileID: 0}
+    voiceKey: 
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 3.2
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  completionSound: 14
+  completionAnimation: balloons
+  starReward: 1
+  unlocks: []

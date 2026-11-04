@@ -27,7 +27,11 @@ namespace LittleBurgerWorld.Customers
             new[] { "milkshake" },
             new[] { "burger", "fries" },
             new[] { "cheeseburger", "milkshake" },
-            new[] { "burger", "fries", "milkshake" }
+            new[] { "burger", "fries", "milkshake" },
+            new[] { "ice_cream" },
+            new[] { "burger", "ice_cream" },
+            new[] { "egg_burger" },
+            new[] { "fries", "ice_cream" }
         };
 
         private AnimalCustomerController m_Current;

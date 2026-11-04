@@ -136,6 +136,26 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 2361d20ad0d001d72af9e19bc5a2c340, type: 3}
     volume: 0.3
     pitchVariance: 0.1
+  - id: 25
+    clips:
+    - {fileID: 8300000, guid: ebcf65fedfac781b99c4e7ac2295536b, type: 3}
+    volume: 0.55
+    pitchVariance: 0.1
+  - id: 26
+    clips:
+    - {fileID: 8300000, guid: b076aba2d0ccfe02682249adf434d261, type: 3}
+    volume: 0.4
+    pitchVariance: 0.15
+  - id: 27
+    clips:
+    - {fileID: 8300000, guid: 156c69df0afefd48b84fd6ced8f54eda, type: 3}
+    volume: 0.6
+    pitchVariance: 0.03
+  - id: 28
+    clips:
+    - {fileID: 8300000, guid: e20ab06e0a1f2dd9db38c9e14dfab019, type: 3}
+    volume: 0.5
+    pitchVariance: 0.02
   voice:
   - key: add_bun
     language: en
@@ -306,6 +326,54 @@ MonoBehaviour:
     language: th
     clip: {fileID: 8300000, guid: 3e536fbf9df1609c9b91ef79948ee683, type: 3}
     transcript: "\u0E40\u0E2D\u0E32\u0E21\u0E34\u0E25\u0E04\u0E4C\u0E40\u0E0A\u0E04\u0E43\u0E2B\u0E49\u0E14\u0E2D\u0E15\u0E15\u0E35\u0E49\u0E40\u0E25\u0E22!"
+  - key: get_cone
+    language: en
+    clip: {fileID: 8300000, guid: 27733b2026d6da1bda27a2f7eb1ef68d, type: 3}
+    transcript: Get an ice cream cone!
+  - key: get_cone
+    language: th
+    clip: {fileID: 8300000, guid: de011a1565a2207a0b2b3b93cdc2ec83, type: 3}
+    transcript: "\u0E2B\u0E22\u0E34\u0E1A\u0E42\u0E04\u0E19\u0E44\u0E2D\u0E28\u0E01\u0E23\u0E35\u0E21\u0E21\u0E32\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E2D\u0E31\u0E19\u0E19\u0E30!"
+  - key: add_scoop
+    language: en
+    clip: {fileID: 8300000, guid: 39e5dec98c30aa07a8b98fe72b94b26e, type: 3}
+    transcript: Tap a flavour to add a scoop!
+  - key: add_scoop
+    language: th
+    clip: {fileID: 8300000, guid: eeaede5878ec35eb991e992d5a9ddade, type: 3}
+    transcript: "\u0E41\u0E15\u0E30\u0E23\u0E2A\u0E17\u0E35\u0E48\u0E0A\u0E2D\u0E1A\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E15\u0E31\u0E01\u0E44\u0E2D\u0E28\u0E01\u0E23\u0E35\u0E21!"
+  - key: one_more_scoop
+    language: en
+    clip: {fileID: 8300000, guid: 6655cf34606e0e99d845775bc0132b21, type: 3}
+    transcript: One more scoop!
+  - key: one_more_scoop
+    language: th
+    clip: {fileID: 8300000, guid: 05571b16aa3b757d28bb3d37861d23a3, type: 3}
+    transcript: "\u0E2D\u0E35\u0E01\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E2A\u0E01\u0E39\u0E4A\u0E1B!"
+  - key: add_sprinkles
+    language: en
+    clip: {fileID: 8300000, guid: 22a84c011bf70503ab098ca880e32163, type: 3}
+    transcript: Shake on the sprinkles!
+  - key: add_sprinkles
+    language: th
+    clip: {fileID: 8300000, guid: 464edf70ae53af725ab847a3f7d1799b, type: 3}
+    transcript: "\u0E42\u0E23\u0E22\u0E40\u0E21\u0E47\u0E14\u0E2A\u0E35\u0E2A\u0E31\u0E19\u0E25\u0E07\u0E44\u0E1B\u0E40\u0E25\u0E22!"
+  - key: add_cherry
+    language: en
+    clip: {fileID: 8300000, guid: fd2113c732df24bfd922e4f71be1eb86, type: 3}
+    transcript: And a cherry on top!
+  - key: add_cherry
+    language: th
+    clip: {fileID: 8300000, guid: bc306b235699e4f4a8ec2daf68917c70, type: 3}
+    transcript: "\u0E41\u0E25\u0E49\u0E27\u0E01\u0E47\u0E40\u0E0A\u0E2D\u0E23\u0E4C\u0E23\u0E35\u0E44\u0E27\u0E49\u0E02\u0E49\u0E32\u0E07\u0E1A\u0E19!"
+  - key: serve_ice_cream
+    language: en
+    clip: {fileID: 8300000, guid: 9510443b1e11a0d21bff2d226709b61a, type: 3}
+    transcript: Give the ice cream to Benny!
+  - key: serve_ice_cream
+    language: th
+    clip: {fileID: 8300000, guid: b8833c0dadb036abfbcb684565e9398f, type: 3}
+    transcript: "\u0E40\u0E2D\u0E32\u0E44\u0E2D\u0E28\u0E01\u0E23\u0E35\u0E21\u0E43\u0E2B\u0E49\u0E40\u0E1A\u0E19\u0E19\u0E35\u0E48\u0E40\u0E25\u0E22!"
   - key: meal_ready
     language: en
     clip: {fileID: 8300000, guid: cf29cb2303e55e97eb95ac00818a96ad, type: 3}

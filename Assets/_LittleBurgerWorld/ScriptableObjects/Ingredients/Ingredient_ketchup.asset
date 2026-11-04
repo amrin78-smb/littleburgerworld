@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798f8f4bf54f534f0b3e6ce86b6b7f10, type: 3}
+  m_Name: Ingredient_ketchup
+  m_EditorClassIdentifier: LittleBurgerWorld.Runtime::LittleBurgerWorld.Food.IngredientData
+  id: ketchup
+  displayName: Ketchup
+  prefab: {fileID: 1297372002729326347, guid: 4455581ee221d3cba96998a540bea0ca, type: 3}
+  icon: {fileID: 21300000, guid: 93495890fb75a03389b2efab5f78b386, type: 3}
+  color: {r: 0.8509804, g: 0.22745098, b: 0.18039216, a: 1}
+  material: {fileID: 0}
+  stackHeight: 0.035
+  stackable: 1
+  completesBurger: 0
+  isBase: 0
+  cookedVariant: {fileID: 0}
+  showInTray: 1
+  unlockedByDefault: 1
+  trayOrder: 8
+  pickSound: 1
+  placeSound: 25

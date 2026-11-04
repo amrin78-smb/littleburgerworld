@@ -42,8 +42,8 @@ namespace LittleBurgerWorld.EditorTools
 
         private static void BuildActivityCard()
         {
-            // Designed at 400x320, built at 0.75 scale so 8 cards fit a 4 x 2 grid.
-            const float k = 0.75f;
+            // Designed at 400x320, built at 0.65 scale so up to 12 cards fit a 4 x 3 grid.
+            const float k = 0.65f;
             Vector2 V(float x, float y) => new Vector2(x * k, y * k);
             GameObject root = UiRoot("UI_ActivityCard", V(400f, 320f));
             Image shadow = UIFactory.Image("Shadow", root.transform, IconLibrary.Get("ui_panel"), new Color(0.3f, 0.18f, 0.1f, 0.25f),

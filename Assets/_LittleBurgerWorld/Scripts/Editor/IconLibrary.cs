@@ -147,8 +147,17 @@ namespace LittleBurgerWorld.EditorTools
             Def("icon_tomato", DrawTomato);
             Def("icon_bun_top", DrawBunTop);
             Def("icon_pickle", DrawPickle);
+            Def("icon_egg", DrawEgg);
+            Def("icon_ice_cream", c => DrawIceCream(c, true));
+            Def("icon_cone", c => DrawIceCream(c, false));
+            Def("icon_sprinkles", DrawSprinkles);
+            Def("icon_cherry", DrawCherry);
+            Def("icon_onion", DrawOnion);
+            Def("icon_ketchup", c => DrawSauceBottle(c, Hex("#D93A2E"), Hex("#F06A5A")));
+            Def("icon_mustard", c => DrawSauceBottle(c, Hex("#F2B71E"), Hex("#FFD65A")));
             Def("icon_burger", c => DrawBurger(c, false));
             Def("icon_cheeseburger", c => DrawBurger(c, true));
+            Def("icon_egg_burger", c => DrawBurger(c, false, true));
             Def("icon_fries", DrawFriesBox);
             Def("icon_potato", DrawPotato);
             Def("icon_milkshake_strawberry", c => DrawShake(c, Strawberry));
@@ -243,6 +252,71 @@ namespace LittleBurgerWorld.EditorTools
             }
         }
 
+        public static void DrawIceCream(Canvas2D c, bool scoops)
+        {
+            c.FillOutlined(Shape.Polygon(new Vector2(84, 132), new Vector2(172, 132), new Vector2(128, 18)).Round(6), Hex("#E2A45A"));
+            for (int i = 0; i < 3; i++) c.Fill(Shape.Capsule(100 + i * 16, 124, 124 + i * 10, 52, 2.5f), Hex("#C27F3A"));
+            if (!scoops) return;
+            c.FillOutlined(Shape.Circle(128, 158, 46), Hex("#FFF1C9"));
+            c.FillOutlined(Shape.Circle(128, 202, 40), Hex("#FF9EC1"));
+            Color[] sp = { Hex("#5DB8F2"), Hex("#FFD23F"), Hex("#7BD389"), Hex("#FFFFFF") };
+            for (int i = 0; i < 8; i++)
+            {
+                float a = i * 0.8f;
+                c.Fill(Shape.Capsule(128 + Mathf.Cos(a) * 24, 200 + Mathf.Sin(a) * 18, 134 + Mathf.Cos(a) * 24, 206 + Mathf.Sin(a) * 18, 3f), sp[i % 4]);
+            }
+            DrawCherry(c, 128, 244, 0.5f);
+        }
+
+        public static void DrawSprinkles(Canvas2D c)
+        {
+            c.FillOutlined(Shape.RoundRect(128, 110, 54, 76, 22), Hex("#CFE8FA"));
+            c.FillOutlined(Shape.RoundRect(128, 196, 58, 16, 8), Hex("#FF7EB6"));
+            Color[] sp = { Hex("#FF7EB6"), Hex("#5DB8F2"), Hex("#FFD23F"), Hex("#7BD389") };
+            for (int i = 0; i < 12; i++)
+            {
+                float x = 96 + (i * 23) % 64, y = 60 + (i * 31) % 100;
+                c.Fill(Shape.Capsule(x, y, x + 9, y + 7, 4f), sp[i % 4]);
+            }
+        }
+
+        public static void DrawCherry(Canvas2D c) => DrawCherry(c, 128, 110, 1f);
+
+        private static void DrawCherry(Canvas2D c, float x, float y, float s)
+        {
+            c.Stroke(Shape.Capsule(x + 6 * s, y + 40 * s, x + 30 * s, y + 110 * s, 0.5f), 7f * s, Hex("#5FA84A"));
+            c.FillOutlined(Shape.Circle(x, y, 46 * s), Hex("#E0283F"), 6f * s);
+            c.Fill(Shape.Ellipse(x - 16 * s, y + 16 * s, 12 * s, 8 * s, 30), new Color(1, 1, 1, 0.6f));
+        }
+
+        public static void DrawEgg(Canvas2D c)
+        {
+            Shape white = Shape.Union(Shape.Circle(118, 130, 82), Shape.Circle(170, 112, 54), Shape.Circle(100, 92, 50), Shape.Circle(86, 168, 46)).Round(4);
+            c.FillOutlined(white, Hex("#FFFDF6"));
+            c.FillOutlined(Shape.Circle(128, 128, 42), Hex("#FFB627"), 5f);
+            c.Fill(Shape.Ellipse(114, 144, 14, 9, 25), new Color(1, 1, 1, 0.7f));
+        }
+
+        public static void DrawOnion(Canvas2D c)
+        {
+            foreach (var (x, y, r) in new[] { (92f, 140f, 58f), (164f, 150f, 50f), (128f, 84f, 52f) })
+            {
+                c.FillOutlined(Shape.Ring(x, y, r - 10, 18), Hex("#E9D3F0"), 5f);
+                c.Fill(Shape.Ring(x, y, r - 10, 6), Hex("#C99AD6"));
+                c.Stroke(Shape.Ring(x, y, r * 0.55f, 9), 3f, Canvas2D.Outline);
+                c.Fill(Shape.Ring(x, y, r * 0.55f, 9), Hex("#F6EBF9"));
+            }
+        }
+
+        public static void DrawSauceBottle(Canvas2D c, Color body, Color light)
+        {
+            c.FillOutlined(Shape.Polygon(new Vector2(116, 214), new Vector2(140, 214), new Vector2(132, 244), new Vector2(124, 244)).Round(4), White);
+            c.FillOutlined(Shape.RoundRect(128, 196, 34, 18, 8), White);
+            c.FillOutlined(Shape.RoundRect(128, 112, 62, 84, 34), body);
+            c.Fill(Shape.RoundRect(104, 120, 12, 56, 10), light);
+            c.Fill(Shape.Heart(136, 104, 30), White);
+        }
+
         public static void DrawPickle(Canvas2D c)
         {
             for (int i = 0; i < 3; i++)
@@ -258,7 +332,7 @@ namespace LittleBurgerWorld.EditorTools
             }
         }
 
-        public static void DrawBurger(Canvas2D c, bool cheese)
+        public static void DrawBurger(Canvas2D c, bool cheese, bool egg = false)
         {
             // bottom bun
             c.FillOutlined(Shape.RoundRect(128, 62, 100, 24, 20), Bun);
@@ -269,6 +343,11 @@ namespace LittleBurgerWorld.EditorTools
                 Shape sl = Shape.Union(Shape.RoundRect(128, 116, 104, 8, 4), Shape.Polygon(new Vector2(60, 116), new Vector2(92, 116), new Vector2(76, 88)),
                     Shape.Polygon(new Vector2(150, 116), new Vector2(186, 116), new Vector2(170, 92)));
                 c.FillOutlined(sl, Cheese, 4f);
+            }
+            if (egg)
+            {
+                c.FillOutlined(Shape.Union(Shape.RoundRect(128, 116, 104, 9, 8), Shape.Circle(70, 112, 16), Shape.Circle(182, 114, 14)), Hex("#FFFDF6"), 4f);
+                c.FillOutlined(Shape.Ellipse(128, 120, 26, 13), Hex("#FFB627"), 4f);
             }
             // lettuce
             var parts = new List<Shape> { Shape.RoundRect(128, 128, 100, 8, 6) };
@@ -641,6 +720,7 @@ namespace LittleBurgerWorld.EditorTools
                 x.Stroke(Shape.Capsule(100, 88, 128, 30, 0.5f), 4, Canvas2D.Outline);
                 x.Stroke(Shape.Capsule(164, 100, 128, 30, 0.5f), 4, Canvas2D.Outline);
             }));
+            Def("sticker_sweet_treat", c => Sticker(c, Strawberry, x => DrawIceCream(x, true)));
             Def("sticker_animal_friends", c => Sticker(c, Mint, x =>
             {
                 // Four little friends: bear, cat, dog, elephant faces around a heart.

@@ -39,6 +39,10 @@ namespace LittleBurgerWorld.EditorTools
                 { "sfx_fries_ready", Arp(new[] { 72, 76, 79, 84 }, 0.09f, Wave.Triangle, 0.5f) },
                 { "sfx_pour_loop", PourLoop() },
                 { "sfx_cream", Cream() },
+                { "sfx_squeeze", Squeeze() },
+                { "sfx_scrub", Scrub() },
+                { "sfx_capsule", CapsuleRattle() },
+                { "sfx_chime", Arp(new[] { 79, 83, 86, 91 }, 0.09f, Wave.Sine, 0.45f) },
                 { "sfx_straw", Slide(500f, 1500f, 0.32f) },
                 { "sfx_jingle", Jingle() },
                 { "sfx_celebration", Fanfare() },
@@ -269,6 +273,36 @@ namespace LittleBurgerWorld.EditorTools
             HighPass(b, 1800f);
             Tone(b, 0.05f, 0.3f, t => 700f - t * 600f, Env(0.1f, 2f), Wave.Sine, 0.2f);
             return Normalize(b, 0.5f);
+        }
+
+        /// <summary>Squishy "pfft-splort" of a sauce bottle.</summary>
+        private static float[] Squeeze()
+        {
+            float[] b = Buf(0.42f);
+            NoiseBurst(b, 0, 0.3f, k => Mathf.Sin(k * Mathf.PI), 0.7f);
+            HighPass(b, 900f);
+            Tone(b, 0.12f, 0.26f, t => 220f + Mathf.Sin(t * 60f) * 40f, Env(0.02f, 3f), Wave.Sine, 0.6f);
+            return Normalize(b, 0.5f);
+        }
+
+        /// <summary>Soft bubbly scrubbing swish.</summary>
+        private static float[] Scrub()
+        {
+            float[] b = Buf(0.3f);
+            NoiseBurst(b, 0, 0.28f, k => Mathf.Sin(k * Mathf.PI) * (0.6f + 0.4f * Mathf.Sin(k * 40f)), 0.6f);
+            HighPass(b, 2200f);
+            Tone(b, 0.05f, 0.12f, t => 900f + t * 2000f, Env(0.02f, 4f), Wave.Sine, 0.15f);
+            return Normalize(b, 0.4f);
+        }
+
+        /// <summary>Plastic capsule rattling down a chute, then a little thunk.</summary>
+        private static float[] CapsuleRattle()
+        {
+            float[] b = Buf(0.8f);
+            for (int i = 0; i < 6; i++)
+                Tone(b, i * 0.08f, 0.05f, t => 1400f - i * 120f, Env(0.002f, 6f), Wave.Triangle, 0.35f);
+            Tone(b, 0.55f, 0.2f, t => 180f - t * 300f, Env(0.005f, 4f), Wave.Sine, 0.8f);
+            return Normalize(b, 0.6f);
         }
 
         private static float[] Slide(float from, float to, float dur)

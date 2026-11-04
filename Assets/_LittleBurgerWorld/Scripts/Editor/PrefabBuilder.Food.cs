@@ -110,10 +110,15 @@ namespace LittleBurgerWorld.EditorTools
             BuildTomato();
             BuildBunTop();
             BuildPickle();
+            BuildEgg();
+            BuildOnion();
+            BuildSauce("Ketchup", A.Ketchup);
+            BuildSauce("Mustard", A.Mustard);
             BuildPotato();
             BuildFriesBatch();
             BuildFriesBox();
             BuildMilkshakeCup();
+            BuildIceCreamCone();
         }
 
         private static GameObject IngredientRoot(string name, float colliderHeight, float width = 1.35f)
@@ -217,6 +222,55 @@ namespace LittleBurgerWorld.EditorTools
             EditorAssetUtil.SavePrefab(root, $"{FoodFolder}/Ingredient_Pickle.prefab");
         }
 
+        private static void BuildEgg()
+        {
+            GameObject root = IngredientRoot("Ingredient_Egg", 0.07f, 1.4f);
+            // Wavy fried-egg white with a glossy yolk dome slightly off centre.
+            Mesh white = A.Mesh("EggWhite", () => MeshFactory.Lathe(MeshFactory.RoundedDiscProfile(0.62f, 0.06f, 0.03f), 48, "EggWhite",
+                (u, v) => Mathf.Sin(u * Mathf.PI * 2f * 3f) * 0.07f + Mathf.Sin(u * Mathf.PI * 2f * 5f + 1f) * 0.035f));
+            Part(root.transform, "White", white, A.EggWhite, Vector3.zero);
+            Mesh yolk = A.Mesh("EggYolk", () => MeshFactory.Lathe(MeshFactory.DomeProfile(0.24f, 0.12f, 0.02f, 10), 28, "EggYolk"));
+            Part(root.transform, "Yolk", yolk, A.Yolk, new Vector3(0.06f, 0.055f, -0.04f), castShadows: false);
+            EditorAssetUtil.SavePrefab(root, $"{FoodFolder}/Ingredient_Egg.prefab");
+        }
+
+        private static void BuildOnion()
+        {
+            GameObject root = IngredientRoot("Ingredient_Onion", 0.05f, 1.3f);
+            (Vector3 pos, float r)[] rings = { (new Vector3(-0.22f, 0.025f, 0.1f), 0.24f), (new Vector3(0.24f, 0.03f, 0.08f), 0.2f), (new Vector3(0f, 0.035f, -0.24f), 0.22f) };
+            for (int i = 0; i < rings.Length; i++)
+            {
+                float r = rings[i].r;
+                Mesh ring = A.Mesh($"OnionRing_{r:0.00}".Replace('.', 'p'), () => MeshFactory.Torus(r, 0.035f, 28, 8));
+                Part(root.transform, "Ring" + i, ring, i == 1 ? A.OnionEdge : A.Onion, rings[i].pos);
+                Mesh inner = A.Mesh($"OnionRingIn_{r:0.00}".Replace('.', 'p'), () => MeshFactory.Torus(r * 0.62f, 0.028f, 24, 8));
+                Part(root.transform, "Inner" + i, inner, A.Onion, rings[i].pos + new Vector3(0f, 0.005f, 0f), castShadows: false);
+            }
+            EditorAssetUtil.SavePrefab(root, $"{FoodFolder}/Ingredient_Onion.prefab");
+        }
+
+        /// <summary>A playful zig-zag of sauce (ketchup / mustard) that lies on top of the stack.</summary>
+        private static void BuildSauce(string name, Material mat)
+        {
+            GameObject root = IngredientRoot("Ingredient_" + name, 0.04f, 1.2f);
+            Mesh zig = A.Mesh("SauceZigzag", () =>
+            {
+                var parts = new List<(Mesh, Matrix4x4)>();
+                Mesh blob = MeshFactory.Sphere(0.5f, 10, 8);
+                int n = 48;
+                for (int i = 0; i < n; i++)
+                {
+                    float t = i / (n - 1f);
+                    float x = Mathf.Lerp(-0.42f, 0.42f, t);
+                    float z = Mathf.Sin(t * Mathf.PI * 5f) * 0.3f * Mathf.Sqrt(1f - Mathf.Pow(2f * t - 1f, 2f) * 0.6f);
+                    parts.Add((blob, Matrix4x4.TRS(new Vector3(x, 0.02f, z), Quaternion.identity, new Vector3(0.09f, 0.05f, 0.09f))));
+                }
+                return MeshFactory.Combine("SauceZigzag", parts.ToArray());
+            });
+            Part(root.transform, "Sauce", zig, mat, Vector3.zero, castShadows: false);
+            EditorAssetUtil.SavePrefab(root, $"{FoodFolder}/Ingredient_{name}.prefab");
+        }
+
         private static void BuildPotato()
         {
             var root = new GameObject("Food_Potato");
@@ -288,6 +342,60 @@ namespace LittleBurgerWorld.EditorTools
                 Part(fill.transform, "Fry" + i, FryStick, A.Fries, new Vector3(x, y, z), new Vector3(rnd.Next(-8, 8), rnd.Next(0, 90), rnd.Next(-14, 14)), castShadows: false);
             }
             EditorAssetUtil.SavePrefab(root, $"{FoodFolder}/Food_FriesBox.prefab");
+        }
+
+        public static readonly (string id, string name, string color)[] IceCreamFlavours =
+        {
+            ("strawberry", "Strawberry", "#FF9EC1"), ("chocolate", "Chocolate", "#8B5A3C"), ("vanilla", "Vanilla", "#FFF1C9")
+        };
+
+        private static void BuildIceCreamCone()
+        {
+            var root = new GameObject("Food_IceCream");
+            Pickable(root, new Vector3(0.8f, 1.6f, 0.8f), new Vector3(0f, 0.8f, 0f));
+            MakeFood(root, FoodType.IceCream, 1.1f, 2.3f);
+            Mesh cone = A.Mesh("WaffleCone", () => MeshFactory.Lathe(new List<Vector2>
+            {
+                new Vector2(0f, 0f), new Vector2(0.04f, 0.02f), new Vector2(0.24f, 0.62f), new Vector2(0.27f, 0.66f), new Vector2(0.25f, 0.7f), new Vector2(0f, 0.7f)
+            }, 28, "WaffleCone"));
+            Part(root.transform, "Cone", cone, A.Waffle, Vector3.zero);
+            for (int i = 0; i < 3; i++)
+            {
+                float y = 0.16f + i * 0.16f;
+                float r = 0.04f + (y / 0.62f) * 0.2f + 0.008f;
+                Mesh ring = A.Mesh($"WaffleLine{i}", () => MeshFactory.Torus(r, 0.012f, 24, 5));
+                Part(root.transform, "Line" + i, ring, A.WaffleDark, new Vector3(0f, y, 0f), castShadows: false);
+            }
+            var scoops = new Object[3];
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject s = Part(root.transform, "Scoop" + i, A.SphereMesh, A.Scoop, new Vector3(0f, 0.8f + i * 0.27f, 0f), null,
+                    new Vector3(0.56f - i * 0.03f, 0.46f, 0.56f - i * 0.03f));
+                scoops[i] = s.GetComponent<MeshRenderer>();
+                s.SetActive(false);
+            }
+            GameObject sprinkles = Node(root.transform, "Sprinkles", new Vector3(0f, 0.8f, 0f));
+            Material[] sm = { A.SprinklePink, A.SprinkleBlue, A.SprinkleYellow, A.SprinkleGreen };
+            var rnd = new System.Random(5);
+            for (int i = 0; i < 16; i++)
+            {
+                float a = (float)rnd.NextDouble() * Mathf.PI * 2f;
+                float h = 0.35f + (float)rnd.NextDouble() * 0.6f; // 0..1 up the dome
+                float rr = Mathf.Sqrt(1f - h * h) * 0.27f;
+                Vector3 pos = new Vector3(Mathf.Cos(a) * rr, h * 0.23f, Mathf.Sin(a) * rr);
+                Part(sprinkles.transform, "S" + i, A.Capsule(0.018f, 0.09f), sm[i % sm.Length], pos,
+                    new Vector3(rnd.Next(0, 180), rnd.Next(0, 360), rnd.Next(0, 180)), Vector3.one, false);
+            }
+            sprinkles.SetActive(false);
+            GameObject cherry = Node(root.transform, "Cherry", new Vector3(0f, 0.97f, 0f));
+            Part(cherry.transform, "Berry", A.SphereMesh, A.CherryRed, new Vector3(0f, 0.08f, 0f), null, Vector3.one * 0.19f);
+            Part(cherry.transform, "Stem", A.Capsule(0.012f, 0.16f), A.Lettuce, new Vector3(0.03f, 0.22f, 0f), new Vector3(0f, 0f, -20f), Vector3.one, false);
+            cherry.SetActive(false);
+            var vis = root.AddComponent<IceCreamVisual>();
+            EditorAssetUtil.SetArray(vis, "m_Scoops", scoops);
+            EditorAssetUtil.Set(vis, "m_Sprinkles", sprinkles.transform);
+            EditorAssetUtil.Set(vis, "m_Cherry", cherry.transform);
+            EditorAssetUtil.SavePrefab(root, $"{FoodFolder}/Food_IceCream.prefab");
         }
 
         private static void BuildMilkshakeCup()

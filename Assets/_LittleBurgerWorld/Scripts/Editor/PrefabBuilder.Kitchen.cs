@@ -21,6 +21,129 @@ namespace LittleBurgerWorld.EditorTools
             BuildFriesHolder();
             BuildDrinks(drinks);
             BuildTray();
+            BuildIceCreamCart();
+        }
+
+        /// <summary>A little wheeled ice cream cart with a striped umbrella (stands on the floor).</summary>
+        private static void BuildIceCreamCart()
+        {
+            var root = new GameObject("Station_IceCream");
+            BlobShadow(root.transform, Vector3.zero, 2.6f, 1.6f);
+            const float top = 1.15f;
+            Part(root.transform, "Body", A.RoundedBox(2.0f, 0.85f, 1.05f, 0.16f), A.SoftPink, new Vector3(0f, 0.3f + 0.425f, 0f));
+            Part(root.transform, "Stripe", A.RoundedBox(2.04f, 0.14f, 1.09f, 0.06f), A.White, new Vector3(0f, 0.86f, 0f), castShadows: false);
+            Part(root.transform, "TopSlab", A.RoundedBox(2.1f, 0.08f, 1.15f, 0.04f), A.White, new Vector3(0f, top - 0.04f, 0f));
+            Face(root.transform, new Vector3(0f, 0.6f, -0.53f), 0.2f, 1.0f, Vector3.zero);
+            foreach (float x in new[] { -0.75f, 0.75f })
+                foreach (float z in new[] { -0.4f, 0.4f })
+                    Part(root.transform, "Wheel", A.Disc(0.17f, 0.1f, 0.04f, 20), A.Sky, new Vector3(x, 0.17f, z), new Vector3(0f, 0f, 90f));
+            // Little cone topper on the back edge instead of an umbrella (keeps the serving counter visible).
+            GameObject sign = Node(root.transform, "Topper", new Vector3(0.95f, top, 0.42f));
+            Part(sign.transform, "Post", A.Capsule(0.03f, 0.5f), A.White, new Vector3(0f, 0.25f, 0f), castShadows: false);
+            Part(sign.transform, "Cone", A.GetMesh("WaffleCone"), A.Waffle, new Vector3(0f, 0.5f, 0f), null, Vector3.one * 0.55f, false);
+            Part(sign.transform, "Scoop", A.SphereMesh, A.Lit("IceCream_strawberry", EditorAssetUtil.Hex("#FF9EC1"), 0.35f),
+                new Vector3(0f, 0.92f, 0f), null, Vector3.one * 0.3f, false);
+            // Flavour tubs along the back
+            var tubs = new List<Object>();
+            var ids = new List<string>();
+            var colors = new List<Color>();
+            Mesh tubMesh = A.Mesh("IceCreamTub", () => MeshFactory.Lathe(new List<Vector2>
+            {
+                new Vector2(0f, 0f), new Vector2(0.2f, 0f), new Vector2(0.24f, 0.24f), new Vector2(0.26f, 0.27f), new Vector2(0.22f, 0.27f), new Vector2(0.21f, 0.2f), new Vector2(0f, 0.2f)
+            }, 28, "IceCreamTub"));
+            for (int i = 0; i < IceCreamFlavours.Length; i++)
+            {
+                var f = IceCreamFlavours[i];
+                GameObject tub = Node(root.transform, "Tub_" + f.id, new Vector3(-0.62f + i * 0.5f, top, 0.24f));
+                GameObject tv = Node(tub.transform, "Visual", Vector3.zero);
+                Part(tv.transform, "Tub", tubMesh, A.White, Vector3.zero);
+                Material m = A.Lit("IceCream_" + f.id, EditorAssetUtil.Hex(f.color), 0.35f);
+                Part(tv.transform, "Cream", A.SphereMesh, m, new Vector3(0f, 0.22f, 0f), null, new Vector3(0.44f, 0.26f, 0.44f));
+                Part(tv.transform, "Scoop", A.SphereMesh, m, new Vector3(0.05f, 0.33f, -0.02f), null, new Vector3(0.22f, 0.18f, 0.22f), false);
+                var c = tub.AddComponent<SphereCollider>();
+                c.radius = 0.32f;
+                c.center = new Vector3(0f, 0.2f, 0f);
+                tubs.Add(Button3D(tub, 8, SfxId.Pop, tv.transform));
+                Key(tub, "IceCream.Tub." + f.id);
+                ids.Add(f.id);
+                colors.Add(EditorAssetUtil.Hex(f.color));
+            }
+            // Cone stack (front left)
+            GameObject cones = Node(root.transform, "ConeStack", new Vector3(-0.72f, top, -0.27f));
+            GameObject cv = Node(cones.transform, "Visual", Vector3.zero);
+            Part(cv.transform, "Holder", A.Disc(0.2f, 0.06f, 0.02f, 20), A.Sky, Vector3.zero);
+            for (int i = 0; i < 3; i++)
+                Part(cv.transform, "Cone" + i, A.GetMesh("WaffleCone"), A.Waffle, new Vector3(0f, 0.75f - i * 0.12f, 0f), new Vector3(180f, 0f, 0f), Vector3.one * 0.85f);
+            var cc = cones.AddComponent<BoxCollider>();
+            cc.size = new Vector3(0.6f, 0.9f, 0.6f);
+            cc.center = new Vector3(0f, 0.4f, 0f);
+            TapButton3D coneButton = Button3D(cones, 8, SfxId.Pop, cv.transform);
+            Key(cones, "IceCream.Cones");
+            GameObject spawn = Node(root.transform, "ConeSpawn", new Vector3(-0.72f, top + 0.9f, -0.27f));
+            // Cone holder (front middle)
+            GameObject holder = Node(root.transform, "Holder", new Vector3(-0.1f, top, -0.25f));
+            Part(holder.transform, "Ring", A.Mesh("ConeHolderRing", () => MeshFactory.Torus(0.19f, 0.04f, 24, 8)), A.Sky, new Vector3(0f, 0.36f, 0f));
+            Part(holder.transform, "Post", A.Capsule(0.04f, 0.34f), A.Sky, new Vector3(0.2f, 0.17f, 0f), castShadows: false);
+            GameObject spot = Node(holder.transform, "Spot", new Vector3(0f, 0.02f, 0f));
+            Key(holder, "IceCream.Holder");
+            // Sprinkle shaker
+            GameObject shaker = Node(root.transform, "Sprinkles", new Vector3(0.42f, top, -0.3f));
+            GameObject sv = Node(shaker.transform, "Visual", Vector3.zero);
+            Part(sv.transform, "Jar", A.Capsule(0.15f, 0.5f), A.Glass, new Vector3(0f, 0.25f, 0f));
+            Part(sv.transform, "Lid", A.Disc(0.16f, 0.08f, 0.03f, 20), A.SprinklePink, new Vector3(0f, 0.48f, 0f));
+            Material[] sm = { A.SprinklePink, A.SprinkleBlue, A.SprinkleYellow, A.SprinkleGreen };
+            for (int i = 0; i < 8; i++)
+                Part(sv.transform, "Bit" + i, A.Capsule(0.02f, 0.08f), sm[i % 4], new Vector3(((i * 37) % 9 - 4) * 0.02f, 0.08f + (i % 4) * 0.07f, -0.07f),
+                    new Vector3(0f, 0f, i * 40f), Vector3.one, false);
+            var shc = shaker.AddComponent<BoxCollider>();
+            shc.size = new Vector3(0.55f, 0.75f, 0.55f);
+            shc.center = new Vector3(0f, 0.3f, 0f);
+            TapButton3D shakerButton = Button3D(shaker, 8, SfxId.Sparkle, sv.transform);
+            Key(shaker, "IceCream.Sprinkles");
+            // Cherry bowl
+            GameObject bowl = Node(root.transform, "Cherries", new Vector3(0.82f, top, -0.12f));
+            GameObject bv = Node(bowl.transform, "Visual", Vector3.zero);
+            Part(bv.transform, "Bowl", A.Mesh("CherryBowl", () => MeshFactory.Lathe(new List<Vector2>
+            {
+                new Vector2(0f, 0f), new Vector2(0.12f, 0f), new Vector2(0.22f, 0.12f), new Vector2(0.24f, 0.16f), new Vector2(0.2f, 0.15f), new Vector2(0f, 0.06f)
+            }, 24, "CherryBowl")), A.White, Vector3.zero);
+            for (int i = 0; i < 4; i++)
+                Part(bv.transform, "Cherry" + i, A.SphereMesh, A.CherryRed, new Vector3(Mathf.Cos(i * 1.6f) * 0.08f, 0.16f + (i == 3 ? 0.07f : 0f), Mathf.Sin(i * 1.6f) * 0.08f),
+                    null, Vector3.one * 0.13f, false);
+            var bc = bowl.AddComponent<SphereCollider>();
+            bc.radius = 0.3f;
+            bc.center = new Vector3(0f, 0.15f, 0f);
+            TapButton3D cherryButton = Button3D(bowl, 8, SfxId.Pop, bv.transform);
+            Key(bowl, "IceCream.Cherry");
+
+            var station = root.AddComponent<IceCreamStation>();
+            var so = new UnityEditor.SerializedObject(station);
+            SerializedStrings(so, "m_FlavourIds", ids);
+            SerializedColors(so, "m_FlavourColors", colors);
+            SetList(so, "m_Tubs", tubs);
+            so.FindProperty("m_Cones").objectReferenceValue = coneButton;
+            so.FindProperty("m_SprinkleShaker").objectReferenceValue = shakerButton;
+            so.FindProperty("m_CherryJar").objectReferenceValue = cherryButton;
+            so.FindProperty("m_Spot").objectReferenceValue = spot.transform;
+            so.FindProperty("m_Spawn").objectReferenceValue = spawn.transform;
+            so.FindProperty("m_ConePrefab").objectReferenceValue = Load($"{FoodFolder}/Food_IceCream.prefab");
+            so.ApplyModifiedPropertiesWithoutUndo();
+            Key(root, "IceCream");
+            EditorAssetUtil.SavePrefab(root, $"{KitchenFolder}/Station_IceCream.prefab");
+        }
+
+        private static void SerializedStrings(UnityEditor.SerializedObject so, string field, List<string> values)
+        {
+            UnityEditor.SerializedProperty p = so.FindProperty(field);
+            p.arraySize = values.Count;
+            for (int i = 0; i < values.Count; i++) p.GetArrayElementAtIndex(i).stringValue = values[i];
+        }
+
+        private static void SerializedColors(UnityEditor.SerializedObject so, string field, List<Color> values)
+        {
+            UnityEditor.SerializedProperty p = so.FindProperty(field);
+            p.arraySize = values.Count;
+            for (int i = 0; i < values.Count; i++) p.GetArrayElementAtIndex(i).colorValue = values[i];
         }
 
         private static TapButton3D Button3D(GameObject go, int priority, SfxId sound, Transform visual = null)

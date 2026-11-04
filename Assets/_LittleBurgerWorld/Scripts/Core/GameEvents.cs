@@ -31,7 +31,16 @@ namespace LittleBurgerWorld.Core
         CustomerLeft,
         ObjectTapped,
         WorkSurfaceReset,
-        BalloonPopped
+        BalloonPopped,
+        ConePlaced,
+        IceCreamScoop,
+        SprinklesAdded,
+        CherryAdded,
+        IceCreamCompleted,
+        DishWashed,
+        AllDishesClean,
+        ToyCollected,
+        ThemeChanged
     }
 
     /// <summary>Payload for <see cref="GameEvents.Gameplay"/>.</summary>

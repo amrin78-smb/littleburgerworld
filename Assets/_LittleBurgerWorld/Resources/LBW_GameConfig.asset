@@ -17,9 +17,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 154aacd99faddb438b7a9eaaedbbad45, type: 2}
   - {fileID: 11400000, guid: 345805dc728ee6ec5a75dacf84896e1d, type: 2}
   - {fileID: 11400000, guid: 986778940e874a922a393e092865c061, type: 2}
+  - {fileID: 11400000, guid: c57284948909b9782a30e8a0797f4f66, type: 2}
   - {fileID: 11400000, guid: 451aa9390fcc25a96831447709d2a524, type: 2}
   - {fileID: 11400000, guid: 2fb39ee42bf0b5783a65b7b58af6f08a, type: 2}
+  - {fileID: 11400000, guid: e25f69180953c61efa8dd774fde2607f, type: 2}
   - {fileID: 11400000, guid: b120acb2f55abcc04ae500e0a458174f, type: 2}
+  - {fileID: 11400000, guid: e3d7c158b31d1067c86aefab9b0fc329, type: 2}
+  - {fileID: 11400000, guid: 096e0de8a8d594b4cbb7e31521b82ef7, type: 2}
   - {fileID: 11400000, guid: 45c31f3138e9c21f680bae3055fa799a, type: 2}
   recipes:
   - {fileID: 11400000, guid: 173c3408282a7f555925bd66cea2e122, type: 2}
@@ -27,6 +31,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 951bebdb2ce8a55379d5213b5dc5ecde, type: 2}
   - {fileID: 11400000, guid: d1d42ef8896745ee2aaa75c202848469, type: 2}
   - {fileID: 11400000, guid: 7c2f2d494d2b1cfe093a50f6e5b51257, type: 2}
+  - {fileID: 11400000, guid: d9c22b4ca144c7691bb15f67d64ccb6a, type: 2}
   drinks:
   - {fileID: 11400000, guid: c1f9923354b27976a84586d4933d1def, type: 2}
   - {fileID: 11400000, guid: 1af363596b28619c4a53c48104ab313a, type: 2}
@@ -46,6 +51,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da62ec86fbceefe3897c6c07bc13c6ed, type: 2}
   - {fileID: 11400000, guid: ded422c8f11b65876b8cf126979af9b1, type: 2}
   - {fileID: 11400000, guid: b026a02063ccd454e8a5ee6c49cfdc5e, type: 2}
+  - {fileID: 11400000, guid: 3df22912cee8a659580f12383610e92b, type: 2}
   - {fileID: 11400000, guid: e9df8b2ce46d71bff8e992fb2021b0b0, type: 2}
   stickers:
   - {fileID: 11400000, guid: 9a2f144b34db6463f8d8dfd654f0785b, type: 2}
@@ -56,11 +62,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ec4f3991e9fe89a2a81f30f3e7d9ed15, type: 2}
   - {fileID: 11400000, guid: 4f2e1f4be67dee4e6960b402ece82cdb, type: 2}
   - {fileID: 11400000, guid: 9e717171c23ac9d3e86c28a57da2ff06, type: 2}
+  - {fileID: 11400000, guid: 234530cf669b94dd6821b078ddc34c42, type: 2}
   - {fileID: 11400000, guid: c4dcb7b47ff4d37ff9daea295afab002, type: 2}
   - {fileID: 11400000, guid: 1ec6150d441fff80aa67c64da7f29e8e, type: 2}
   audioLibrary: {fileID: 11400000, guid: 0843c303cbba9cc59bb154d788b140ab, type: 2}
   localization: {fileID: 11400000, guid: 39cc4fa437cae6e839c36cf756558dda, type: 2}
   friesIcon: {fileID: 21300000, guid: b51f892dd8cbced358070ed91f587521, type: 3}
+  iceCreamIcon: {fileID: 21300000, guid: 4527d89b31ffe7cb39d7cf0ebd46d40e, type: 3}
   trayIcon: {fileID: 21300000, guid: 84f6e1a98b07775f3a09490ee01c7647, type: 3}
   burgerIcon: {fileID: 21300000, guid: 48597f491d4c0b161b959dff1595c793, type: 3}
   starIcon: {fileID: 21300000, guid: c77f213b2a27c96bd83abbcf109851f7, type: 3}

@@ -33,11 +33,16 @@ namespace LittleBurgerWorld.EditorTools
             raw.cookedVariant = cooked;
             raw.placeSound = SfxId.Plop;
             Ingredient("cheese", "Cheese", $"{pf}/Ingredient_Cheese.prefab", "icon_cheese", "#F7B731", 0.055f, 2);
-            Ingredient("lettuce", "Lettuce", $"{pf}/Ingredient_Lettuce.prefab", "icon_lettuce", "#8CCB5E", 0.07f, 3);
-            Ingredient("tomato", "Tomato", $"{pf}/Ingredient_Tomato.prefab", "icon_tomato", "#E4503F", 0.08f, 4);
-            IngredientData pickle = Ingredient("pickle", "Pickles", $"{pf}/Ingredient_Pickle.prefab", "icon_pickle", "#6FAF4A", 0.05f, 5);
+            Ingredient("egg", "Fried Egg", $"{pf}/Ingredient_Egg.prefab", "icon_egg", "#FFB627", 0.07f, 3);
+            Ingredient("lettuce", "Lettuce", $"{pf}/Ingredient_Lettuce.prefab", "icon_lettuce", "#8CCB5E", 0.07f, 4);
+            Ingredient("tomato", "Tomato", $"{pf}/Ingredient_Tomato.prefab", "icon_tomato", "#E4503F", 0.08f, 5);
+            Ingredient("onion", "Onion", $"{pf}/Ingredient_Onion.prefab", "icon_onion", "#C99AD6", 0.05f, 6);
+            IngredientData pickle = Ingredient("pickle", "Pickles", $"{pf}/Ingredient_Pickle.prefab", "icon_pickle", "#6FAF4A", 0.05f, 7);
             pickle.unlockedByDefault = false;
-            IngredientData top = Ingredient("bun_top", "Top Bun", $"{pf}/Ingredient_BunTop.prefab", "icon_bun_top", "#E8993D", 0.48f, 6);
+            IngredientData ketchup = Ingredient("ketchup", "Ketchup", $"{pf}/Ingredient_Ketchup.prefab", "icon_ketchup", "#D93A2E", 0.035f, 8);
+            IngredientData mustard = Ingredient("mustard", "Mustard", $"{pf}/Ingredient_Mustard.prefab", "icon_mustard", "#F2B71E", 0.035f, 9);
+            ketchup.placeSound = mustard.placeSound = SfxId.Squeeze;
+            IngredientData top = Ingredient("bun_top", "Top Bun", $"{pf}/Ingredient_BunTop.prefab", "icon_bun_top", "#E8993D", 0.48f, 10);
             top.completesBurger = true;
             foreach (IngredientData i in Ingredients.Values) EditorUtility.SetDirty(i);
 
@@ -48,6 +53,7 @@ namespace LittleBurgerWorld.EditorTools
             Recipe("veggie_burger", "Veggie Burger", "icon_burger", "bun_bottom", "lettuce", "tomato", "lettuce", "bun_top");
             Recipe("double_burger", "Double Burger", "icon_cheeseburger", "bun_bottom", "patty", "cheese", "patty", "cheese", "bun_top");
             Recipe("special_burger", "Special Burger", "icon_cheeseburger", "bun_bottom", "patty", "cheese", "lettuce", "tomato", "bun_top");
+            Recipe("egg_burger", "Sunny Egg Burger", "icon_egg_burger", "bun_bottom", "patty", "egg", "ketchup", "bun_top");
 
             Drinks.Clear();
             Drink("strawberry", "Strawberry", "icon_milkshake_strawberry", "#F48FB1", "#FFF6F8");
@@ -295,6 +301,16 @@ namespace LittleBurgerWorld.EditorTools
             a8.AddRange(ShakeSteps(true));
             a8.Add(S(ActivityStepType.WaitForDrop, "Customer", "Drinks.Cup", "milkshake", "icon_milkshake_strawberry", voice: "serve_dotty"));
             a8.Add(S(ActivityStepType.Wait, duration: 3.2f));
+            var a9 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen), Call("benny", "ice_cream") };
+            a9.Add(S(ActivityStepType.WaitForEvent, "IceCream.Cones", null, null, "icon_cone", GameplayEventType.ConePlaced, voice: "get_cone"));
+            a9.Add(S(ActivityStepType.WaitForEvent, "IceCream.Tub.strawberry", null, null, "icon_ice_cream", GameplayEventType.IceCreamScoop, voice: "add_scoop"));
+            a9.Add(S(ActivityStepType.WaitForEvent, "IceCream.Tub.vanilla", null, null, "icon_ice_cream", GameplayEventType.IceCreamScoop, voice: "one_more_scoop"));
+            a9.Add(S(ActivityStepType.WaitForEvent, "IceCream.Sprinkles", null, null, "icon_sprinkles", GameplayEventType.SprinklesAdded, voice: "add_sprinkles"));
+            a9.Add(S(ActivityStepType.WaitForEvent, "IceCream.Cherry", null, null, "icon_cherry", GameplayEventType.CherryAdded, voice: "add_cherry"));
+            a9.Add(S(ActivityStepType.WaitForDrop, "Customer", "IceCream.Holder", "ice_cream", "icon_ice_cream", voice: "serve_ice_cream"));
+            a9.Add(S(ActivityStepType.Wait, duration: 3.2f));
+            list.Add(Activity("ice_cream_time", "Ice Cream Time", "icon_ice_cream", "#FFE1EC", a9, null));
+
             list.Add(Activity("dottys_milkshake", "Dotty's Milkshake", "portrait_dotty", "#DCEBFF", a8, null));
 
             return list;
@@ -329,6 +345,7 @@ namespace LittleBurgerWorld.EditorTools
                 Sticker("bear_buddy", "Bear Buddy", "sticker_bear_buddy", StickerCondition.ServeCustomers, 1),
                 Sticker("tall_tower", "Tall Tower", "sticker_tall_tower", StickerCondition.TallBurger, 8),
                 Sticker("balloon_pop", "Balloon Popper", "sticker_balloon_pop", StickerCondition.PopBalloons, 5),
+                Sticker("sweet_treat", "Sweet Treat", "sticker_sweet_treat", StickerCondition.FirstIceCream, 1),
                 Sticker("animal_friends", "Animal Friends", "sticker_animal_friends", StickerCondition.ServeDifferentAnimals, 4),
                 Sticker("super_chef", "Super Chef", "sticker_super_chef", StickerCondition.CompleteAllActivities, 1)
             };
@@ -381,6 +398,10 @@ namespace LittleBurgerWorld.EditorTools
             Add(SfxId.DoorChime, "sfx_door_chime", 0.45f, 0f);
             Add(SfxId.Boing, "sfx_boing", 0.45f, 0.05f);
             Add(SfxId.Footstep, "sfx_footstep", 0.3f, 0.1f);
+            Add(SfxId.Squeeze, "sfx_squeeze", 0.55f, 0.1f);
+            Add(SfxId.Scrub, "sfx_scrub", 0.4f, 0.15f);
+            Add(SfxId.Capsule, "sfx_capsule", 0.6f, 0.03f);
+            Add(SfxId.Chime, "sfx_chime", 0.5f, 0.02f);
 
             // Voice lines: Tools/voice/voice_lines.json is the single source for the spoken clip
             // (Audio/Voice/<lang>/<key>.wav, generated by Tools/voice/generate_voice.sh) and the on-screen text.
@@ -475,6 +496,7 @@ namespace LittleBurgerWorld.EditorTools
             cfg.audioLibrary = audio;
             cfg.localization = loc;
             cfg.friesIcon = IconLibrary.Get("icon_fries");
+            cfg.iceCreamIcon = IconLibrary.Get("icon_ice_cream");
             cfg.trayIcon = IconLibrary.Get("icon_meal");
             cfg.burgerIcon = IconLibrary.Get("icon_burger");
             cfg.starIcon = IconLibrary.Get("icon_star");

@@ -31,6 +31,7 @@ namespace LittleBurgerWorld.Core
 
         [Header("Shared visuals")]
         public Sprite friesIcon;
+        public Sprite iceCreamIcon;
         public Sprite trayIcon;
         public Sprite burgerIcon;
         public Sprite starIcon;
@@ -72,6 +73,7 @@ namespace LittleBurgerWorld.Core
             switch (id)
             {
                 case "fries": return friesIcon;
+                case "ice_cream": return iceCreamIcon;
                 case "tray":
                 case "meal": return trayIcon;
                 case "burger": return burgerIcon;
