@@ -60,7 +60,7 @@ Legend: `[x]` done and verified · `[~]` implemented, needs on-device verificati
 
 ### Phase 8 – Android
 - [x] Validator passes (setup batch exits 0)
-- [x] EditMode 34/34, PlayMode 13/13 passing (executed in batch mode)
+- [x] EditMode 34/34, PlayMode 15/15 passing (executed in batch mode)
 - [x] Automated play-through in a Linux player build: 13/13 checks passing, 17 screenshots
 - [x] ARMv7 + ARM64, IL2CPP, landscape, Vulkan + GLES3 with PowerVR → GLES3 deny list
 - [x] APK built to `Builds/Android/LittleBurgerWorld.apk`

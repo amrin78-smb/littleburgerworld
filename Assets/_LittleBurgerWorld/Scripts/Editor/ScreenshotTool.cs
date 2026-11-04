@@ -40,6 +40,41 @@ namespace LittleBurgerWorld.EditorTools
             Debug.Log("[LBW Shots] Screenshots written to " + Path.GetFullPath(OutFolder));
         }
 
+        /// <summary>All animal customers side by side (front and back three-quarter views) for art review.</summary>
+        [MenuItem(LittleBurgerWorldSetup.MenuRoot + "Capture Character Line-up", priority = 41)]
+        public static void CaptureCharacters()
+        {
+            Directory.CreateDirectory(OutFolder);
+            EditorSceneManager.OpenScene(SceneBuilder.MenuPath, OpenSceneMode.Single);
+            DynamicGI.UpdateEnvironment();
+            Camera cam = Camera.main;
+            foreach (GameObject root in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                bool keep = root.GetComponentInChildren<Light>() != null || root.GetComponentInChildren<Camera>() != null;
+                if (!keep) root.SetActive(false);
+            }
+            var cfg = AssetDatabase.LoadAssetAtPath<GameConfig>(DataBuilder.ConfigPath);
+            var spawned = new System.Collections.Generic.List<GameObject>();
+            int n = cfg.characters.Count;
+            for (int i = 0; i < n; i++)
+            {
+                var go = (GameObject)PrefabUtility.InstantiatePrefab(cfg.characters[i].prefab);
+                go.transform.position = new Vector3((i - (n - 1) * 0.5f) * 2.3f, 0f, 0f);
+                Transform bubble = go.transform.Find("RequestBubble");
+                if (bubble != null) bubble.gameObject.SetActive(false);
+                spawned.Add(go);
+            }
+            cam.transform.position = new Vector3(0f, 2.4f, -16f);
+            cam.transform.rotation = Quaternion.LookRotation(new Vector3(0f, 1.3f, 0f) - cam.transform.position);
+            cam.fieldOfView = 30f;
+            foreach (var (label, yaw) in new[] { ("front", 160f), ("back", 25f) })
+            {
+                foreach (GameObject go in spawned) go.transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+                Capture($"characters_{label}", 2600, 900);
+            }
+            Debug.Log("[LBW Shots] Character line-up written to " + Path.GetFullPath(OutFolder));
+        }
+
         private static void PopulateSample()
         {
             var cfg = AssetDatabase.LoadAssetAtPath<GameConfig>(DataBuilder.ConfigPath);

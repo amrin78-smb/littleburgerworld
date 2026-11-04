@@ -320,4 +320,5 @@ MonoBehaviour:
   completionSound: 14
   completionAnimation: balloons
   starReward: 1
-  unlocks: []
+  unlocks:
+  - bao

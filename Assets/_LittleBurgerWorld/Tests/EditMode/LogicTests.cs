@@ -462,7 +462,14 @@ namespace LittleBurgerWorld.Tests
             }
             Assert.IsNotNull(cfg.FindRecipe("burger"));
             Assert.IsNotNull(cfg.FindRecipe("cheeseburger"));
-            Assert.AreEqual(6, cfg.activities.Count);
+            Assert.AreEqual(8, cfg.activities.Count);
+            foreach (string animal in new[] { "benny", "penny", "milo", "dotty", "ellie", "bao" })
+            {
+                CharacterData c = cfg.FindCharacter(animal);
+                Assert.IsNotNull(c, animal);
+                Assert.IsNotNull(c.prefab.GetComponent<AnimalCustomerController>(), animal + " controller");
+                Assert.IsNotNull(c.portrait, animal + " portrait");
+            }
             Assert.AreEqual(3, cfg.drinks.Count);
             Assert.IsNotNull(cfg.FindCharacter("benny").prefab.GetComponent<AnimalCustomerController>());
             Assert.IsNotNull(cfg.audioLibrary.restaurantMusic);

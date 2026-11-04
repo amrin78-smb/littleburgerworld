@@ -23,6 +23,8 @@
     { "key": "burger_on_tray", "en": "Put the burger on the tray.",           "th": "วางเบอร์เกอร์บนถาดนะ" },
     { "key": "fries_on_tray",  "en": "Put the fries on the tray.",            "th": "วางเฟรนช์ฟรายส์บนถาดนะ" },
     { "key": "shake_on_tray",  "en": "Put the milkshake on the tray.",        "th": "วางมิลค์เชคบนถาดนะ" },
+    { "key": "serve_milo",     "en": "Give the fries to Milo!",               "th": "เอาเฟรนช์ฟรายส์ให้ไมโลเลย!" },
+    { "key": "serve_dotty",    "en": "Give the milkshake to Dotty!",          "th": "เอามิลค์เชคให้ดอตตี้เลย!" },
     { "key": "meal_ready",     "en": "What a yummy meal!",                    "th": "อาหารน่าอร่อยมากเลย!" },
     { "key": "well_done",      "en": "Hooray! You did it!",                   "th": "ไชโย! หนูทำได้แล้ว!" }
   ]

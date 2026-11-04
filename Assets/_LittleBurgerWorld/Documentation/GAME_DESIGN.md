@@ -41,7 +41,7 @@ No timers, no failure, no angry customers, no lives, no ads, no purchases, no cu
 
 ## Customers
 
-Benny the Bear (original design: round head, big glossy eyes, small nose, smile, rosy cheeks, soft brown fur, red bow tie) and Penny the Bunny (unlockable). States: Idle → Entering → Waiting → ReceivingFood → Eating → Celebrating → Leaving. Request shown as a picture in a thought bubble. **Any** food is accepted happily (raw patties are the only thing not accepted – they go to the grill). Without food they wait happily forever, blinking, breathing and waving.
+Benny the Bear (original design: round head, big glossy eyes, small nose, smile, rosy cheeks, soft brown fur, red bow tie) plus Penny the Bunny, Milo the Cat (ginger tabby, whiskers, curly tail), Dotty the Dog (floppy ears, eye patch), Ellie the Elephant (big ears, trunk) and Bao the Panda. Milo and Dotty are available from the start; Penny, Ellie and Bao are unlocked by activities. Free Play picks unlocked animals at random. States: Idle → Entering → Waiting → ReceivingFood → Eating → Celebrating → Leaving. Request shown as a picture in a thought bubble. **Any** food is accepted happily (raw patties are the only thing not accepted – they go to the grill). Without food they wait happily forever, blinking, breathing and waving.
 
 ## Game modes
 
@@ -51,9 +51,11 @@ Six picture cards (stars earned shown on each). Steps are communicated with a pi
 1. **My First Burger** – bun, patty on grill, flip, patty on bun, top bun, Benny cheers.
 2. **Add Some Cheese** – as above + cheese, then give it to Benny. Unlocks **pickles**.
 3. **Make French Fries** – potato, fries into the box.
-4. **Make a Milkshake** – flavour, cup, fill, cream, straw. Unlocks **Penny the Bunny**.
+4. **Make a Milkshake** – flavour, cup, fill, cream, straw. Unlocks **Penny the Bunny**. (*Make French Fries* unlocks **Ellie the Elephant**, *Prepare a Complete Meal* unlocks **Bao the Panda**.)
 5. **Prepare a Complete Meal** – burger, fries and milkshake on the tray.
 6. **Serve Benny** – Benny walks in wanting a cheeseburger; make it and serve him.
+7. **Milo's Snack** – make fries and give them to Milo the Cat.
+8. **Dotty's Milkshake** – make a milkshake and give it to Dotty the Dog.
 
 Never stuck: actions done early count immediately; hints repeat every few seconds; after several hints the game gently does the step itself; replay and back-to-cards buttons are always available.
 
@@ -61,7 +63,7 @@ Never stuck: actions done early count immediately; hints repeat every few second
 Everything unlocked is available at once, any order, tall towers (12 layers), food can be put down anywhere on the counters, customers keep arriving with random picture requests and love whatever they get. **Tidy-up** is a hold-to-confirm button so a stray tap never wipes the child's work.
 
 ## Rewards (pressure-free)
-Stars per activity (up to 3, earned by replaying), 9 stickers (first burger, cheese champ, fries fan, shake maker, meal master, bear buddy, tall tower ≥ 8 layers, balloon popper, super chef), unlocks (pickles, Penny), celebration balloons. Nothing is ever taken away.
+Stars per activity (up to 3, earned by replaying), 10 stickers (first burger, cheese champ, fries fan, shake maker, meal master, bear buddy, tall tower ≥ 8 layers, balloon popper, animal friends = serve 4 different animals, super chef), unlocks (pickles, Penny, Ellie, Bao), celebration balloons. Nothing is ever taken away.
 
 ## Parent area
 Gear button → grown-up gate (simple sum, three big answers; a wrong answer just shows a new question) → music / sounds / voice volumes, spoken-hint toggle, language (English / ไทย, data-driven), hold-to-reset progress, privacy information. No links, purchases or accounts.

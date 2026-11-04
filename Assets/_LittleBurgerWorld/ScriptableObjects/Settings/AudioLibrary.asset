@@ -290,6 +290,22 @@ MonoBehaviour:
     language: th
     clip: {fileID: 8300000, guid: 3f1c1b64d358169fabfc1d1194dfde19, type: 3}
     transcript: "\u0E27\u0E32\u0E07\u0E21\u0E34\u0E25\u0E04\u0E4C\u0E40\u0E0A\u0E04\u0E1A\u0E19\u0E16\u0E32\u0E14\u0E19\u0E30"
+  - key: serve_milo
+    language: en
+    clip: {fileID: 8300000, guid: f94f5d133bf6fb9c9b1792513d449156, type: 3}
+    transcript: Give the fries to Milo!
+  - key: serve_milo
+    language: th
+    clip: {fileID: 8300000, guid: a8b9d727bcabc7b8c89482ce0a8db43a, type: 3}
+    transcript: "\u0E40\u0E2D\u0E32\u0E40\u0E1F\u0E23\u0E19\u0E0A\u0E4C\u0E1F\u0E23\u0E32\u0E22\u0E2A\u0E4C\u0E43\u0E2B\u0E49\u0E44\u0E21\u0E42\u0E25\u0E40\u0E25\u0E22!"
+  - key: serve_dotty
+    language: en
+    clip: {fileID: 8300000, guid: c1426bd0917caaea0bdc322c8f7bffd8, type: 3}
+    transcript: Give the milkshake to Dotty!
+  - key: serve_dotty
+    language: th
+    clip: {fileID: 8300000, guid: 3e536fbf9df1609c9b91ef79948ee683, type: 3}
+    transcript: "\u0E40\u0E2D\u0E32\u0E21\u0E34\u0E25\u0E04\u0E4C\u0E40\u0E0A\u0E04\u0E43\u0E2B\u0E49\u0E14\u0E2D\u0E15\u0E15\u0E35\u0E49\u0E40\u0E25\u0E22!"
   - key: meal_ready
     language: en
     clip: {fileID: 8300000, guid: cf29cb2303e55e97eb95ac00818a96ad, type: 3}

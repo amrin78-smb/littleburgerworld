@@ -34,6 +34,10 @@ MonoBehaviour:
   characters:
   - {fileID: 11400000, guid: 0fda4a4bd7e2f0100bfdf4e71593a334, type: 2}
   - {fileID: 11400000, guid: 8c598fc1bb8c47a76a862c351c1992d8, type: 2}
+  - {fileID: 11400000, guid: 368f3fe74a5d24bbdae94dc74e02596c, type: 2}
+  - {fileID: 11400000, guid: f3bb7c03854e20cfcb6d3bfe46f1156b, type: 2}
+  - {fileID: 11400000, guid: 9e06570ec5c8a6250a177ccfeba0a1ca, type: 2}
+  - {fileID: 11400000, guid: 3ed91e924782c3fcdb4a1c0089c56835, type: 2}
   activities:
   - {fileID: 11400000, guid: 7b9f15184e8e76b8f8a2eaff4cb8ddce, type: 2}
   - {fileID: 11400000, guid: 12af10e8bb3b3caa88b88f4886e76c37, type: 2}
@@ -41,6 +45,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 66dc51e1d38259af687bf0a3bfaea59e, type: 2}
   - {fileID: 11400000, guid: da62ec86fbceefe3897c6c07bc13c6ed, type: 2}
   - {fileID: 11400000, guid: ded422c8f11b65876b8cf126979af9b1, type: 2}
+  - {fileID: 11400000, guid: b026a02063ccd454e8a5ee6c49cfdc5e, type: 2}
+  - {fileID: 11400000, guid: e9df8b2ce46d71bff8e992fb2021b0b0, type: 2}
   stickers:
   - {fileID: 11400000, guid: 9a2f144b34db6463f8d8dfd654f0785b, type: 2}
   - {fileID: 11400000, guid: 8739193925232c0d4a210062343f7476, type: 2}
@@ -50,6 +56,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ec4f3991e9fe89a2a81f30f3e7d9ed15, type: 2}
   - {fileID: 11400000, guid: 4f2e1f4be67dee4e6960b402ece82cdb, type: 2}
   - {fileID: 11400000, guid: 9e717171c23ac9d3e86c28a57da2ff06, type: 2}
+  - {fileID: 11400000, guid: c4dcb7b47ff4d37ff9daea295afab002, type: 2}
   - {fileID: 11400000, guid: 1ec6150d441fff80aa67c64da7f29e8e, type: 2}
   audioLibrary: {fileID: 11400000, guid: 0843c303cbba9cc59bb154d788b140ab, type: 2}
   localization: {fileID: 11400000, guid: 39cc4fa437cae6e839c36cf756558dda, type: 2}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c743a15a15207b9b8b1b140e9a19ef1c, type: 3}
+  m_Name: Character_milo
+  m_EditorClassIdentifier: LittleBurgerWorld.Runtime::LittleBurgerWorld.Customers.CharacterData
+  id: milo
+  displayName: Milo the Cat
+  prefab: {fileID: 6351310503141211344, guid: 8adaf86152f6403ae9b5023c278c30ac, type: 3}
+  portrait: {fileID: 21300000, guid: c1ff708f722b4ed7dad5a987263497b6, type: 3}
+  unlockedByDefault: 1
+  voicePitch: 1.15
+  walkSpeed: 1.8

@@ -285,6 +285,30 @@ namespace LittleBurgerWorld.Tests
         }
 
         [UnityTest]
+        public IEnumerator NewAnimalActivities_CompleteAndServeTheRightFriend(
+            [Values("milos_snack:milo", "dottys_milkshake:dotty")] string pair)
+        {
+            string activity = pair.Split(':')[0], animal = pair.Split(':')[1];
+            yield return LoadRestaurant(GameMode.Guided);
+            KitchenManager k = KitchenManager.Instance;
+            ActivityManager am = ActivityManager.Instance;
+            int finished = 0;
+            am.ActivityFinished += (a, st) => finished++;
+            am.StartActivity(activity);
+            float t = 0f;
+            while (finished == 0 && t < 60f)
+            {
+                ActivityStep s = am.Controller.CurrentStep;
+                if (am.Controller.IsWaiting && s != null) am.Assist(s);
+                yield return new WaitForSeconds(0.4f);
+                t += 0.4f * Time.timeScale;
+            }
+            Assert.AreEqual(1, finished, activity + " completed");
+            Assert.IsTrue(m_Events.Exists(e => e.Type == GameplayEventType.CustomerServed && e.ExtraId == animal), animal + " was served");
+            CollectionAssert.Contains(GM.Save.Data.stats.animalsServed, animal);
+        }
+
+        [UnityTest]
         public IEnumerator MainMenu_FreePlayButton_LoadsRestaurant()
         {
             m_SavePath = Path.Combine(Application.temporaryCachePath, "lbw_test_menu.json");

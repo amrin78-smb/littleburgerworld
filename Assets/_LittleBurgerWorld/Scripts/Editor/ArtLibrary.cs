@@ -143,6 +143,16 @@ namespace LittleBurgerWorld.EditorTools
         public static Material BearFur => Lit("BearFur", Hex("#A0663F"), 0.15f);
         public static Material BearLight => Lit("BearLight", Hex("#E7C39A"), 0.15f);
         public static Material BunnyFur => Lit("BunnyFur", Hex("#FFF4F2"), 0.15f);
+        public static Material CatFur => Lit("CatFur", Hex("#F4A65B"), 0.15f);
+        public static Material CatLight => Lit("CatLight", Hex("#FFE6C9"), 0.15f);
+        public static Material CatStripe => Lit("CatStripe", Hex("#D97F34"), 0.15f);
+        public static Material DogFur => Lit("DogFur", Hex("#FFF3E4"), 0.15f);
+        public static Material DogLight => Lit("DogLight", Hex("#FFFFFF"), 0.15f);
+        public static Material DogPatch => Lit("DogPatch", Hex("#B5784A"), 0.15f);
+        public static Material ElephantSkin => Lit("ElephantSkin", Hex("#AEBBD6"), 0.15f);
+        public static Material ElephantLight => Lit("ElephantLight", Hex("#D9E0EE"), 0.15f);
+        public static Material PandaWhite => Lit("PandaWhite", Hex("#FFFDF7"), 0.15f);
+        public static Material PandaBlack => Lit("PandaBlack", Hex("#4A4342"), 0.15f);
         public static Material Blush => Lit("Blush", Hex("#F6A3B4"), 0.1f);
         public static Material EyeShine => Lit("EyeShine", Color.white, 0.9f, null, null, Color.white * 0.4f);
         public static Material BlobShadow => Sprite("BlobShadow", IconLibrary.Get("fx_soft") != null ? IconLibrary.Get("fx_soft").texture : null,
@@ -187,6 +197,13 @@ namespace LittleBurgerWorld.EditorTools
             string name = $"Disc_{radius:0.##}_{height:0.##}_{bevel:0.##}".Replace('.', 'p');
             return Mesh(name, () => MeshFactory.Lathe(MeshFactory.RoundedDiscProfile(radius, height, bevel), segments));
         }
+
+        /// <summary>Rounded cone (cat ears): base at y=0, soft tip at y=1, radius 0.5.</summary>
+        public static Mesh SoftCone => Mesh("SoftCone", () => MeshFactory.Lathe(new[]
+        {
+            new Vector2(0f, 0f), new Vector2(0.42f, 0f), new Vector2(0.5f, 0.06f), new Vector2(0.44f, 0.3f),
+            new Vector2(0.3f, 0.62f), new Vector2(0.14f, 0.88f), new Vector2(0.05f, 0.98f), new Vector2(0f, 1f)
+        }, 20, "SoftCone"));
 
         public static Mesh SphereMesh => Mesh("Sphere_r0p5", () => MeshFactory.Sphere(0.5f, 24, 16));
         public static Mesh LowSphere => Mesh("Sphere_low_r0p5", () => MeshFactory.Sphere(0.5f, 10, 7));

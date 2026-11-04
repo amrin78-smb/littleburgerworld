@@ -542,10 +542,10 @@ namespace LittleBurgerWorld.EditorTools
             UIFactory.Image("Header", pickPanel.transform, IconLibrary.Get("icon_star"), Color.white, new Vector2(0.5f, 1f), new Vector2(0f, 0f), new Vector2(150f, 150f), false);
             RectTransform grid = UIFactory.Rect("Grid", pickPanel.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, -20f), new Vector2(1300f, 700f));
             var g = grid.gameObject.AddComponent<GridLayoutGroup>();
-            g.cellSize = new Vector2(400f, 320f);
-            g.spacing = new Vector2(36f, 36f);
+            g.cellSize = new Vector2(300f, 240f);
+            g.spacing = new Vector2(34f, 40f);
             g.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            g.constraintCount = 3;
+            g.constraintCount = 4;
             g.childAlignment = TextAnchor.MiddleCenter;
             var select = pick.gameObject.AddComponent<ActivitySelectUI>();
             E.Set(select, "m_Grid", grid);

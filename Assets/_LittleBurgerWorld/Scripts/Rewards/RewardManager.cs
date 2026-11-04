@@ -76,7 +76,11 @@ namespace LittleBurgerWorld.Rewards
                 case GameplayEventType.FriesBoxFilled: s.friesMade++; break;
                 case GameplayEventType.MilkshakeCompleted: s.milkshakesMade++; break;
                 case GameplayEventType.MealReady: s.mealsMade++; break;
-                case GameplayEventType.CustomerServed: s.customersServed++; break;
+                case GameplayEventType.CustomerServed:
+                    s.customersServed++;
+                    if (s.animalsServed == null) s.animalsServed = new System.Collections.Generic.List<string>();
+                    if (!string.IsNullOrEmpty(e.ExtraId) && !s.animalsServed.Contains(e.ExtraId)) s.animalsServed.Add(e.ExtraId);
+                    break;
                 case GameplayEventType.BalloonPopped: s.balloonsPopped++; break;
                 default: return;
             }
@@ -126,6 +130,7 @@ namespace LittleBurgerWorld.Rewards
                 case StickerCondition.ServeCustomers: return s.customersServed >= st.threshold;
                 case StickerCondition.TallBurger: return s.tallestBurger >= st.threshold;
                 case StickerCondition.PopBalloons: return s.balloonsPopped >= st.threshold;
+                case StickerCondition.ServeDifferentAnimals: return s.animalsServed != null && s.animalsServed.Count >= st.threshold;
                 case StickerCondition.CompleteActivity: return Data.IsActivityCompleted(st.activityId);
                 case StickerCondition.CompleteAllActivities:
                     foreach (Activities.ActivityData a in m_Config.activities)

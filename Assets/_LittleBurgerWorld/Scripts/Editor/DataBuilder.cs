@@ -138,7 +138,45 @@ namespace LittleBurgerWorld.EditorTools
             }, penny, $"{PrefabBuilder.CharFolder}/Character_Penny.prefab");
             EditorUtility.SetDirty(penny);
             list.Add(penny);
+
+            list.Add(Character("milo", "Milo the Cat", "portrait_milo", true, 1.15f, 1.8f, new PrefabBuilder.CharacterLook
+            {
+                Name = "Milo", Fur = ArtLibrary.CatFur, FurLight = ArtLibrary.CatLight, Accent = ArtLibrary.Sky,
+                Ears = PrefabBuilder.EarStyle.Pointy, Stripes = ArtLibrary.CatStripe, Whiskers = true, Tail = PrefabBuilder.TailStyle.Long
+            }));
+            list.Add(Character("dotty", "Dotty the Dog", "portrait_dotty", true, 1.05f, 1.9f, new PrefabBuilder.CharacterLook
+            {
+                Name = "Dotty", Fur = ArtLibrary.DogFur, FurLight = ArtLibrary.DogLight, Accent = ArtLibrary.TomatoCoral,
+                Ears = PrefabBuilder.EarStyle.Floppy, EarFur = ArtLibrary.DogPatch, EyeSpot = ArtLibrary.DogPatch, Snout = true,
+                Tail = PrefabBuilder.TailStyle.Short
+            }));
+            list.Add(Character("ellie", "Ellie the Elephant", "portrait_ellie", false, 0.8f, 1.5f, new PrefabBuilder.CharacterLook
+            {
+                Name = "Ellie", Fur = ArtLibrary.ElephantSkin, FurLight = ArtLibrary.ElephantLight, Accent = ArtLibrary.Lavender,
+                Ears = PrefabBuilder.EarStyle.Big, Trunk = true, Tail = PrefabBuilder.TailStyle.Thin, Scale = 1.1f
+            }));
+            list.Add(Character("bao", "Bao the Panda", "portrait_bao", false, 0.95f, 1.6f, new PrefabBuilder.CharacterLook
+            {
+                Name = "Bao", Fur = ArtLibrary.PandaWhite, FurLight = ArtLibrary.PandaWhite, Accent = ArtLibrary.Mint,
+                Ears = PrefabBuilder.EarStyle.Round, EarFur = ArtLibrary.PandaBlack, LimbFur = ArtLibrary.PandaBlack,
+                EyePatches = ArtLibrary.PandaBlack, Snout = true, Tail = PrefabBuilder.TailStyle.Puff
+            }));
             return list;
+        }
+
+        private static CharacterData Character(string id, string name, string portrait, bool unlocked, float pitch, float speed,
+            PrefabBuilder.CharacterLook look)
+        {
+            var c = E.LoadOrCreateSO<CharacterData>($"{SO}/Characters/Character_{id}.asset");
+            c.id = id;
+            c.displayName = name;
+            c.portrait = IconLibrary.Get(portrait);
+            c.unlockedByDefault = unlocked;
+            c.voicePitch = pitch;
+            c.walkSpeed = speed;
+            c.prefab = PrefabBuilder.BuildCharacter(look, c, $"{PrefabBuilder.CharFolder}/Character_{look.Name}.prefab");
+            EditorUtility.SetDirty(c);
+            return c;
         }
 
         // ------------------------------------------------------------------ activities
@@ -223,7 +261,7 @@ namespace LittleBurgerWorld.EditorTools
             var a3 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen) };
             a3.AddRange(FriesSteps());
             a3.Add(S(ActivityStepType.Wait, duration: 1f));
-            list.Add(Activity("make_fries", "Make French Fries", "icon_fries", "#FFC9BE", a3, null));
+            list.Add(Activity("make_fries", "Make French Fries", "icon_fries", "#FFC9BE", a3, "ellie"));
 
             var a4 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen) };
             a4.AddRange(ShakeSteps(true));
@@ -239,13 +277,25 @@ namespace LittleBurgerWorld.EditorTools
             a5.Add(S(ActivityStepType.WaitForDrop, "Tray", "Drinks.Cup", "milkshake", "icon_milkshake_strawberry", voice: "shake_on_tray"));
             a5.Add(S(ActivityStepType.WaitForEvent, null, null, null, "icon_meal", GameplayEventType.MealReady, hintDelay: 30f, assist: 0, voice: "meal_ready"));
             a5.Add(S(ActivityStepType.Wait, duration: 1.2f));
-            list.Add(Activity("complete_meal", "Prepare a Complete Meal", "icon_meal", "#C9EBDC", a5, null));
+            list.Add(Activity("complete_meal", "Prepare a Complete Meal", "icon_meal", "#C9EBDC", a5, "bao"));
 
             var a6 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen), Call("benny", "cheeseburger") };
             a6.AddRange(BurgerSteps(true));
             a6.Add(S(ActivityStepType.WaitForDrop, "Customer", "Board", "burger", "icon_cheeseburger", voice: "serve_benny"));
             a6.Add(S(ActivityStepType.Wait, duration: 3.4f));
             list.Add(Activity("serve_benny", "Serve Benny", "portrait_benny", "#CFE2F7", a6, null));
+
+            var a7 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen), Call("milo", "fries") };
+            a7.AddRange(FriesSteps());
+            a7.Add(S(ActivityStepType.WaitForDrop, "Customer", "FriesBox", "fries", "icon_fries", voice: "serve_milo"));
+            a7.Add(S(ActivityStepType.Wait, duration: 3.2f));
+            list.Add(Activity("milos_snack", "Milo's Snack", "portrait_milo", "#FFE0C2", a7, null));
+
+            var a8 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen), Call("dotty", "milkshake") };
+            a8.AddRange(ShakeSteps(true));
+            a8.Add(S(ActivityStepType.WaitForDrop, "Customer", "Drinks.Cup", "milkshake", "icon_milkshake_strawberry", voice: "serve_dotty"));
+            a8.Add(S(ActivityStepType.Wait, duration: 3.2f));
+            list.Add(Activity("dottys_milkshake", "Dotty's Milkshake", "portrait_dotty", "#DCEBFF", a8, null));
 
             return list;
         }
@@ -279,6 +329,7 @@ namespace LittleBurgerWorld.EditorTools
                 Sticker("bear_buddy", "Bear Buddy", "sticker_bear_buddy", StickerCondition.ServeCustomers, 1),
                 Sticker("tall_tower", "Tall Tower", "sticker_tall_tower", StickerCondition.TallBurger, 8),
                 Sticker("balloon_pop", "Balloon Popper", "sticker_balloon_pop", StickerCondition.PopBalloons, 5),
+                Sticker("animal_friends", "Animal Friends", "sticker_animal_friends", StickerCondition.ServeDifferentAnimals, 4),
                 Sticker("super_chef", "Super Chef", "sticker_super_chef", StickerCondition.CompleteAllActivities, 1)
             };
             return list;

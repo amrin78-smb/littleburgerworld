@@ -291,7 +291,7 @@ namespace LittleBurgerWorld.Kitchen
         {
             if (FlipAny()) return true;
             FoodItem cooked = FindCooked();
-            if (cooked != null && FoodItem.AutoSendHandler != null) return FoodItem.AutoSendHandler(cooked);
+            if (cooked != null) return cooked.SendToKeyOrAuto(targetKey == "Grill" ? null : targetKey);
             return false;
         }
 

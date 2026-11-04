@@ -321,6 +321,18 @@ namespace LittleBurgerWorld.Food
         }
 
         /// <summary>Flies the item into a drop target (used when a child taps food).</summary>
+        /// <summary>Assist helper: sends to the step's target when it has one (e.g. the customer),
+        /// otherwise to the next sensible place.</summary>
+        public bool SendToKeyOrAuto(string targetKey)
+        {
+            if (!string.IsNullOrEmpty(targetKey))
+            {
+                IDropTarget target = Core.SceneObjectRegistry.Find<IDropTarget>(targetKey);
+                if (target != null) return SendTo(target);
+            }
+            return AutoSendHandler != null && AutoSendHandler(this);
+        }
+
         public bool SendTo(IDropTarget target)
         {
             if (target == null || !CanDrag) return false;

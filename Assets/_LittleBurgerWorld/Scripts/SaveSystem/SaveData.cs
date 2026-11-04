@@ -32,6 +32,8 @@ namespace LittleBurgerWorld.Save
         public int customersServed;
         public int tallestBurger;
         public int balloonsPopped;
+        /// <summary>Ids of the different animals served (for the Animal Friends sticker).</summary>
+        public List<string> animalsServed = new List<string>();
     }
 
     /// <summary>

@@ -192,7 +192,7 @@ namespace LittleBurgerWorld.Core
             yield return new WaitForSeconds(1.2f);
             yield return Shot("14_activity_select");
             ActivitySelectUI select = FindFirstObjectByType<ActivitySelectUI>();
-            Check(select != null && select.Cards.Count == 6, "Six activity cards shown");
+            Check(select != null && select.Cards.Count == 8, "Eight activity cards shown");
             select.Cards[0].Button.Click();
             yield return new WaitForSeconds(4.5f);
             yield return Shot("15_guided_hint");

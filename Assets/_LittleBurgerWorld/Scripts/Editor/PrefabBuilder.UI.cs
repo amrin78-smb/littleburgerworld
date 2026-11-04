@@ -42,20 +42,24 @@ namespace LittleBurgerWorld.EditorTools
 
         private static void BuildActivityCard()
         {
-            GameObject root = UiRoot("UI_ActivityCard", new Vector2(400f, 320f));
+            // Designed at 400x320, built at 0.75 scale so 8 cards fit a 4 x 2 grid.
+            const float k = 0.75f;
+            Vector2 V(float x, float y) => new Vector2(x * k, y * k);
+            GameObject root = UiRoot("UI_ActivityCard", V(400f, 320f));
             Image shadow = UIFactory.Image("Shadow", root.transform, IconLibrary.Get("ui_panel"), new Color(0.3f, 0.18f, 0.1f, 0.25f),
-                new Vector2(0.5f, 0.5f), new Vector2(0f, -10f), new Vector2(400f, 320f), false, true);
-            shadow.pixelsPerUnitMultiplier = 0.35f;
-            Image bg = UIFactory.Panel("Background", root.transform, Color.white, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(400f, 320f));
+                new Vector2(0.5f, 0.5f), V(0f, -10f), V(400f, 320f), false, true);
+            shadow.pixelsPerUnitMultiplier = 0.35f / k;
+            Image bg = UIFactory.Panel("Background", root.transform, Color.white, new Vector2(0.5f, 0.5f), Vector2.zero, V(400f, 320f));
+            bg.pixelsPerUnitMultiplier /= k;
             UIFactory.Image("Window", bg.transform, IconLibrary.Get("ui_panel"), new Color(1f, 1f, 1f, 0.75f), new Vector2(0.5f, 0.5f),
-                new Vector2(0f, 30f), new Vector2(330f, 210f), false, true).pixelsPerUnitMultiplier = 0.4f;
-            Image thumb = UIFactory.Image("Thumbnail", bg.transform, null, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 32f),
-                new Vector2(200f, 200f), false);
+                V(0f, 30f), V(330f, 210f), false, true).pixelsPerUnitMultiplier = 0.4f / k;
+            Image thumb = UIFactory.Image("Thumbnail", bg.transform, null, Color.white, new Vector2(0.5f, 0.5f), V(0f, 32f),
+                V(200f, 200f), false);
             var stars = new Object[3];
             for (int i = 0; i < 3; i++)
             {
                 stars[i] = UIFactory.Image("Star" + i, bg.transform, IconLibrary.Get("icon_star_empty"), Color.white, new Vector2(0.5f, 0f),
-                    new Vector2(-80f + i * 80f, 44f), new Vector2(76f, 76f), false);
+                    V(-80f + i * 80f, 44f), V(76f, 76f), false);
             }
             var button = root.AddComponent<SquishyButton>();
             var card = root.AddComponent<ActivityCard>();

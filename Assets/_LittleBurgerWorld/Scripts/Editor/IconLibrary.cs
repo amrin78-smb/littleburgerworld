@@ -338,6 +338,10 @@ namespace LittleBurgerWorld.EditorTools
         {
             Def("portrait_benny", DrawBennyFace);
             Def("portrait_penny", DrawPennyFace);
+            Def("portrait_milo", DrawMiloFace);
+            Def("portrait_dotty", DrawDottyFace);
+            Def("portrait_ellie", DrawEllieFace);
+            Def("portrait_bao", DrawBaoFace);
         }
 
         public static void DrawBennyFace(Canvas2D c)
@@ -372,6 +376,84 @@ namespace LittleBurgerWorld.EditorTools
             c.Fill(Shape.Ellipse(74, 100, 18, 11), new Color(0.97f, 0.55f, 0.65f, 0.55f));
             c.Fill(Shape.Ellipse(182, 100, 18, 11), new Color(0.97f, 0.55f, 0.65f, 0.55f));
             c.FillOutlined(Shape.Union(Shape.Ellipse(178, 196, 20, 14, 30), Shape.Ellipse(206, 210, 20, 14, -30)), Lavender, 4f);
+        }
+
+        private static readonly Color CheekBlush = new Color(0.95f, 0.55f, 0.6f, 0.6f);
+
+        private static void Smile(Canvas2D c, float y, float r = 18f) =>
+            c.Fill(Shape.Ring(128, y, r, 5.5f).Intersect(Shape.RoundRect(128, y - r * 0.8f, r * 1.5f, r * 0.8f, 0)), Dark);
+
+        public static void DrawMiloFace(Canvas2D c)
+        {
+            Color fur = Hex("#F4A65B"), light = Hex("#FFE6C9"), stripe = Hex("#D97F34");
+            c.FillOutlined(Shape.Polygon(new Vector2(46, 150), new Vector2(60, 236), new Vector2(112, 186)).Round(10), fur);
+            c.FillOutlined(Shape.Polygon(new Vector2(210, 150), new Vector2(196, 236), new Vector2(144, 186)).Round(10), fur);
+            c.Fill(Shape.Polygon(new Vector2(64, 164), new Vector2(70, 214), new Vector2(100, 184)).Round(6), Pink);
+            c.Fill(Shape.Polygon(new Vector2(192, 164), new Vector2(186, 214), new Vector2(156, 184)).Round(6), Pink);
+            c.FillOutlined(Shape.Ellipse(128, 120, 104, 90), fur);
+            c.Fill(Shape.Capsule(128, 200, 128, 176, 6), stripe);
+            c.Fill(Shape.Capsule(104, 196, 110, 176, 5), stripe);
+            c.Fill(Shape.Capsule(152, 196, 146, 176, 5), stripe);
+            c.Fill(Shape.Ellipse(128, 88, 46, 32), light);
+            DrawEyes(c, 92, 136, 164, 136);
+            c.Fill(Shape.Polygon(new Vector2(116, 110), new Vector2(140, 110), new Vector2(128, 98)).Round(3), Hex("#F47C9A"));
+            Smile(c, 92, 14);
+            foreach (int side in new[] { -1, 1 })
+                for (int i = -1; i <= 1; i++)
+                    c.Fill(Shape.Capsule(128 + side * 50, 98 + i * 9, 128 + side * 104, 102 + i * 16, 2.2f), Dark);
+            c.Fill(Shape.Ellipse(72, 108, 16, 10), CheekBlush);
+            c.Fill(Shape.Ellipse(184, 108, 16, 10), CheekBlush);
+        }
+
+        public static void DrawDottyFace(Canvas2D c)
+        {
+            Color fur = Hex("#FFF3E4"), patch = Hex("#B5784A");
+            c.FillOutlined(Shape.Ellipse(44, 128, 30, 62, -18), patch);
+            c.FillOutlined(Shape.Ellipse(212, 128, 30, 62, 18), patch);
+            c.FillOutlined(Shape.Ellipse(128, 124, 98, 94), fur);
+            c.Fill(Shape.Ellipse(164, 146, 36, 36), patch);
+            c.Fill(Shape.Ellipse(128, 90, 50, 36), White);
+            DrawEyes(c, 94, 142, 164, 142);
+            c.Fill(Shape.Ellipse(128, 108, 20, 14), Dark);
+            c.Fill(Shape.Ellipse(122, 113, 7, 3), new Color(1, 1, 1, 0.6f));
+            Smile(c, 92, 18);
+            c.Fill(Shape.Ellipse(128, 70, 10, 12), Hex("#F47C9A"));
+            c.Fill(Shape.Ellipse(70, 104, 16, 10), CheekBlush);
+            c.Fill(Shape.Ellipse(186, 104, 16, 10), CheekBlush);
+        }
+
+        public static void DrawEllieFace(Canvas2D c)
+        {
+            Color skin = Hex("#AEBBD6"), light = Hex("#D9E0EE");
+            c.FillOutlined(Shape.Ellipse(42, 140, 42, 64), skin);
+            c.FillOutlined(Shape.Ellipse(214, 140, 42, 64), skin);
+            c.Fill(Shape.Ellipse(46, 140, 26, 44), Pink);
+            c.Fill(Shape.Ellipse(210, 140, 26, 44), Pink);
+            c.FillOutlined(Shape.Union(Shape.Ellipse(128, 136, 88, 84), Shape.Capsule(128, 110, 128, 36, 22)), skin);
+            c.Fill(Shape.Ellipse(128, 34, 18, 9), light);
+            for (int i = 0; i < 3; i++) c.Fill(Shape.Capsule(112, 84 - i * 16, 144, 84 - i * 16, 1.8f), Hex("#8F9DBB"));
+            DrawEyes(c, 96, 150, 160, 150);
+            c.Fill(Shape.Ellipse(80, 118, 16, 10), CheekBlush);
+            c.Fill(Shape.Ellipse(176, 118, 16, 10), CheekBlush);
+            c.FillOutlined(Shape.Union(Shape.Ellipse(168, 210, 18, 12, 30), Shape.Ellipse(194, 222, 18, 12, -30)), Lavender, 4f);
+        }
+
+        public static void DrawBaoFace(Canvas2D c)
+        {
+            Color white = Hex("#FFFDF7"), black = Hex("#4A4342");
+            c.FillOutlined(Shape.Circle(62, 198, 32), black);
+            c.FillOutlined(Shape.Circle(194, 198, 32), black);
+            c.FillOutlined(Shape.Ellipse(128, 124, 102, 92), white);
+            c.Fill(Shape.Ellipse(92, 136, 26, 32, -28), black);
+            c.Fill(Shape.Ellipse(164, 136, 26, 32, 28), black);
+            c.Fill(Shape.Ellipse(92, 138, 18, 23), White);
+            c.Fill(Shape.Ellipse(164, 138, 18, 23), White);
+            DrawEyes(c, 92, 138, 164, 138);
+            c.Fill(Shape.Ellipse(128, 90, 44, 30), white);
+            c.Fill(Shape.Ellipse(128, 102, 16, 11), Dark);
+            Smile(c, 88, 16);
+            c.Fill(Shape.Ellipse(70, 100, 16, 10), CheekBlush);
+            c.Fill(Shape.Ellipse(186, 100, 16, 10), CheekBlush);
         }
 
         private static void DrawEyes(Canvas2D c, float lx, float ly, float rx, float ry)
@@ -558,6 +640,15 @@ namespace LittleBurgerWorld.EditorTools
                 x.FillOutlined(Shape.Ellipse(164, 160, 46, 58), Sky);
                 x.Stroke(Shape.Capsule(100, 88, 128, 30, 0.5f), 4, Canvas2D.Outline);
                 x.Stroke(Shape.Capsule(164, 100, 128, 30, 0.5f), 4, Canvas2D.Outline);
+            }));
+            Def("sticker_animal_friends", c => Sticker(c, Mint, x =>
+            {
+                // Four little friends: bear, cat, dog, elephant faces around a heart.
+                x.Push(18, 112, 0.42f); DrawBennyFace(x); x.Pop();
+                x.Push(130, 112, 0.42f); DrawMiloFace(x); x.Pop();
+                x.Push(18, 6, 0.42f); DrawDottyFace(x); x.Pop();
+                x.Push(130, 6, 0.42f); DrawEllieFace(x); x.Pop();
+                x.FillOutlined(Shape.Heart(128, 118, 36), Strawberry, 4f);
             }));
             Def("sticker_super_chef", c => Sticker(c, Hex("#FFB86B"), x => x.FillOutlined(Shape.Star(128, 124, 104, 48, 5).Round(8), CheeseLight)));
         }

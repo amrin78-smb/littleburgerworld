@@ -271,7 +271,7 @@ namespace LittleBurgerWorld.Kitchen
                 case CupState.Filled: AddCream(); return true;
                 case CupState.Creamed: AddStraw(); return true;
                 case CupState.Complete:
-                    return m_Cup != null && FoodItem.AutoSendHandler != null && FoodItem.AutoSendHandler(m_Cup);
+                    return m_Cup != null && m_Cup.SendToKeyOrAuto(targetKey);
             }
             return false;
         }

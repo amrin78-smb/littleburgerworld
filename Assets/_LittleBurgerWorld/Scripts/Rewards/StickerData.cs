@@ -14,7 +14,9 @@ namespace LittleBurgerWorld.Rewards
         TallBurger,
         CompleteActivity,
         CompleteAllActivities,
-        PopBalloons
+        PopBalloons,
+        /// <summary>Serve this many different animal customers.</summary>
+        ServeDifferentAnimals
     }
 
     [CreateAssetMenu(menuName = "Little Burger World/Sticker", fileName = "Sticker_New")]

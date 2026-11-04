@@ -137,7 +137,7 @@ namespace LittleBurgerWorld.Kitchen
 
         public bool Assist(string itemId, string targetKey)
         {
-            if (m_Box != null && m_Filled && FoodItem.AutoSendHandler != null && FoodItem.AutoSendHandler(m_Box)) return true;
+            if (m_Box != null && m_Filled) return m_Box.SendToKeyOrAuto(targetKey);
             FryStation fry = FindFirstObjectByType<FryStation>();
             if (fry != null) return fry.Assist(itemId, targetKey);
             return false;
