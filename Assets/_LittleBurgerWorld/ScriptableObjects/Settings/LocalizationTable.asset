@@ -88,6 +88,14 @@ MonoBehaviour:
     values:
     - Stickers
     - Pegatinas
+  - key: hold_home
+    values:
+    - Hold to go home
+    - "Mant\xE9n pulsado para salir"
+  - key: hold_tidy
+    values:
+    - Hold to tidy up
+    - "Mant\xE9n pulsado para recoger"
   - key: say.add_bun
     values:
     - Put the bottom bun on the board!
@@ -168,3 +176,7 @@ MonoBehaviour:
     values:
     - What a yummy meal!
     - "\xA1Qu\xE9 comida tan rica!"
+  - key: say.well_done
+    values:
+    - Hooray! You did it!
+    - "\xA1Hurra! \xA1Lo has conseguido!"

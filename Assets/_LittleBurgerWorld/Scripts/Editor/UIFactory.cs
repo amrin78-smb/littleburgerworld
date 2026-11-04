@@ -149,7 +149,8 @@ namespace LittleBurgerWorld.EditorTools
             return rt.gameObject.AddComponent<SquishyButton>();
         }
 
-        public static HoldButton HoldButton(string name, Transform parent, Sprite icon, Color bg, Vector2 anchor, Vector2 pos, float size)
+        public static HoldButton HoldButton(string name, Transform parent, Sprite icon, Color bg, Vector2 anchor, Vector2 pos, float size,
+            string tipText = null, string tipLocKey = null, float tipPivotX = 0.5f)
         {
             RectTransform rt = Rect(name, parent, anchor, anchor, pos, new Vector2(size, size));
             Image(name + "_Shadow", rt, IconLibrary.Get("ui_circle"), new Color(0.3f, 0.18f, 0.1f, 0.25f), new Vector2(0.5f, 0.5f),
@@ -168,6 +169,22 @@ namespace LittleBurgerWorld.EditorTools
             hit.sprite = IconLibrary.Get("ui_circle");
             var hb = rt.gameObject.AddComponent<HoldButton>();
             EditorAssetUtil.Set(hb, "m_Fill", fill);
+            if (!string.IsNullOrEmpty(tipText))
+            {
+                // Small speech tip under the button, shown after a too-quick tap.
+                const float w = 400f, h = 96f;
+                float x = (tipPivotX - 0.5f) * -size * 0.6f;
+                Image tip = Panel("Tip", rt, new Color(1f, 0.98f, 0.94f, 1f), new Vector2(0.5f, 0.5f), new Vector2(x, -size * 0.62f - 14f), new Vector2(w, h));
+                tip.rectTransform.pivot = new Vector2(tipPivotX, 1f);
+                tip.raycastTarget = false;
+                Text t = Text("Label", tip.transform, tipText, 40, EditorAssetUtil.Hex("#5A3A26"), new Vector2(0.5f, 0.5f), Vector2.zero,
+                    new Vector2(w - 36f, h - 16f), TextAnchor.MiddleCenter, false, tipLocKey);
+                t.resizeTextForBestFit = true;
+                t.resizeTextMinSize = 24;
+                t.resizeTextMaxSize = 40;
+                tip.gameObject.SetActive(false);
+                EditorAssetUtil.Set(hb, "m_Tip", tip.rectTransform);
+            }
             return hb;
         }
 

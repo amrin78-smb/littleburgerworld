@@ -166,8 +166,16 @@ namespace LittleBurgerWorld.EditorTools
                     var e = cfg.audioLibrary.Get(id);
                     if (e == null || e.clips.Length == 0 || e.clips.Any(c => c == null)) problems.Add("No clip for sound " + id);
                 }
-                int recorded = cfg.audioLibrary.voice.Count(v => v.clip != null);
-                if (recorded == 0) warnings.Add("Voice prompts have transcripts but no recorded clips yet (documented placeholder; game is fully playable without them).");
+                // Every spoken step needs a clip in every language (Tools/voice/generate_voice.sh).
+                var languages = cfg.localization != null ? cfg.localization.languages : new List<string> { "en" };
+                var voiceKeys = new HashSet<string>(cfg.activities.Where(a => a != null).SelectMany(a => a.steps)
+                    .Where(st => !string.IsNullOrEmpty(st.voiceKey)).Select(st => st.voiceKey)) { "well_done" };
+                foreach (string key in voiceKeys)
+                    foreach (string lang in languages)
+                    {
+                        var v = cfg.audioLibrary.GetVoice(key, lang);
+                        if (v == null || v.clip == null) problems.Add($"No voice clip for '{key}' ({lang}) – run Tools/voice/generate_voice.sh");
+                    }
             }
         }
 

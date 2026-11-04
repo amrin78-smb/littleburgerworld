@@ -1,0 +1,28 @@
+{
+  "note": "Single source for guided-step instructions: on-screen text (say.<key>) and generated voice clips. Edit, then run Tools/voice/generate_voice.sh and Little Burger World > Setup Project.",
+  "voices": { "en": "af_heart", "es": "ef_dora" },
+  "speed": { "en": 0.88, "es": 0.9 },
+  "lines": [
+    { "key": "add_bun",        "en": "Put the bottom bun on the board!",      "es": "¡Pon el pan de abajo en la tabla!" },
+    { "key": "patty_on_grill", "en": "Put the patty on the grill.",           "es": "Pon la carne en la parrilla." },
+    { "key": "flip_patty",     "en": "Tap the patty to flip it!",             "es": "¡Toca la carne para darle la vuelta!" },
+    { "key": "patty_cooking",  "en": "Sizzle sizzle! The patty is cooking.",  "es": "¡Chisporrotea! La carne se está cocinando." },
+    { "key": "patty_on_bun",   "en": "Yummy! Put the patty on the bun.",      "es": "¡Qué rico! Pon la carne sobre el pan." },
+    { "key": "add_cheese",     "en": "Add some cheese!",                      "es": "¡Añade queso!" },
+    { "key": "add_top_bun",    "en": "Now the top bun!",                      "es": "¡Ahora el pan de arriba!" },
+    { "key": "serve_benny",    "en": "Give the burger to Benny!",             "es": "¡Dale la hamburguesa a Benny!" },
+    { "key": "tap_potato",     "en": "Tap the potatoes!",                     "es": "¡Toca las patatas!" },
+    { "key": "fries_cooking",  "en": "The fries are cooking!",                "es": "¡Las patatas se están friendo!" },
+    { "key": "fries_in_box",   "en": "Put the fries in the box.",             "es": "Pon las patatas en la caja." },
+    { "key": "pick_flavour",   "en": "Tap the strawberry flavour!",           "es": "¡Toca el sabor de fresa!" },
+    { "key": "pick_cup",       "en": "Get a cup.",                            "es": "Coge un vaso." },
+    { "key": "press_lever",    "en": "Press the big button!",                 "es": "¡Pulsa el botón grande!" },
+    { "key": "add_cream",      "en": "Add whipped cream!",                    "es": "¡Añade nata montada!" },
+    { "key": "add_straw",      "en": "And a straw!",                          "es": "¡Y una pajita!" },
+    { "key": "burger_on_tray", "en": "Put the burger on the tray.",           "es": "Pon la hamburguesa en la bandeja." },
+    { "key": "fries_on_tray",  "en": "Put the fries on the tray.",            "es": "Pon las patatas en la bandeja." },
+    { "key": "shake_on_tray",  "en": "Put the milkshake on the tray.",        "es": "Pon el batido en la bandeja." },
+    { "key": "meal_ready",     "en": "What a yummy meal!",                    "es": "¡Qué comida tan rica!" },
+    { "key": "well_done",      "en": "Hooray! You did it!",                   "es": "¡Hurra! ¡Lo has conseguido!" }
+  ]
+}

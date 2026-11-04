@@ -70,7 +70,7 @@ namespace LittleBurgerWorld.EditorTools
                    AssetDatabase.LoadAssetAtPath<AudioClip>($"{MusicFolder}/{name}.wav");
         }
 
-        private static void ConfigureClip(string path, bool music)
+        internal static void ConfigureClip(string path, bool music)
         {
             var imp = AssetImporter.GetAtPath(path) as AudioImporter;
             if (imp == null) return;

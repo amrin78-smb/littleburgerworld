@@ -7,7 +7,7 @@ Unity 6000.3 · URP 17.3 · Input System 1.20 · uGUI · Test Framework 1.6. All
 ```
 Assets/_LittleBurgerWorld/
   Art/        Fonts (Fredoka, OFL), Icons (generated PNG sprites), Textures, Meshes (generated .asset meshes)
-  Audio/      SFX + Music (generated WAV), Voice (empty – see limitations)
+  Audio/      SFX + Music (generated WAV), Voice/<lang> (Kokoro TTS clips)
   Materials/  URP Lit pastel materials + Sprites/Default FX materials
   Prefabs/    Food, Kitchen, Environment, Characters, UI
   Resources/  LBW_GameConfig.asset (root config, loaded at boot)

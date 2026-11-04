@@ -551,9 +551,11 @@ namespace LittleBurgerWorld.EditorTools
             E.Set(select, "m_CardPrefab", AssetDatabase.LoadAssetAtPath<GameObject>($"{P.UiFolder}/UI_ActivityCard.prefab").GetComponent<ActivityCard>());
 
             // Top bar
-            HoldButton home = UIFactory.HoldButton("HomeButton", root, IconLibrary.Get("icon_home"), E.Hex("#83B6E8"), new Vector2(0f, 1f), new Vector2(100f, -100f), 130f);
+            HoldButton home = UIFactory.HoldButton("HomeButton", root, IconLibrary.Get("icon_home"), E.Hex("#83B6E8"), new Vector2(0f, 1f), new Vector2(100f, -100f), 130f,
+                "Hold to go home", "hold_home", 0.15f);
             Image badge = UIFactory.Image("ModeBadge", root, IconLibrary.Get("icon_star"), Color.white, new Vector2(0f, 1f), new Vector2(225f, -100f), new Vector2(80f, 80f), false);
-            HoldButton reset = UIFactory.HoldButton("ResetKitchenButton", root, IconLibrary.Get("icon_sparkle_clean"), E.Hex("#79BFA0"), new Vector2(1f, 1f), new Vector2(-100f, -100f), 130f);
+            HoldButton reset = UIFactory.HoldButton("ResetKitchenButton", root, IconLibrary.Get("icon_sparkle_clean"), E.Hex("#79BFA0"), new Vector2(1f, 1f), new Vector2(-100f, -100f), 130f,
+                "Hold to tidy up", "hold_tidy", 0.85f);
             SquishyButton replay = UIFactory.RoundButton("ReplayButton", root, IconLibrary.Get("icon_replay"), E.Hex("#F5A623"), new Vector2(1f, 1f), new Vector2(-100f, -100f), 120f);
             SquishyButton list = UIFactory.RoundButton("ActivitiesButton", root, IconLibrary.Get("icon_grid"), Color.white, new Vector2(1f, 1f), new Vector2(-245f, -100f), 120f);
 

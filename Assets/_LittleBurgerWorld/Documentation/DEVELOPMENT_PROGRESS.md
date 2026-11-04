@@ -56,11 +56,11 @@ Legend: `[x]` done and verified · `[~]` implemented, needs on-device verificati
 - [x] FX: sparkles, stars, confetti, hearts, crumbs, steam, bubbles, poofs, tappable balloons
 - [x] Rewards: stars, 9 stickers, unlocks; save system (versioned, backup, corruption recovery, migration)
 - [x] Parent gate + settings (volumes, voice toggle, language, reset, privacy)
-- [ ] Recorded voice prompts (architecture + transcripts done; clips not recorded)
+- [x] Voice prompts: 21 lines in English + Spanish, generated offline with Kokoro TTS; intelligibility checked by transcribing every clip back with Whisper
 
 ### Phase 8 – Android
 - [x] Validator passes (setup batch exits 0)
-- [x] EditMode 33/33, PlayMode 12/12 passing (executed in batch mode)
+- [x] EditMode 34/34, PlayMode 13/13 passing (executed in batch mode)
 - [x] Automated play-through in a Linux player build: 13/13 checks passing, 17 screenshots
 - [x] ARMv7 + ARM64, IL2CPP, landscape, Vulkan + GLES3 with PowerVR → GLES3 deny list
 - [x] APK built to `Builds/Android/LittleBurgerWorld.apk`
@@ -75,7 +75,7 @@ Legend: `[x]` done and verified · `[~]` implemented, needs on-device verificati
 **Phase 7–8.** Polished lighting; sticker toasts, celebrations and balloons verified in the player. Per the owner's Redmi A3 report, added 32-bit support and the PowerVR Vulkan deny list; the validator enforces both.
 
 ## Known limitations
-* Voice prompts: keys and transcripts exist, but no recorded clips. All guidance is also visual, so the game is fully playable without them.
+* Voice is AI-generated (Kokoro). Natural, but a recorded voice actor would be warmer for a commercial release.
 * Visuals were verified with a software renderer (llvmpipe) and a desktop player; touch feel and frame rate still need checking on real phones and tablets, especially the Redmi A3 on OpenGL ES 3.
 * Models are procedural (rounded primitives); see ASSET_INVENTORY.md for recommended professional replacements.
 * Debug keystore and APK only; store release needs a release keystore and an AAB.

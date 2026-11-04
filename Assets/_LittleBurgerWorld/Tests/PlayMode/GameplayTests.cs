@@ -267,6 +267,7 @@ namespace LittleBurgerWorld.Tests
             UIManager ui = Object.FindFirstObjectByType<UIManager>();
             Assert.IsTrue(ui.PromptVisible, "Prompt bubble shown");
             Assert.AreEqual("Put the bottom bun on the board!", ui.PromptText, "Instruction text shown with the picture");
+            Assert.AreEqual("add_bun", GM.Audio.LastVoiceKey, "Instruction is spoken");
 
             float t = 0f;
             while (finished == 0 && t < 40f)
@@ -280,6 +281,7 @@ namespace LittleBurgerWorld.Tests
             Assert.AreEqual(1, finished, "Activity completed");
             Assert.IsTrue(GM.Save.Data.IsActivityCompleted("my_first_burger"));
             Assert.IsTrue(GM.Rewards.HasSticker("first_burger"), "Sticker earned");
+            Assert.AreEqual("well_done", GM.Audio.LastVoiceKey, "Completion is cheered");
         }
 
         [UnityTest]
@@ -295,6 +297,24 @@ namespace LittleBurgerWorld.Tests
             menu.FreePlayButton.Click();
             yield return Until(() => SceneManager.GetActiveScene().name == "Restaurant", 10f);
             Assert.AreEqual(GameMode.FreePlay, GM.Modes.CurrentMode);
+            yield return Until(() => !GM.Scenes.IsLoading, 5f);
+        }
+
+        [UnityTest]
+        public IEnumerator HomeButton_QuickTapShowsTip_HoldGoesToMenu()
+        {
+            yield return LoadRestaurant(GameMode.FreePlay);
+            HoldButton home = Object.FindFirstObjectByType<UIManager>().Home;
+            home.OnPointerDown(null);
+            yield return null;
+            home.OnPointerUp(null);
+            yield return null;
+            Assert.IsTrue(home.TipVisible, "Quick tap explains 'Hold to go home'");
+            Assert.AreEqual("Restaurant", SceneManager.GetActiveScene().name, "Quick tap does not leave");
+
+            home.OnPointerDown(null);
+            yield return Until(() => SceneManager.GetActiveScene().name == "MainMenu", 10f);
+            Assert.AreEqual("MainMenu", SceneManager.GetActiveScene().name, "Holding goes home");
             yield return Until(() => !GM.Scenes.IsLoading, 5f);
         }
     }

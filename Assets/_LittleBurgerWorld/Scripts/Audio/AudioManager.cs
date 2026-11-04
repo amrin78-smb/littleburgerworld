@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using LittleBurgerWorld.Core;
 
 namespace LittleBurgerWorld.Audio
 {
@@ -22,6 +23,8 @@ namespace LittleBurgerWorld.Audio
         private readonly Dictionary<SfxId, float> m_LastPlayed = new Dictionary<SfxId, float>();
         private int m_NextLoopHandle = 1;
         private int m_NextVoice;
+        private float m_Duck = 1f;
+        private const float k_VoiceDuck = 0.4f;
         private float m_MusicVolume = 0.8f;
         private float m_SfxVolume = 0.9f;
         private float m_VoiceVolume = 1f;
@@ -76,7 +79,7 @@ namespace LittleBurgerWorld.Audio
         {
             if (m_Music == null) return;
             float baseVol = m_Library != null ? m_Library.musicVolume : 0.45f;
-            m_Music.volume = baseVol * m_MusicVolume * m_MusicFade;
+            m_Music.volume = baseVol * m_MusicVolume * m_MusicFade * m_Duck;
         }
 
         public void PlayMusic(AudioClip clip)
@@ -168,17 +171,31 @@ namespace LittleBurgerWorld.Audio
         public bool PlayVoice(string key)
         {
             if (m_Library == null) return false;
-            VoiceEntry v = m_Library.GetVoice(key);
+            VoiceEntry v = m_Library.GetVoice(key, Localization.Language);
             if (v == null || v.clip == null) return false;
             m_Voice.Stop();
             m_Voice.clip = v.clip;
             m_Voice.volume = m_VoiceVolume;
             m_Voice.Play();
+            LastVoiceKey = key;
             return true;
         }
 
+        /// <summary>Key of the last voice line started (diagnostics/tests).</summary>
+        public string LastVoiceKey { get; private set; }
+
+        /// <summary>True while a voice line is playing.</summary>
+        public bool VoicePlaying => m_Voice != null && m_Voice.isPlaying;
+
         private void Update()
         {
+            // Music dips while the voice speaks so the words are easy to hear.
+            float duck = VoicePlaying ? k_VoiceDuck : 1f;
+            if (!Mathf.Approximately(duck, m_Duck))
+            {
+                m_Duck = Mathf.MoveTowards(m_Duck, duck, Time.unscaledDeltaTime * (VoicePlaying ? 4f : 1.2f));
+                ApplyMusicVolume();
+            }
             if (m_MusicFade < 1f)
             {
                 m_MusicFade = Mathf.MoveTowards(m_MusicFade, 1f, Time.unscaledDeltaTime * 0.6f);

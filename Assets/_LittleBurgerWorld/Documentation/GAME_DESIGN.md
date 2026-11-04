@@ -46,7 +46,7 @@ Benny the Bear (original design: round head, big glossy eyes, small nose, smile,
 ## Game modes
 
 ### Guided Play ("LET'S PLAY!")
-Six picture cards (stars earned shown on each). Steps are communicated with a picture prompt bubble, a pulsing highlight and an animated hand that taps or drags. Optional voice keys exist for every step (see Known limitations).
+Six picture cards (stars earned shown on each). Steps are communicated with a picture prompt bubble, a pulsing highlight and an animated hand that taps or drags. Each step also shows a one-line instruction and speaks it (English or Spanish, following the language setting); the line repeats with the hand hint at most every 9 s, music dips while the voice talks, and "Hooray! You did it!" plays on completion.
 
 1. **My First Burger** – bun, patty on grill, flip, patty on bun, top bun, Benny cheers.
 2. **Add Some Cheese** – as above + cheese, then give it to Benny. Unlocks **pickles**.

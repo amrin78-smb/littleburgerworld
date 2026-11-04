@@ -90,6 +90,7 @@ namespace LittleBurgerWorld.Activities
                 stars = gm.Rewards.RecordActivityCompleted(activity);
                 gm.Save.Save();
                 gm.Audio.Play(activity.completionSound);
+                gm.Audio.PlayVoice(k_WellDoneVoice);
             }
             GameEvents.RaiseActivityCompleted(activity.id);
             ActivityFinished?.Invoke(activity, stars);
@@ -130,6 +131,11 @@ namespace LittleBurgerWorld.Activities
         public void ShowHint(ActivityStep step)
         {
             if (m_UI == null || step == null) return;
+            // Say the instruction again with the hand hint, but not every few seconds.
+            GameManager gm = GameManager.Instance;
+            if (gm != null && !string.IsNullOrEmpty(step.voiceKey) && !gm.Audio.VoicePlaying &&
+                Time.unscaledTime - m_LastVoiceTime > k_VoiceRepeatSeconds && gm.Audio.PlayVoice(step.voiceKey))
+                m_LastVoiceTime = Time.unscaledTime;
             Highlight(step.targetKey, true);
             bool drag = !string.IsNullOrEmpty(step.sourceKey) && !string.IsNullOrEmpty(step.targetKey);
             if (drag)
@@ -186,11 +192,15 @@ namespace LittleBurgerWorld.Activities
             FxManager.Play(FxType.Sparkle, t.position + Vector3.up * 0.5f, 10);
         }
 
+        private const string k_WellDoneVoice = "well_done";
+        private const float k_VoiceRepeatSeconds = 9f;
+        private float m_LastVoiceTime = -100f;
+
         public void PlaySound(ActivityStep step)
         {
             GameManager gm = GameManager.Instance;
             if (gm == null || step == null) return;
-            if (!string.IsNullOrEmpty(step.voiceKey)) gm.Audio.PlayVoice(step.voiceKey);
+            if (!string.IsNullOrEmpty(step.voiceKey) && gm.Audio.PlayVoice(step.voiceKey)) m_LastVoiceTime = Time.unscaledTime;
             if (step.sound != SfxId.None) gm.Audio.Play(step.sound);
         }
 

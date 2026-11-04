@@ -18,7 +18,9 @@ namespace LittleBurgerWorld.Audio
     {
         [Tooltip("Key referenced by ActivityStep.voiceKey (e.g. add_cheese).")]
         public string key;
-        [Tooltip("Spoken line. Leave empty until recorded – the game works silently without it.")]
+        [Tooltip("Language code of this clip (en, es...). One entry per key and language.")]
+        public string language = "en";
+        [Tooltip("Spoken line. Empty = silent (the on-screen text and pictures still guide).")]
         public AudioClip clip;
         [TextArea] public string transcript;
     }
@@ -48,10 +50,14 @@ namespace LittleBurgerWorld.Audio
             return m_Lookup.TryGetValue(id, out SfxEntry entry) ? entry : null;
         }
 
-        public VoiceEntry GetVoice(string key)
+        /// <summary>Voice line for a key in the given language (no cross-language fallback, so the
+        /// voice always matches the on-screen text). Null language = first entry for the key.</summary>
+        public VoiceEntry GetVoice(string key, string language = null)
         {
             if (string.IsNullOrEmpty(key)) return null;
-            return voice.Find(v => v != null && v.key == key);
+            if (string.IsNullOrEmpty(language)) return voice.Find(v => v != null && v.key == key);
+            return voice.Find(v => v != null && v.key == key &&
+                (v.language == language || (string.IsNullOrEmpty(v.language) && language == "en")));
         }
 
         private void OnValidate() => m_Lookup = null;

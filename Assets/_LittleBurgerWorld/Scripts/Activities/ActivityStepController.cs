@@ -147,9 +147,7 @@ namespace LittleBurgerWorld.Activities
                 m_Context.SetBoardFilter(step.itemId);
             else
                 m_Context.SetBoardFilter(null);
-            if (!string.IsNullOrEmpty(step.voiceKey) || step.sound != Audio.SfxId.None) m_Context.PlaySound(step);
-
-            // Already done ahead of time?
+            // Already done ahead of time? Then skip straight on (no instruction needed).
             for (int i = m_Consumed; i < m_History.Count; i++)
             {
                 if (!Matches(step, m_History[i])) continue;
@@ -157,6 +155,7 @@ namespace LittleBurgerWorld.Activities
                 Satisfy(step);
                 return;
             }
+            if (!string.IsNullOrEmpty(step.voiceKey) || step.sound != Audio.SfxId.None) m_Context.PlaySound(step);
         }
 
         private static bool IsBoardKey(string key) => key == "Board";
