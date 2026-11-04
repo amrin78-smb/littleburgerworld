@@ -168,8 +168,23 @@ MonoBehaviour:
     requestItems: []
     hintDelay: 2.5
     autoAssistAfterHints: 4
-  - type: 9
+  - type: 6
     targetKey: Customer
+    sourceKey: Board
+    itemId: burger
+    eventType: 0
+    promptIcon: {fileID: 21300000, guid: 48597f491d4c0b161b959dff1595c793, type: 3}
+    voiceKey: serve_benny
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
+  - type: 11
+    targetKey: 
     sourceKey: 
     itemId: 
     eventType: 0
@@ -177,8 +192,8 @@ MonoBehaviour:
     voiceKey: 
     textKey: 
     sound: 0
-    animation: cheer
-    duration: 1.4
+    animation: 
+    duration: 3.2
     characterId: 
     requestItems: []
     hintDelay: 2.5

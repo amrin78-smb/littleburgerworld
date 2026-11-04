@@ -32,6 +32,22 @@ MonoBehaviour:
     requestItems: []
     hintDelay: 2.5
     autoAssistAfterHints: 4
+  - type: 1
+    targetKey: 
+    sourceKey: 
+    itemId: 
+    eventType: 0
+    promptIcon: {fileID: 0}
+    voiceKey: 
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 0.4
+    characterId: dotty
+    requestItems:
+    - fries
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
   - type: 7
     targetKey: Fryer.Potatoes
     sourceKey: 
@@ -92,6 +108,21 @@ MonoBehaviour:
     requestItems: []
     hintDelay: 30
     autoAssistAfterHints: 0
+  - type: 6
+    targetKey: Customer
+    sourceKey: FriesBox
+    itemId: fries
+    eventType: 0
+    promptIcon: {fileID: 21300000, guid: b51f892dd8cbced358070ed91f587521, type: 3}
+    voiceKey: serve_dotty_fries
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
   - type: 11
     targetKey: 
     sourceKey: 
@@ -102,7 +133,7 @@ MonoBehaviour:
     textKey: 
     sound: 0
     animation: 
-    duration: 1
+    duration: 3.2
     characterId: 
     requestItems: []
     hintDelay: 2.5

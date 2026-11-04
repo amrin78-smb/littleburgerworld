@@ -478,6 +478,22 @@ namespace LittleBurgerWorld.Tests
         }
 
         [Test]
+        public void EveryCookingActivity_EndsByServingAnAnimal()
+        {
+            var cfg = Resources.Load<GameConfig>(GameConfig.ResourcePath);
+            foreach (ActivityData a in cfg.activities)
+            {
+                if (a.id == "wash_dishes") continue;
+                bool called = a.steps.Exists(s => s.type == ActivityStepType.CallCustomer);
+                int serve = a.steps.FindIndex(s => s.type == ActivityStepType.WaitForDrop && s.targetKey == "Customer");
+                Assert.IsTrue(called, a.id + ": an animal comes in");
+                Assert.GreaterOrEqual(serve, 0, a.id + ": the food is given to the animal");
+                for (int i = serve + 1; i < a.steps.Count; i++)
+                    Assert.AreEqual(ActivityStepType.Wait, a.steps[i].type, a.id + ": serving is the last thing to do");
+            }
+        }
+
+        [Test]
         public void GuidedSteps_WithAPicture_HaveInstructionTextInEveryLanguage()
         {
             var cfg = Resources.Load<GameConfig>(GameConfig.ResourcePath);

@@ -352,7 +352,7 @@ namespace LittleBurgerWorld.EditorTools
         private static void BuildIceCreamCone()
         {
             var root = new GameObject("Food_IceCream");
-            Pickable(root, new Vector3(0.8f, 1.6f, 0.8f), new Vector3(0f, 0.8f, 0f));
+            Pickable(root, new Vector3(0.62f, 1.5f, 0.62f), new Vector3(0f, 0.75f, 0f));
             MakeFood(root, FoodType.IceCream, 1.1f, 2.3f);
             Mesh cone = A.Mesh("WaffleCone", () => MeshFactory.Lathe(new List<Vector2>
             {

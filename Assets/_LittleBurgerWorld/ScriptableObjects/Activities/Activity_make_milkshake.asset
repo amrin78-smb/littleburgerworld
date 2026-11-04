@@ -32,6 +32,22 @@ MonoBehaviour:
     requestItems: []
     hintDelay: 2.5
     autoAssistAfterHints: 4
+  - type: 1
+    targetKey: 
+    sourceKey: 
+    itemId: 
+    eventType: 0
+    promptIcon: {fileID: 0}
+    voiceKey: 
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 0.4
+    characterId: milo
+    requestItems:
+    - milkshake
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
   - type: 8
     targetKey: Drinks.Flavour.strawberry
     sourceKey: 
@@ -107,6 +123,21 @@ MonoBehaviour:
     requestItems: []
     hintDelay: 2.5
     autoAssistAfterHints: 4
+  - type: 6
+    targetKey: Customer
+    sourceKey: Drinks.Cup
+    itemId: milkshake
+    eventType: 0
+    promptIcon: {fileID: 21300000, guid: 36664a4127d5db1fc88938cce393e159, type: 3}
+    voiceKey: serve_milo_shake
+    textKey: 
+    sound: 0
+    animation: 
+    duration: 1
+    characterId: 
+    requestItems: []
+    hintDelay: 2.5
+    autoAssistAfterHints: 4
   - type: 11
     targetKey: 
     sourceKey: 
@@ -117,7 +148,7 @@ MonoBehaviour:
     textKey: 
     sound: 0
     animation: 
-    duration: 1.2
+    duration: 3.2
     characterId: 
     requestItems: []
     hintDelay: 2.5

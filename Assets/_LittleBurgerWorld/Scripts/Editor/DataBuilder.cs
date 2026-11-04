@@ -255,7 +255,8 @@ namespace LittleBurgerWorld.EditorTools
 
             var a1 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen), Call("benny", "burger") };
             a1.AddRange(BurgerSteps(false));
-            a1.Add(S(ActivityStepType.PlayAnimation, "Customer", animation: "cheer", duration: 1.4f));
+            a1.Add(S(ActivityStepType.WaitForDrop, "Customer", "Board", "burger", "icon_burger", voice: "serve_benny"));
+            a1.Add(S(ActivityStepType.Wait, duration: 3.2f));
             list.Add(Activity("my_first_burger", "My First Burger", "icon_burger", "#FFE3A3", a1, unlocks: null));
 
             var a2 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen), Call("benny", "cheeseburger") };
@@ -264,17 +265,19 @@ namespace LittleBurgerWorld.EditorTools
             a2.Add(S(ActivityStepType.Wait, duration: 3.2f));
             list.Add(Activity("add_some_cheese", "Add Some Cheese", "icon_cheeseburger", "#FFD6A0", a2, "pickle"));
 
-            var a3 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen) };
+            var a3 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen), Call("dotty", "fries") };
             a3.AddRange(FriesSteps());
-            a3.Add(S(ActivityStepType.Wait, duration: 1f));
+            a3.Add(S(ActivityStepType.WaitForDrop, "Customer", "FriesBox", "fries", "icon_fries", voice: "serve_dotty_fries"));
+            a3.Add(S(ActivityStepType.Wait, duration: 3.2f));
             list.Add(Activity("make_fries", "Make French Fries", "icon_fries", "#FFC9BE", a3, "ellie"));
 
-            var a4 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen) };
+            var a4 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen), Call("milo", "milkshake") };
             a4.AddRange(ShakeSteps(true));
-            a4.Add(S(ActivityStepType.Wait, duration: 1.2f));
+            a4.Add(S(ActivityStepType.WaitForDrop, "Customer", "Drinks.Cup", "milkshake", "icon_milkshake_strawberry", voice: "serve_milo_shake"));
+            a4.Add(S(ActivityStepType.Wait, duration: 3.2f));
             list.Add(Activity("make_milkshake", "Make a Milkshake", "icon_milkshake_strawberry", "#FAD3DD", a4, "penny"));
 
-            var a5 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen) };
+            var a5 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen), Call("benny", "burger", "fries", "milkshake") };
             a5.AddRange(BurgerSteps(false));
             a5.Add(S(ActivityStepType.WaitForDrop, "Tray", "Board", "burger", "icon_burger", voice: "burger_on_tray"));
             a5.AddRange(FriesSteps());
@@ -282,7 +285,8 @@ namespace LittleBurgerWorld.EditorTools
             a5.AddRange(ShakeSteps(false));
             a5.Add(S(ActivityStepType.WaitForDrop, "Tray", "Drinks.Cup", "milkshake", "icon_milkshake_strawberry", voice: "shake_on_tray"));
             a5.Add(S(ActivityStepType.WaitForEvent, null, null, null, "icon_meal", GameplayEventType.MealReady, hintDelay: 30f, assist: 0, voice: "meal_ready"));
-            a5.Add(S(ActivityStepType.Wait, duration: 1.2f));
+            a5.Add(S(ActivityStepType.WaitForDrop, "Customer", "Tray", "meal", "icon_meal", voice: "serve_meal"));
+            a5.Add(S(ActivityStepType.Wait, duration: 3.4f));
             list.Add(Activity("complete_meal", "Prepare a Complete Meal", "icon_meal", "#C9EBDC", a5, "bao"));
 
             var a6 = new List<ActivityStep> { S(ActivityStepType.PrepareKitchen), Call("benny", "cheeseburger") };

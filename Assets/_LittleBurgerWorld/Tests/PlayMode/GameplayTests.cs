@@ -286,26 +286,65 @@ namespace LittleBurgerWorld.Tests
 
         [UnityTest]
         public IEnumerator NewAnimalActivities_CompleteAndServeTheRightFriend(
-            [Values("milos_snack:milo", "dottys_milkshake:dotty", "ice_cream_time:benny")] string pair)
+            [Values("milos_snack:milo", "dottys_milkshake:dotty", "ice_cream_time:benny", "make_fries:dotty", "make_milkshake:milo",
+                "complete_meal:benny", "my_first_burger:benny")] string pair)
         {
             string activity = pair.Split(':')[0], animal = pair.Split(':')[1];
             yield return LoadRestaurant(GameMode.Guided);
             KitchenManager k = KitchenManager.Instance;
+            k.Grill.SideSeconds = 0.3f;
             ActivityManager am = ActivityManager.Instance;
             int finished = 0;
             am.ActivityFinished += (a, st) => finished++;
             am.StartActivity(activity);
             float t = 0f;
-            while (finished == 0 && t < 60f)
+            while (finished == 0 && t < 150f)
             {
                 ActivityStep s = am.Controller.CurrentStep;
                 if (am.Controller.IsWaiting && s != null) am.Assist(s);
                 yield return new WaitForSeconds(0.4f);
                 t += 0.4f * Time.timeScale;
             }
-            Assert.AreEqual(1, finished, activity + " completed");
+            ActivityStep stuck = am.Controller.CurrentStep;
+            Assert.AreEqual(1, finished, activity + " completed (stuck at " + (stuck != null ? stuck.type + " " + stuck.targetKey + " " + stuck.itemId : "-") + ")");
             Assert.IsTrue(m_Events.Exists(e => e.Type == GameplayEventType.CustomerServed && e.ExtraId == animal), animal + " was served");
             CollectionAssert.Contains(GM.Save.Data.stats.animalsServed, animal);
+        }
+
+        [UnityTest]
+        public IEnumerator IceCream_TappingATubBehindTheCone_AddsAScoop()
+        {
+            yield return LoadRestaurant(GameMode.FreePlay);
+            CustomerManager.Instance.AutoSpawn = false;
+            IceCreamStation station = KitchenManager.Instance.IceCream;
+            var im = InteractionManager.Instance;
+            station.PlaceCone(null);
+            yield return new WaitForSeconds(0.6f);
+            station.AddScoop(0);
+            yield return null;
+            Assert.AreEqual(1, station.ScoopCount);
+            int expected = 1;
+            foreach (string flavour in new[] { "strawberry", "chocolate", "vanilla" })
+            {
+                Transform tub = SceneObjectRegistry.Find("IceCream.Tub." + flavour);
+                Assert.IsNotNull(tub, flavour);
+                // Aim at the tub's ice cream, which the cone stands right in front of.
+                foreach (Vector3 offset in new[] { Vector3.up * 0.25f, Vector3.up * 0.1f })
+                {
+                    IInteractable picked = im.Pick(im.WorldToScreen(tub.position + offset));
+                    Assert.AreSame(tub.GetComponent<TapButton3D>(), picked, flavour + " tub should win the tap over the cone");
+                }
+                if (expected < 3)
+                {
+                    ((TapButton3D)im.Pick(im.WorldToScreen(tub.position + Vector3.up * 0.25f))).OnTap();
+                    expected++;
+                    yield return null;
+                    Assert.AreEqual(expected, station.ScoopCount, flavour + " scoop added");
+                }
+            }
+            // The cone itself is still easy to grab from its scoops.
+            IInteractable cone = im.Pick(im.WorldToScreen(station.Cone.transform.position + Vector3.up * 1.2f));
+            Assert.AreSame(station.Cone, cone, "Cone can still be picked up by its scoops");
         }
 
         [UnityTest]

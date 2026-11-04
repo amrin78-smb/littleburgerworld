@@ -25,6 +25,14 @@ namespace LittleBurgerWorld.EditorTools
         }
 
         /// <summary>A little wheeled ice cream cart with a striped umbrella (stands on the floor).</summary>
+        /// <summary>
+        /// Above the cone's food priority (13): the cone stands in front of the tubs, so a tap that touches
+        /// both must scoop rather than grab or tap the cone.
+        /// </summary>
+        public const int CartButtonPriority = 15;
+        // Tubs sit at the back, so the cone stack can overlap them on screen too; scooping wins
+        // (tapping a tub without a cone places one by itself, so the stack is never needed).
+
         private static void BuildIceCreamCart()
         {
             var root = new GameObject("Station_IceCream");
@@ -61,9 +69,9 @@ namespace LittleBurgerWorld.EditorTools
                 Part(tv.transform, "Cream", A.SphereMesh, m, new Vector3(0f, 0.22f, 0f), null, new Vector3(0.44f, 0.26f, 0.44f));
                 Part(tv.transform, "Scoop", A.SphereMesh, m, new Vector3(0.05f, 0.33f, -0.02f), null, new Vector3(0.22f, 0.18f, 0.22f), false);
                 var c = tub.AddComponent<SphereCollider>();
-                c.radius = 0.32f;
-                c.center = new Vector3(0f, 0.2f, 0f);
-                tubs.Add(Button3D(tub, 8, SfxId.Pop, tv.transform));
+                c.radius = 0.4f;
+                c.center = new Vector3(0f, 0.25f, 0f);
+                tubs.Add(Button3D(tub, CartButtonPriority + 1, SfxId.Pop, tv.transform));
                 Key(tub, "IceCream.Tub." + f.id);
                 ids.Add(f.id);
                 colors.Add(EditorAssetUtil.Hex(f.color));
@@ -77,7 +85,7 @@ namespace LittleBurgerWorld.EditorTools
             var cc = cones.AddComponent<BoxCollider>();
             cc.size = new Vector3(0.6f, 0.9f, 0.6f);
             cc.center = new Vector3(0f, 0.4f, 0f);
-            TapButton3D coneButton = Button3D(cones, 8, SfxId.Pop, cv.transform);
+            TapButton3D coneButton = Button3D(cones, CartButtonPriority, SfxId.Pop, cv.transform);
             Key(cones, "IceCream.Cones");
             GameObject spawn = Node(root.transform, "ConeSpawn", new Vector3(-0.72f, top + 0.9f, -0.27f));
             // Cone holder (front middle)
@@ -98,7 +106,7 @@ namespace LittleBurgerWorld.EditorTools
             var shc = shaker.AddComponent<BoxCollider>();
             shc.size = new Vector3(0.55f, 0.75f, 0.55f);
             shc.center = new Vector3(0f, 0.3f, 0f);
-            TapButton3D shakerButton = Button3D(shaker, 8, SfxId.Sparkle, sv.transform);
+            TapButton3D shakerButton = Button3D(shaker, CartButtonPriority, SfxId.Sparkle, sv.transform);
             Key(shaker, "IceCream.Sprinkles");
             // Cherry bowl
             GameObject bowl = Node(root.transform, "Cherries", new Vector3(0.82f, top, -0.12f));
@@ -113,7 +121,7 @@ namespace LittleBurgerWorld.EditorTools
             var bc = bowl.AddComponent<SphereCollider>();
             bc.radius = 0.3f;
             bc.center = new Vector3(0f, 0.15f, 0f);
-            TapButton3D cherryButton = Button3D(bowl, 8, SfxId.Pop, bv.transform);
+            TapButton3D cherryButton = Button3D(bowl, CartButtonPriority, SfxId.Pop, bv.transform);
             Key(bowl, "IceCream.Cherry");
 
             var station = root.AddComponent<IceCreamStation>();

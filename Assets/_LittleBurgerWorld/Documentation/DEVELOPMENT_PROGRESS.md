@@ -60,7 +60,8 @@ Legend: `[x]` done and verified · `[~]` implemented, needs on-device verificati
 
 ### Phase 8 – Android
 - [x] Validator passes (setup batch exits 0)
-- [x] EditMode 34/34, PlayMode 21/21 passing (executed in batch mode)
+- [x] EditMode 35/35, PlayMode 26/26 passing (executed in batch mode)
+- [x] v0.6.1 device-test fixes: every cooking activity calls an animal and ends with serving them; ice cream cart buttons (tubs above all) win taps over the cone standing in front of them, bigger tub touch areas
 - [x] Automated play-through in a Linux player build: 13/13 checks passing, 17 screenshots
 - [x] ARMv7 + ARM64, IL2CPP, landscape, Vulkan + GLES3 with PowerVR → GLES3 deny list
 - [x] APK built to `Builds/Android/LittleBurgerWorld.apk`
